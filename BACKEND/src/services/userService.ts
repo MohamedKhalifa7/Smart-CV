@@ -12,9 +12,6 @@ export const register = async ({
   password,
   role,
 }: RegisterParams) => {
-  const isFirstAccount = (await User.countDocuments()) === 0;
-  role = isFirstAccount ? "admin" : "user";
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -66,7 +63,6 @@ export const login = async ({ email, password }: LoginParams) => {
     expiresIn: "1d",
   });
 
-  
   return {
     status: StatusCodes.OK,
     message: "Login successful",
