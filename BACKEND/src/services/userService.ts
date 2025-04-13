@@ -1,7 +1,8 @@
-import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/userModel";
 import { RegisterParams, LoginParams } from "../types/user.types";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 // Register
 export const register = async ({
@@ -56,15 +57,19 @@ export const login = async ({ email, password }: LoginParams) => {
     };
   }
 
+  const payload = {
+    userId: user._id,
+    email: user.email,
+  };
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET_Key || "jwt_secret", {
+    expiresIn: "1d",
+  });
+
+  
   return {
     status: StatusCodes.OK,
     message: "Login successful",
-    user: {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      role: user.role,
-    },
+    token,
   };
 };

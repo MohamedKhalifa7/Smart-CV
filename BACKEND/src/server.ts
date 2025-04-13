@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 
 mongoose
-  .connect("mongodb://localhost:27017/ecosolar")
+  .connect("mongodb://localhost:27017/Smart-CV")
   .then(() => console.log("mongo connected!"))
   .catch(() => console.log("failed to connect!"));
 app.listen(port, () => {
