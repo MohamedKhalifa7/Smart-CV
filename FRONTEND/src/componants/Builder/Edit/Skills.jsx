@@ -1,9 +1,20 @@
 import { useState } from 'react';
 import { useCV } from '../../../context/CVcontext';
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Chip,
+  Stack,
+  Divider
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+
 const Skills = () => {
   const { formData, updateSection } = useCV();
   const [input, setInput] = useState('');
-  const skills = formData.skills.skills || [];
+  const skills = formData.skills?.skills || [];
 
   const addSkill = () => {
     if (input.trim() && !skills.includes(input.trim())) {
@@ -23,75 +34,73 @@ const Skills = () => {
   };
 
   return (
-    <div>
-      <h3>Skills</h3>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h5" gutterBottom>Skills</Typography>
 
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <input
-          type="text"
+      <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+        <TextField
+          label="Add Skill"
           placeholder="e.g. Project Management"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && addSkill()}
+          size="small"
         />
-        <button onClick={addSkill}>Add</button>
-      </div>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={addSkill}
+        >
+          Add
+        </Button>
+      </Stack>
 
-      <div style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
         {skills.map((skill, index) => (
-          <span
+          <Chip
             key={index}
-            style={{
-              background: '#E9D5FF',
-              padding: '6px 10px',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px'
-            }}
-          >
-            {skill}
-            <button
-              onClick={() => removeSkill(skill)}
-              style={{
-                border: 'none',
-                background: 'transparent',
-                fontWeight: 'bold',
-                cursor: 'pointer'
-              }}
-            >
-              
-            </button>
-          </span>
+            label={skill}
+            onDelete={() => removeSkill(skill)}
+            color="primary"
+            variant="outlined"
+          />
         ))}
-      </div>
+      </Box>
 
-      <br />
+      <Divider sx={{ my: 3 }} />
 
-      <label>Languages (Optional)</label>
-      <textarea
+      <TextField
+        fullWidth
+        label="Languages (Optional)"
         placeholder="e.g.: English (Native), Spanish (Intermediate)"
-        value={formData.skills.languages || ''}
+        value={formData.skills?.languages || ''}
         onChange={(e) =>
           updateSection('skills', {
             ...formData.skills,
             languages: e.target.value,
           })
         }
+        margin="normal"
+        multiline
+        rows={2}
       />
 
-      <label>Certifications (Optional)</label>
-      <textarea
+      <TextField
+        fullWidth
+        label="Certifications (Optional)"
         placeholder="e.g.: Google Analytics Certification (2022)"
-        value={formData.skills.certifications || ''}
+        value={formData.skills?.certifications || ''}
         onChange={(e) =>
           updateSection('skills', {
             ...formData.skills,
             certifications: e.target.value,
           })
         }
+        margin="normal"
+        multiline
+        rows={2}
       />
-    </div>
+    </Box>
   );
 };
 
