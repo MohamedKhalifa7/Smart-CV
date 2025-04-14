@@ -118,8 +118,8 @@ const Builder = () => {
                       minHeight: "unset",
                       padding: 0,
                       margin: 0,
-                      flex: 1, // This makes tabs take equal space
-                      minWidth: 0, // Allows tabs to shrink properly
+                      flex: 1, 
+                      minWidth: 0, 
                       '&.Mui-selected': {
                         color: 'primary.main', 
                         bgcolor: 'white',

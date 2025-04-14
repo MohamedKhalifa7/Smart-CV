@@ -15,9 +15,9 @@ const Header = () => {
       }}>
         <Toolbar sx={{ 
           justifyContent: 'space-between',
-          alignItems: 'flex-start', // Align items to top
-          pt: 2, // Add padding at top
-          pb: 1 // Add padding at bottom
+          alignItems: 'flex-start', 
+          pt: 2, 
+          pb: 1 
         }}>
           {/* Title and subtitle stacked */}
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -34,7 +34,7 @@ const Header = () => {
             <Typography variant="subtitle1" sx={{
                 color: 'text.secondary',
               fontSize: '0.9rem',
-              mt: 0.5 // Small margin top
+              mt: 0.5 
             }}>
               Create your professional CV with our easy-to-use tools
             </Typography>
