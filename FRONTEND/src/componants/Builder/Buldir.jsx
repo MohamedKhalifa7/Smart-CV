@@ -10,6 +10,9 @@ import Education from './Edit/Education';
 import Skills from './Edit/Skills';
 import Preview from './Preview';
 import Header from './Header';
+import Part1 from './sidebar/part1';
+import Part2 from './sidebar/part2';
+import SideBar from './sidebar/sideBar';
 
 const Builder = () => {
   const [editMode, setEditMode] = useState(true);
@@ -23,12 +26,28 @@ const Builder = () => {
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header />
-        
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          minHeight: '100vh',
+}}>
+
+<Box  sx={{
+          width:'20%',
+          my:3,
+          minWidth: '220px',
+         }}>
+       <SideBar >
+
+       </SideBar>
+       </Box>
         <Box sx={{ 
-          maxWidth: 1000, 
+          maxWidth: 'lg', 
           ml: 'auto', 
           mr: 0,
           p: 3,
+          flexGrow: 1,
         }}>
           {/* Edit/Preview Tabs */}
           <Paper sx={{ 
@@ -156,6 +175,7 @@ const Builder = () => {
           ) : (
             <Preview />
           )}
+        </Box>
         </Box>
       </Box>
     </ThemeProvider>
