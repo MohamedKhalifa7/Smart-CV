@@ -60,7 +60,7 @@ const Skills = () => {
                 cursor: 'pointer'
               }}
             >
-              ×
+              
             </button>
           </span>
         ))}

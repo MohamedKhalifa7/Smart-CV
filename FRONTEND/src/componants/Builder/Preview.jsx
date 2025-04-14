@@ -1,7 +1,7 @@
 import { useCV } from "../../context/CVcontext";
 
 const Preview = () => {
-    const { formData } = useCV(); // Access formData from the context
+    const { formData } = useCV(); 
   
     return (
       <div>

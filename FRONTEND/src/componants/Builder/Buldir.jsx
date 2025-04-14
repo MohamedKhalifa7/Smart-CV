@@ -6,10 +6,10 @@ import Skills from './Edit/Skills';
 import Preview from './Preview.jsx';
 
 const Builder = () => {
-  const [editMode, setEditMode] = useState(true); // الوضع الحالي: تعديل ولا عرض؟
+  const [editMode, setEditMode] = useState(true); 
   const [activeTab, setActiveTab] = useState('personal');
 
-  // كل البيانات هنجمعها هنا
+  
   const [formData, setFormData] = useState({
     personal: {},
     experience: {},
