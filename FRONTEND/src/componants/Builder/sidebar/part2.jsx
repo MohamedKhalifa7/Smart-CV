@@ -7,6 +7,7 @@ import { savedCVsAction } from '../../../redux/store/slices/savedCVsSlice';
 function Part2() {
     const dispatch = useDispatch();
     const savedCVs = useSelector((state) => state.savedCVs.savedCVs);
+    //insert user id in the action
     useEffect(()=>{
         dispatch(savedCVsAction())
     },[])
