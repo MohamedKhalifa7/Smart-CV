@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import AIWritingAssistDialog from './component/AIWritingAssist';
 
 function Part1() {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
     return (
  <>
      <Box  sx={{
@@ -21,11 +31,18 @@ function Part1() {
              Choose Template
         </Button>
         <Button sx={{my:1}}
+        onClick={handleClickOpen}
         variant="outlined" 
         startIcon={<AutoFixHighIcon></AutoFixHighIcon>}
          fullWidth>
              AI Writing Assistant
         </Button>
+        <AIWritingAssistDialog
+       
+        open={open}
+        onClose={handleClose}
+        selectedValue={''}
+        ></AIWritingAssistDialog>
      </Box>
 </>
     )
