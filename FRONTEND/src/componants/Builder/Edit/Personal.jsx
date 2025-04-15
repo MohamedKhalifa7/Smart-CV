@@ -25,7 +25,7 @@ const Personal = () => {
       fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif'
     }}>
       {/* Personal Information Section */}
-      <Typography variant="h6" sx={{ 
+      <Typography variant="h3" sx={{ 
         fontWeight: 'bold',
         marginBottom: '16px',
         color: '#333',
@@ -38,7 +38,7 @@ const Personal = () => {
       {/* First and Last Name */}
       <Box sx={{ marginBottom: '20px', display: 'flex', gap: '12px' }}>
         <Box sx={{ width: '50%' }}>
-          <Typography variant="body2" sx={{ 
+          <Typography variant="subtitle1" sx={{ 
             marginBottom: '2px',
             textAlign: 'left',
             fontWeight: 'bold',
@@ -67,7 +67,7 @@ const Personal = () => {
         </Box>
 
         <Box sx={{ width: '50%' }}>
-          <Typography variant="body2" sx={{ 
+          <Typography variant="subtitle1" sx={{ 
             fontWeight: 'bold', 
             marginBottom: '2px',
             textAlign: 'left',
@@ -98,7 +98,7 @@ const Personal = () => {
 
       {/* Professional Title */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="body2" sx={{ 
+        <Typography variant="subtitle1" sx={{ 
           fontWeight: 'bold', 
           marginBottom: '2px',
           textAlign: 'left',
@@ -131,7 +131,7 @@ const Personal = () => {
 
       {/* Email */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="body2" sx={{ 
+        <Typography variant="subtitle1" sx={{ 
           fontWeight: 'bold', 
           marginBottom: '2px',
           textAlign: 'left',
@@ -164,7 +164,7 @@ const Personal = () => {
 
       {/* Phone */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="body2" sx={{ 
+        <Typography variant="subtitle1" sx={{ 
           fontWeight: 'bold', 
           marginBottom: '2px',
           textAlign: 'left',
@@ -197,7 +197,7 @@ const Personal = () => {
 
       {/* Location */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="body2" sx={{ 
+        <Typography variant="subtitle1" sx={{ 
           fontWeight: 'bold', 
           marginBottom: '2px',
           textAlign: 'left',
@@ -230,7 +230,7 @@ const Personal = () => {
 
       {/* Professional Summary */}
       <Box>
-        <Typography variant="body2" sx={{ 
+        <Typography variant="subtitle1" sx={{ 
           fontWeight: 'bold', 
           marginBottom: '2px',
           textAlign: 'left',
