@@ -1,6 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "passport";
+import "./config/passportConfig";
+
+
 dotenv.config();
 // routers
 import authRouter from "./routes/authRouter";
@@ -9,6 +14,19 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
+// Session middleware
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/auth", authRouter);
 
 const mongoUri = process.env.MONGO_URI;
