@@ -226,6 +226,7 @@ function AIWritingAssistDialog(props) {
   );
 }
 
+//to be inserted in choose template dialog
 AIWritingAssistDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,

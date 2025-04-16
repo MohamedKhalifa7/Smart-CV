@@ -3,9 +3,18 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import React from 'react'
 import TemplateCard from './templateCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect , useState} from 'react';
+import {cvTemplateAction} from '../../../../redux/store/slices/cvTemplateSlice';
 
 function ChooseTemplateDialog(props) {
     const { onClose, open } = props;
+
+    const dispatch = useDispatch();
+    const templates = useSelector((state) => state.cvTemplate.cvTemplate);
+    useEffect(() => {
+        dispatch(cvTemplateAction())
+    }, [])   
 
     const handleClose = () => {
         onClose();
@@ -20,7 +29,14 @@ function ChooseTemplateDialog(props) {
                 ></CloseIcon>
             </Box>
             <List>
-                <TemplateCard></TemplateCard>
+                {/* <TemplateCard></TemplateCard> */}
+                {templates.map((template, index) => (
+                    <TemplateCard
+                        key={index}
+                        template={template}
+                    ></TemplateCard>
+                ))}
+
             </List>
         </Dialog>
     )

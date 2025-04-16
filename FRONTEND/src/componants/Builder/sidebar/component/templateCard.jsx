@@ -9,7 +9,9 @@ import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-function TemplateCard() {
+function TemplateCard(props) {
+
+  const { title, img , disc, pro} = props;
   return (
     <Card sx={{ maxWidth: 200 , border:'solid #6a11cb 3px'}} >
       
@@ -43,7 +45,7 @@ function TemplateCard() {
           <CardMedia
             component="img"
             height="300"
-            image="src/assets/1.jpg"
+            image={img}
             alt="template image"
           />
         </Box>
@@ -51,10 +53,10 @@ function TemplateCard() {
         {/* Text Below Image */}
         <CardContent>
           <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-            Professional
+            {title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Clean and professional layout suitable for most industries
+            {disc}
           </Typography>
         </CardContent>
       
