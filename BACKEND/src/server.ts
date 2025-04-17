@@ -4,12 +4,10 @@ import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
 import "./config/passportConfig";
-
+import authRouter from "./routes/authRouter";
+import aiWritingRouter from "./routes/AIWritingRouter";
 
 dotenv.config();
-// routers
-import authRouter from "./routes/authRouter";
-
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -27,7 +25,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Routes
 app.use("/auth", authRouter);
+app.use("/api/ai", aiWritingRouter);
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
