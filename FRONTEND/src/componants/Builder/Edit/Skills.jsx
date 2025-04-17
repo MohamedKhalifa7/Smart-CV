@@ -7,7 +7,9 @@ import {
   Button,
   Stack,
   Divider,
-  Chip
+  Chip,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,6 +18,10 @@ const Skills = () => {
   const { formData, updateSection } = useCV();
   const [input, setInput] = useState('');
   const skills = formData.skills?.skills || [];
+  
+  // Responsive check for mobile
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const addSkill = () => {
     if (input.trim() && !skills.includes(input.trim())) {
@@ -37,16 +43,16 @@ const Skills = () => {
   return (
     <Box sx={{ 
       width: '100%', 
-      maxWidth: '800px', 
+      maxWidth: isMobile ? '90%' : '800px', 
       margin: '0 auto', 
-      padding: '12px',
-      borderRadius: '8px'
+      padding: isMobile ? '8px' : '12px',
+      borderRadius: '8px',
     }}>
       {/* Header */}
       <Typography variant="h5" sx={{ 
         fontWeight: 'bold', 
         color: '#333', 
-        fontSize: '1.1rem',
+        fontSize: isMobile ? '1rem' : '1.1rem',
         mb: 2
       }}>
         Skills
@@ -61,7 +67,7 @@ const Skills = () => {
         }}>
           Add Skills
         </Typography>
-        <Box sx={{ display: 'flex', gap: '8px', mb: 1 }}>
+        <Stack direction={isMobile ? 'column' : 'row'} spacing={2} sx={{ mb: 1 }}>
           <TextField
             fullWidth
             variant="standard"
@@ -70,13 +76,13 @@ const Skills = () => {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && addSkill()}
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
-                border: '1px solid #ddd', 
-                borderRadius: '8px', 
-                fontSize: '0.85rem', 
-                padding: '4px 8px' 
-              } 
+            sx={{
+              '& .MuiInput-input': {
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '0.85rem',
+                padding: '4px 8px'
+              }
             }}
           />
           <Button
@@ -89,25 +95,25 @@ const Skills = () => {
               '&:hover': { bgcolor: '#3f46a5' },
               fontSize: '0.8rem',
               padding: '4px 12px',
-              minWidth: '80px'
+              width: '80px'
             }}
           >
             Add
           </Button>
-        </Box>
+        </Stack>
       </Box>
 
       {/* Your Skills Section */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" sx={{ 
+        <Typography variant="subtitle1" sx={{
           fontWeight: 'bold', 
           fontSize: '0.85rem',
           mb: 1
         }}>
           Your Skills
         </Typography>
-        <Box sx={{ 
-          minHeight: '40px', 
+        <Box sx={{
+          minHeight: '40px',
           border: skills.length ? 'none' : '1px dashed #ddd',
           borderRadius: '8px',
           padding: skills.length ? '0' : '8px',
@@ -138,7 +144,7 @@ const Skills = () => {
 
       {/* Languages Section */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1" sx={{ 
+        <Typography variant="subtitle1" sx={{
           fontWeight: 'bold', 
           fontSize: '0.85rem',
           mb: 1
@@ -157,20 +163,20 @@ const Skills = () => {
             })
           }
           InputProps={{ disableUnderline: true }}
-          sx={{ 
-            '& .MuiInput-input': { 
-              border: '1px solid #ddd', 
-              borderRadius: '8px', 
-              fontSize: '0.85rem', 
-              padding: '4px 8px' 
-            } 
+          sx={{
+            '& .MuiInput-input': {
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              fontSize: '0.85rem',
+              padding: '4px 8px'
+            }
           }}
         />
       </Box>
 
       {/* Certifications Section */}
       <Box>
-        <Typography variant="subtitle1" sx={{ 
+        <Typography variant="subtitle1" sx={{
           fontWeight: 'bold', 
           fontSize: '0.85rem',
           mb: 1
@@ -189,13 +195,13 @@ const Skills = () => {
             })
           }
           InputProps={{ disableUnderline: true }}
-          sx={{ 
-            '& .MuiInput-input': { 
-              border: '1px solid #ddd', 
-              borderRadius: '8px', 
-              fontSize: '0.85rem', 
-              padding: '4px 8px' 
-            } 
+          sx={{
+            '& .MuiInput-input': {
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              fontSize: '0.85rem',
+              padding: '4px 8px'
+            }
           }}
         />
       </Box>
@@ -204,3 +210,4 @@ const Skills = () => {
 };
 
 export default Skills;
+  

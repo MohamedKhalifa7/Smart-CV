@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, TextField } from '@mui/material';
+import { Box, Typography, Divider, TextField, useMediaQuery, useTheme } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -8,7 +8,8 @@ import { useCV } from '../../../context/CVcontext';
 const Personal = () => {
   const { formData, updateSection } = useCV();
   const personal = formData.personal || {};
-
+  const theme = useTheme();
+const isMobile=useMediaQuery(theme.breakpoints.down('md'))
   const handleChange = (e) => {
     updateSection('personal', {
       ...personal,
@@ -19,9 +20,9 @@ const Personal = () => {
   return (
     <Box sx={{ 
       width: '100%',
-      maxWidth: '800px',
+      maxWidth: isMobile?'90%':'800px',
       margin: '0 auto',
-      padding: '12px',
+        padding: '12px',
       fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif'
     }}>
       {/* Personal Information Section */}
