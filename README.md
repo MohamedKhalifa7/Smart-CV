@@ -1,1 +1,1 @@
-# SmarCV
+# SmartCV
