@@ -5,11 +5,13 @@ dotenv.config();
 // routers
 import authRouter from "./routes/authRouter";
 
+
 const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use("/auth", authRouter);
+
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
@@ -24,3 +26,4 @@ mongoose
 app.listen(port, () => {
   console.log(`Server is running at: http://localhost:${port}`);
 });
+

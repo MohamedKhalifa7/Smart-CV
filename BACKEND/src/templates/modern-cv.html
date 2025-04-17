@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{name}} - CV</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      background-color: #1e293b; /* dark blue-gray */
+      color: #fff;
+      width: 30%;
+      padding: 40px 25px;
+    }
+
+    .main {
+      width: 70%;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #1e293b;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 25px;
+    }
+
+    .small {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h1>{{name}}</h1>
+      <p class="small">{{email}}</p>
+
+      <div class="sidebar-section">
+        <div class="label">Skills</div>
+        <p class="small">{{skills}}</p>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="label">Languages</div>
+        <ul>
+          {{#each languages}}
+            <li class="small">{{name}} — {{degree}}</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="label">Certifications</div>
+        <ul>
+          {{#each certifications}}
+            <li class="small">{{name}} ({{company}}, {{years}})</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="section">
+        <h2>Experience</h2>
+        <ul>
+          {{#each experience}}
+            <li><strong>{{role}}</strong> at {{company}} ({{years}})</li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+        <p>{{education.university}} — {{education.degree}}</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
