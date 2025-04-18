@@ -20,7 +20,7 @@ export const aiWritingAssist = async (
       industry,
       experience
     );
-    res.status(200).json({ sectionName,generatedContent });
+    res.status(200).json({ sectionName, generatedContent });
   } catch (error) {
     next(error);
   }
