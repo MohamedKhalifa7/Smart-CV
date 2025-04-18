@@ -7,7 +7,6 @@ import cors from "cors";
 import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
 import aiWritingRouter from "./routes/AIWritingRouter";
-import cors from "cors";
 
 
 dotenv.config();
@@ -21,9 +20,7 @@ app.use(
   })
 );
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-}));
+
 app.use(express.json());
 // Session middleware
 app.use(
