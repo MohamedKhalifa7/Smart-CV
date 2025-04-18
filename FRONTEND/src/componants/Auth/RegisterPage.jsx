@@ -61,7 +61,7 @@ const RegisterPage = () => {
         formData
       );
       if (response.status === 201) {
-        setSuccess(true); // Show success message
+        setSuccess(true);
         setError("");
         setTimeout(() => navigate("/login"), 3000);
       }

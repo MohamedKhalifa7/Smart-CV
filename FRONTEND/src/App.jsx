@@ -11,7 +11,6 @@ import { theme } from "./componants/theme";
 import Home from "./componants/Home/Home";
 import LoginPage from "./componants/Auth/LoginPage";
 import RegisterPage from "./componants/Auth/RegisterPage";
-import AuthProvider from "./context/Auth/AuthProvider";
 import GoogleAuthSuccess from "./componants/Auth/GoogleAuthSuccess";
 
 const router = createBrowserRouter([
