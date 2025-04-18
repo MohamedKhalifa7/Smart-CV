@@ -1,5 +1,6 @@
 import { Router } from "express";
 import passport from "passport";
+import jwt from "jsonwebtoken";
 import "../config/passportConfig";
 
 const router = Router();
@@ -21,11 +22,36 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res) => {
-    res
-      .status(200)
-      .json({ message: "Google login successful", user: req.user });
+  passport.authenticate("google", {
+    failureRedirect: "http://localhost:5173/login",
+  }),
+  (req: any, res) => {
+    const user = req.user;
+    const userData = {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    };
+
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET_Key || "jwt_secret",
+      { expiresIn: "1d" }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.redirect(
+      `http://localhost:5173/auth/success?token=${token}&user=${encodeURIComponent(
+        JSON.stringify(userData)
+      )}`
+    );
   }
 );
 

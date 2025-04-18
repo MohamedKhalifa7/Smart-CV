@@ -102,7 +102,7 @@ const RegisterPage = () => {
             alt="Register Illustration"
             sx={{
               width: "100%",
-              maxHeight: "600px",
+              maxHeight: "550px",
               objectFit: "cover",
               borderRadius: 2,
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",

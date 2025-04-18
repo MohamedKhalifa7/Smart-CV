@@ -9,6 +9,7 @@ import {
   Grid,
   Alert,
 } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/Auth/AuthContext";
@@ -28,15 +29,23 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3001/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
       if (response.status === 200) {
-        login(response.data.user, response.data.token);
+        const { user, token } = response.data;
+        login(user, token);
         setSuccess(true);
         setError("");
-        setTimeout(() => navigate("/"), 3000);
+        navigate("/");
       }
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
@@ -79,7 +88,7 @@ const LoginPage = () => {
             alt="Login Illustration"
             sx={{
               width: "100%",
-              maxHeight: "600px",
+              maxHeight: "550px",
               objectFit: "cover",
               borderRadius: 2,
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
@@ -166,6 +175,7 @@ const LoginPage = () => {
                 variant="outlined"
                 color="secondary"
                 onClick={handleGoogleLogin}
+                startIcon={<GoogleIcon />}
                 sx={{
                   mt: 2,
                   padding: { xs: 1, sm: 1.5 },
