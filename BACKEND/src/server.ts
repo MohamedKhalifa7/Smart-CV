@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
+import cors from "cors";
 import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
 import aiWritingRouter from "./routes/AIWritingRouter";
@@ -10,6 +11,13 @@ import aiWritingRouter from "./routes/AIWritingRouter";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 // Session middleware
@@ -29,7 +37,6 @@ app.use(passport.session());
 app.use("/auth", authRouter);
 app.use("/api/ai", aiWritingRouter);
 
-
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
   console.error("MONGO_URI is not found");
@@ -43,4 +50,3 @@ mongoose
 app.listen(port, () => {
   console.log(`Server is running at: http://localhost:${port}`);
 });
-

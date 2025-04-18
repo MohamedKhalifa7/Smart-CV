@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { generateAIContent } from "../services/aiWritingService";
+import { generateAIContent } from "../services/AIWritingService";
 
 export const aiWritingAssist = async (
   req: Request,
@@ -20,7 +20,7 @@ export const aiWritingAssist = async (
       industry,
       experience
     );
-    res.status(200).json({ sectionName,generatedContent });
+    res.status(200).json({ sectionName, generatedContent });
   } catch (error) {
     next(error);
   }
