@@ -1,5 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import img1 from '../../../assets/1.jpg';
+import classic from '../../../assets/classic.jpg';
+import modern from '../../../assets/modern.jpg';
+import linkedin from '../../../assets/linkedin.jpg';
 export const cvTemplateAction= createAsyncThunk(
     'cvTemplate/getAll',
 
@@ -11,9 +14,9 @@ export const cvTemplateAction= createAsyncThunk(
     // }
 
     async(userid)=>{
-        return [{title:'template1', id:1,img: img1 ,pro:true, disc:'discription 1'},
-        {title:'template2', id:2, img:img1 ,pro:false,disc:'discription 2'},
-        {title:'template3', id:3, img:img1 ,pro:false,disc:'discription 3'},]
+        return [{title:'template1', id:1,img: classic ,pro:true, disc:'discription 1'},
+        {title:'template2', id:2, img:linkedin ,pro:false,disc:'discription 2'},
+        {title:'template3', id:3, img:modern ,pro:false,disc:'discription 3'},]
     }
 
 )

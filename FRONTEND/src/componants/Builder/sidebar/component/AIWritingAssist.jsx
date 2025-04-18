@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
-import { Box, IconButton, TextField } from '@mui/material';
+import { Box, CircularProgress, IconButton, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,7 +22,7 @@ function AIWritingAssistDialog(props) {
 
   const [formData, setFormData] = useState({
     jobTitle: '',
-    section: 'Professional Summary',
+    sectionName: 'Professional Summary',
     industry: '',
     experience: 'Entry Level (0-2 years)',
   });
@@ -32,6 +32,7 @@ function AIWritingAssistDialog(props) {
 
   const dispatch = useDispatch();
   const contentGenerated = useSelector((state) => state.generateContent.generateContent);
+  const loading = useSelector((state) => state.generateContent.loading);
 
   useEffect(() => {
     if (contentGenerated && contentGenerated.trim() !== '') {
@@ -47,7 +48,7 @@ function AIWritingAssistDialog(props) {
   const handleClose = () => {
     setFormData({
       jobTitle: '',
-      section: 'Professional Summary',
+      sectionName: 'Professional Summary',
       industry: '',
       experience: 'Entry Level (0-2 years)',
     });
@@ -67,6 +68,9 @@ function AIWritingAssistDialog(props) {
   const handleGenerate = () => {
     dispatch(generateContentAction(formData));
     setContentVisible(true);
+    console.log('Form data:', formData);
+    console.log('Generated content:', contentGenerated);
+    console.log('Loading:', loading);
   };
 
   const isFormValid = Object.values(formData).every((val) => val.trim() !== '');
@@ -114,8 +118,8 @@ function AIWritingAssistDialog(props) {
               <TextField
                 fullWidth
                 select
-                name="section"
-                value={formData.section}
+                name="sectionName"
+                value={formData.sectionName}
                 onChange={handleChange}
               >
                 {generatedSection.map((option) => (
@@ -164,13 +168,13 @@ function AIWritingAssistDialog(props) {
         </Box>
 
         <Button
-          disabled={!isFormValid}
+          disabled={!isFormValid || loading}
           onClick={handleGenerate}
           sx={{ width: '50%', mx: 'auto', alignSelf: 'center', mb: 3 }}
           variant="contained"
-          startIcon={<AutoFixHighIcon />}
+          startIcon={loading ? <CircularProgress size={20} /> : <AutoFixHighIcon />}
         >
-          Generate Content
+           {loading ? "Generating..." : "Generate Content"}
         </Button>
 
         {contentVisible && (

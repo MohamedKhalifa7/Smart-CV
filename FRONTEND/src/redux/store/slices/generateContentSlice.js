@@ -1,21 +1,61 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
+
+// export const generateContentAction = createAsyncThunk(
+//     'generateContent/getSection',
+//     // api from backend
+//     async (formData) => {
+//         const { jobTitle, industry, experience, sectionName } = formData;
+//         const response = await fetch('http://localhost:3001/api/ai/ai-writing-assist', {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({
+//             jobTitle,
+//             industry,
+//             experience,
+//             sectionName,
+//           }),
+//         });
+    
+//         if (!response.ok) {
+//           throw new Error('Failed to generate content');
+//         }
+    
+//         const data = await response.json();
+//         console.log("API response:", data);
+//         return data.generatedContent;
+//       }
+    
+
+//     // async (data) => {
+       
+//     //     return `${data.jobTitle}, ${data.industry}, ${data.experience}, ${data.section}, Generated content based on the provided parameters.`;
+//     // }
+
+
+// )
 
 export const generateContentAction = createAsyncThunk(
-    'generateContent/getSection',
-    // api from backend
-    // async ({jobTitle, industry, experience, section}) => {
-    //     const response = await fetch(`https://api.example.com/${jobTitle}/${industry}/${experience}/${section}`);
-    //     const data = await response.json();
-    //     return data;
-    // }
+    "generateContent",
+    async function fetchAIContent(data) {
+        try {
+          const response = await axios.post('http://localhost:3001/api/ai/ai-writing-assist', data);
+          console.log('Response from server:', response.data); 
+      
+          if (response.status === 200) {
 
-    async (data) => {
-       
-        return `${data.jobTitle}, ${data.industry}, ${data.experience}, ${data.section}, Generated content based on the provided parameters.`;
-    }
-
-
-)
+            console.log('Generated Content:', response.data.generatedContent);
+            return response.data.generatedContent;
+          }
+        } catch (error) {
+          console.error('Error fetching content:', error);
+        }
+      }
+      
+  );
+  
 
 export const generateContentSlice = createSlice({
     name: 'generateContent',
@@ -32,6 +72,7 @@ export const generateContentSlice = createSlice({
             })
             .addCase(generateContentAction.fulfilled, (state, action) => {
                 state.loading = false;
+                console.log("Fulfilled payload********:", action.payload);
                 state.generateContent = action.payload;
             })
             .addCase(generateContentAction.rejected, (state, action) => {

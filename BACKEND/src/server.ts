@@ -6,11 +6,16 @@ import passport from "passport";
 import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
 import aiWritingRouter from "./routes/AIWritingRouter";
+import cors from "cors";
+
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+}));
 app.use(express.json());
 // Session middleware
 app.use(
