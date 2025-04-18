@@ -3,11 +3,12 @@ import SaveIcon from '@mui/icons-material/Save';
 import DownloadIcon from '@mui/icons-material/Download';
 import { theme } from '../theme';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
-
+const navigate=useNavigate();
   return (
       <AppBar position="static" sx={{ 
         bgcolor: 'white',
@@ -27,6 +28,7 @@ const Header = () => {
           <Box sx={{ display: 'flex', flexDirection: 'column', width: isMobile ? '100%' : 'auto' }}>
             <Typography
               variant="h4"
+              onClick={()=>navigate('/')}
               component="div"
               sx={{
                 color: muiTheme.customStyles.gradientText,

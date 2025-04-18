@@ -9,6 +9,7 @@ import { theme } from './componants/theme'
 import { Routes, Route ,BrowserRouter} from 'react-router-dom';
 
 import { ThemeProvider } from '@mui/material'
+import Home from './componants/Home/Home'
 function App() {
 
   return (
@@ -20,8 +21,10 @@ function App() {
      <GetStarted></GetStarted> */}
       <BrowserRouter>
             <Routes>
-              <Route path="/" element={<GetStarted />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/getStart" element={<GetStarted />} />
               <Route path="/builder" element={<Builder />} />
+
             </Routes>
           </BrowserRouter>
      </ThemeProvider>
