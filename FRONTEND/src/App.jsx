@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store/store'
 import GetStarted from './componants/Home/getStart'
 import { theme } from './componants/theme'
+import { Routes, Route ,BrowserRouter} from 'react-router-dom';
 
 import { ThemeProvider } from '@mui/material'
 function App() {
@@ -15,8 +16,14 @@ function App() {
     <Provider store={store}>
     <CVProvider>
       <ThemeProvider theme={theme}>
-     {/* <Builder /> */}
-     <GetStarted></GetStarted>
+     {/* <Builder />
+     <GetStarted></GetStarted> */}
+      <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<GetStarted />} />
+              <Route path="/builder" element={<Builder />} />
+            </Routes>
+          </BrowserRouter>
      </ThemeProvider>
      </CVProvider>
     </Provider>
