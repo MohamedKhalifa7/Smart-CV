@@ -52,7 +52,7 @@ const Builder = () => {
           }}
         >
          <Box  sx={{
-          width:'25%',
+          width:isMobile ? '100%' : '25%',
           my:3,
           minWidth: '220px',
          }}>

@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogTitle, List } from '@mui/material';
+import { Box, Dialog, DialogTitle, Grid, List, useMediaQuery, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import React from 'react'
@@ -9,6 +9,10 @@ import {cvTemplateAction} from '../../../../redux/store/slices/cvTemplateSlice';
 
 function ChooseTemplateDialog(props) {
     const { onClose, open } = props;
+
+     const muiTheme = useTheme();
+      const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
+    
 
     const dispatch = useDispatch();
     const templates = useSelector((state) => state.cvTemplate.cvTemplate);
@@ -28,16 +32,21 @@ function ChooseTemplateDialog(props) {
                    onClick={handleClose}
                 ></CloseIcon>
             </Box>
-            <List>
+            <Grid container spacing={2} sx={{ padding: 2,  justifyContent: 'center'  }}>
                 {/* <TemplateCard></TemplateCard> */}
                 {templates.map((template, index) => (
+                    <Grid item xs={12} sm={6} md={4}  key={index}>
                     <TemplateCard
-                        key={index}
-                        template={template}
+                        sx={{minWidth:isMobile?'100%':'30%'}}
+                        title={template.title}
+                        img={template.img}
+                        disc={template.disc}
+                        pro={template.pro}
                     ></TemplateCard>
+                    </Grid>
                 ))}
 
-            </List>
+            </Grid>
         </Dialog>
     )
 }

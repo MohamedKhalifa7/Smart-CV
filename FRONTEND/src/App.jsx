@@ -15,8 +15,8 @@ function App() {
     <Provider store={store}>
     <CVProvider>
       <ThemeProvider theme={theme}>
-     {/* <Builder /> */}
-     <GetStarted></GetStarted>
+     <Builder />
+     {/* <GetStarted></GetStarted> */}
      </ThemeProvider>
      </CVProvider>
     </Provider>
