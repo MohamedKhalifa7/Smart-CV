@@ -12,7 +12,8 @@ export const cvTemplateAction= createAsyncThunk(
 
     async(userid)=>{
         return [{title:'template1', id:1,img: img1 ,pro:true, disc:'discription 1'},
-        {title:'template2', id:2, img:img1 ,pro:false,disc:'discription 1'},]
+        {title:'template2', id:2, img:img1 ,pro:false,disc:'discription 2'},
+        {title:'template3', id:3, img:img1 ,pro:false,disc:'discription 3'},]
     }
 
 )

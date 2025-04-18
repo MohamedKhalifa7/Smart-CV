@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#6a11cb',
+      main: 'rgba(106, 17, 203, 0.74)',
       light: '#8e2de2',
       dark: '#4a00e0',
     },
@@ -49,15 +49,7 @@ export const theme = createTheme({
     }
   },
   components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#ffffff',
-          color: '#2d2d2d',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        },
-      },
-    },
+   
     MuiButton: {
       styleOverrides: {
         root: {
@@ -110,12 +102,12 @@ export const theme = createTheme({
   },
   customStyles: {
     gradientText: {
-      background: 'linear-gradient(135deg, #6a11cb 10%,rgb(226, 45, 211) 100%)',
+      background: 'linear-gradient(to right, rgb(96, 10, 153) 20%, rgb(206, 88, 206) 60%, rgb(235, 150, 214) 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
       textFillColor: 'transparent',
-      display: 'inline-block'
+   
     }
   }
 });

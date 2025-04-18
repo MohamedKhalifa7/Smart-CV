@@ -35,10 +35,12 @@ function TemplateCard(props) {
             <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
                 <CheckCircleOutlineIcon sx={{ mr: 0.5 ,mt:0.5, color:"green"}} />
             </Typography>
-            <Typography variant='caption' 
-            sx={{background:'#6a11cb',px:'8px',py:'4px',mx: 2,mt:0.5, borderRadius:'5px',fontWeight: 'bold'}}>
-                Pro
-                </Typography>
+            {(pro) &&
+                <Typography variant='caption' 
+                sx={{background:'#6a11cb',px:'8px',py:'4px',mx: 2,mt:0.5, borderRadius:'5px',fontWeight: 'bold'}}>
+                    Pro
+                    </Typography>}
+        
           </Box>
 
           {/* Image */}
