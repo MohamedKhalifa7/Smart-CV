@@ -110,12 +110,12 @@ export const theme = createTheme({
   },
   customStyles: {
     gradientText: {
-      background: 'linear-gradient(135deg, #6a11cb 10%,rgb(226, 45, 211) 100%)',
+      background: 'linear-gradient(to right, rgb(96, 10, 153) 20%, rgb(206, 88, 206) 60%, rgb(235, 150, 150) 100%)',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       backgroundClip: 'text',
       textFillColor: 'transparent',
-      display: 'inline-block'
+   
     }
   }
 });

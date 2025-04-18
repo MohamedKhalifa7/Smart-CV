@@ -9,7 +9,6 @@ const Header = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
 
   return (
-    <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ 
         bgcolor: 'white',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -94,7 +93,6 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
-    </ThemeProvider>
   );
 };
 

@@ -39,7 +39,6 @@ const Builder = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default',overflowX: 'hidden'  }}>
       <Header></Header>
 
@@ -198,7 +197,6 @@ const Builder = () => {
           </Box>
         </Box>
       </Box>
-    </ThemeProvider>
   );
 };
 
