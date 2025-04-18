@@ -7,10 +7,9 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 const Footer = () => {
   return (
-    <Box sx={{ backgroundColor: "#f5f5f5", mt: 10, py: 6 }}>
+    <Box sx={{ backgroundColor: "#f5f5f5", mt: 10, py: 6}}>
       <Container maxWidth="lg">
-        <Grid container spacing={4}>
-         
+        <Grid container sx={{justifyContent:"center",flexDirection:{xs:"column",md:"row"},gap:"80px",alignItems:"center"}}>   
           <Grid>
             <Box display="flex" alignItems="center" mb={1}>
               <DescriptionIcon sx={{ color: "#7d25d2", mr: 1 }} />
