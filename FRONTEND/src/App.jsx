@@ -1,30 +1,35 @@
-import { useState } from 'react'
-import './App.css'
+import { ThemeProvider } from '@mui/material';
+import { Provider } from 'react-redux';
+import { CVProvider } from './context/CVcontext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Builder from './componants/Builder/Buldir'
-import { CVProvider } from './context/CVcontext'
-import { Provider } from 'react-redux'
-import store from './redux/store/store'
+
+import store from './redux/store/store';
 import Layout from './pages/layout';
+import GetStarted from './componants/Home/getStart';
+import Builder from './componants/Builder/Buldir';
+import { theme } from './componants/theme';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { path: '', element: <GetStarted /> },
+      { path: 'builder', element: <Builder /> }
+    ]
+  }
+]);
+
 function App() {
-
-  const routes = createBrowserRouter([
-    {
-      path:"",
-      element:<Layout/>
-    }
-  ])
-
   return (
-    <>
     <Provider store={store}>
-     <RouterProvider router={routes}/>
-    <CVProvider>
-     <Builder />
-     </CVProvider>
+      <CVProvider>
+        <ThemeProvider theme={theme}>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </CVProvider>
     </Provider>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;

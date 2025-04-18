@@ -9,7 +9,6 @@ const Header = () => {
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
 
   return (
-    <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ 
         bgcolor: 'white',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -67,11 +66,7 @@ const Header = () => {
               fullWidth={isMobile}
               sx={{
                 mr: isMobile ? 0 : 2,
-                color: 'primary.main',
-                borderColor: 'primary.main',
-                '&:hover': {
-                  bgcolor: 'rgba(106, 17, 203, 0.08)'
-                }
+              
               }}
               variant="outlined"
             >
@@ -80,13 +75,7 @@ const Header = () => {
             <Button
               startIcon={<DownloadIcon />}
               fullWidth={isMobile}
-              sx={{
-                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
-                color: 'white',
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)',
-                }
-              }}
+        
               variant="contained"
             >
               Download
@@ -94,7 +83,6 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
-    </ThemeProvider>
   );
 };
 
