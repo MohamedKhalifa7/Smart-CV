@@ -43,7 +43,7 @@ const GetStarted = () => {
 
                         <FileUploadOutlinedIcon sx={{ fontSize: "70px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" align="center">
+                            <Typography gutterBottom variant="h6" component="div" align="center">
                                 Upload Existing CV
                             </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
@@ -73,7 +73,7 @@ const GetStarted = () => {
 
                         <DescriptionOutlinedIcon sx={{ fontSize: "60px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" align="center">
+                            <Typography gutterBottom variant="h6" component="div" align="center">
                             Create New CV                            </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
                             Start from scratch with our guided CV builder and customizable templates                            </Typography>
@@ -100,7 +100,7 @@ const GetStarted = () => {
 
                         <SpellcheckOutlinedIcon sx={{ fontSize: "70px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" align="center">
+                            <Typography gutterBottom variant="h6" component="div" align="center">
                             Grammar Check                            </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
                             Check your CV for grammar, spelling, and style improvements                            </Typography>
