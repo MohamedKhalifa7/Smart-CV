@@ -23,7 +23,7 @@ const Footer = () => {
             <Box display="flex" gap={1}>
               <IconButton color="inherit"><TwitterIcon /></IconButton>
               <IconButton color="inherit"><LinkedInIcon /></IconButton>
-              <IconButton color="inherit"><GitHubIcon /></IconButton>
+              <IconButton href="https://github.com/MohamedKhalifa7/Smart-CV" color="inherit"><GitHubIcon /></IconButton>
             </Box>
           </Grid>
 

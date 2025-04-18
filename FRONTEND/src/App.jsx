@@ -2,7 +2,7 @@ import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import { CVProvider } from './context/CVcontext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import Error from './pages/Error';
 import store from './redux/store/store';
 import Layout from './pages/layout';
 import GetStarted from './componants/Home/getStart';
@@ -15,7 +15,8 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: '', element: <GetStarted /> },
-      { path: 'builder', element: <Builder /> }
+      { path: 'builder', element: <Builder /> },
+      { path: "*", element: <Error/> }
     ]
   }
 ]);
