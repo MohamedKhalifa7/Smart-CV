@@ -24,13 +24,13 @@ const HomePart1 = () => {
     <Box
       sx={{
         // width: "100vw",
-        overflowX: "hidden", // ✅ prevents scroll on root
+        overflowX: "hidden",
         bgcolor: "#fceff9",
       }}
     >
       <Box
         sx={{
-          // maxWidth: "1440px", // ✅ prevent overly wide content
+          // maxWidth: "1440px", 
           // margin: "0 auto",
           px: { xs: 2, md: 4 },
           py: 6,
