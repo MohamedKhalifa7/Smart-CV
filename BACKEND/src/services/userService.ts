@@ -39,7 +39,7 @@ export const register = async ({
 // Login
 export const login = async ({ email, password }: LoginParams) => {
   const user = await User.findOne({ email });
-  if (!user|| !user.password) {
+  if (!user || !user.password) {
     return {
       status: StatusCodes.UNAUTHORIZED,
       error: { message: "Invalid credentials" },

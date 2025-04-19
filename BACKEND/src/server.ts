@@ -7,7 +7,7 @@ import cors from "cors";
 import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
 import aiWritingRouter from "./routes/AIWritingRouter";
-
+import cvBuilderRouter from "./routes/cvBuilderRouter";
 
 dotenv.config();
 const app = express();
@@ -20,7 +20,6 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 // Session middleware
 app.use(
@@ -31,13 +30,14 @@ app.use(
   })
 );
 
-// Initialize Passport
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
 app.use("/auth", authRouter);
 app.use("/api/ai", aiWritingRouter);
+app.use("/cvbuilder", cvBuilderRouter);
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
