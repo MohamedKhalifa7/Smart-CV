@@ -6,7 +6,7 @@ import passport from "passport";
 import cors from "cors";
 import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
-import aiWritingRouter from "./routes/AIWritingRouter";
+import cvRouter from "./routes/cvRouter"
 
 
 dotenv.config();
@@ -37,7 +37,7 @@ app.use(passport.session());
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/api/ai", aiWritingRouter);
+app.use("/api/ai",cvRouter)
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
