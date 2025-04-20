@@ -6,17 +6,18 @@ import {
   editCV,
   removeCV,
 } from "../controllers/cvBuilderController";
+import { authenticateToken } from "../middleware/validateJWTMiddleware";
 
 const router = Router();
 
-router.post("/save", saveCV);
+router.post("/save", authenticateToken, saveCV);
 
-router.get("/user/:userId", getUserCVs);
+router.get("/user", authenticateToken, getUserCVs);
 
-router.get("/:cvId", getCV);
+router.get("/:cvId", authenticateToken, getCV);
 
-router.put("/:cvId", editCV);
+router.put("/:cvId", authenticateToken, editCV);
 
-router.delete("/:cvId", removeCV);
+router.delete("/:cvId", authenticateToken, removeCV);
 
 export default router;

@@ -1,33 +1,42 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-interface CustomRequest extends Request {
-  user?: any;
+
+export interface CustomRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+  };
 }
 
 export const authenticateToken = (
-  req: CustomRequest,
+  req: Request,
   res: Response,
   next: NextFunction
-) => {
-  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+): void => {
+  const customReq = req as CustomRequest;
+
+  const token = customReq.cookies?.token || customReq.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Access denied. No token provided." });
+    res.status(401).json({ message: "Access denied. No token provided." });
+    return;
   }
 
   try {
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET_Key || "jwt_secret"
-    );
+    ) as { userId: string; email: string };
 
-    // Fetch user from database
-    req.user = decoded;
+    customReq.user = {
+      userId: decoded.userId,
+      email: decoded.email,
+    };
+
     next();
   } catch (err) {
-    return res.status(403).json({ message: "Invalid or expired token." });
+    res.status(403).json({ message: "Invalid or expired token." });
+    return;
   }
 };
