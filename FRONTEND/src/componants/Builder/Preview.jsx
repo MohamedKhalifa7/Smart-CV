@@ -8,8 +8,8 @@ const Preview = () => {
         <h2>Preview Mode</h2>
         
         <h3>👤 Personal</h3>
-        <p>Name: {formData.personal.firstName} {formData.personal.lastName}</p>
-        <p>Email: {formData.personal.email}</p>
+        <p>Name: {formData.personalInfo.firstName} {formData.personalInfo.lastName}</p>
+        <p>Email: {formData.personalInfo.email}</p>
 
         {/* Displaying Experience */}
         <h3>💼 Experience</h3>
