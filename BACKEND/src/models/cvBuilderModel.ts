@@ -7,7 +7,7 @@ const cvSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
-    title: { type: String, required: true },
+    // title: { type: String, required: true },
     personalInfo: {
       firstName: { type: String, required: true },
       lastName: { type: String, required: true },
