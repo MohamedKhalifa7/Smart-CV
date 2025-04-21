@@ -4,7 +4,13 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
 });
 
-export async function aiResponse(cvText:string):Promise<{score:number;explanation:string}>{
+export async function aiResponse(cvText:string):Promise<{
+    score: number;
+    positiveFeedback: string[];
+    neutralFeedback: string[];
+    negativeFeedback: string[];
+    sectionsToImprove: { section: string; suggestion: string }[];
+ }>{
 
     const prompt = `you are an AI CV analayzer that checks if a resume is compatable with ATS (application tracking system)
     heres the candidates resume text:
@@ -13,15 +19,31 @@ export async function aiResponse(cvText:string):Promise<{score:number;explanatio
 
     Based on this, answer:
         1. Read the CV content below.
-        2. Is the CV ATS-compatible? Why or why not?
-        3. Identify any sections that need improvement (e.g. "Summary", "Experience", "Skills").
-        4. Mention formatting, keywords, and structure tips if relevant.
-        5. Give it a score from 0 to 100 for ATS compatibility.
-        Return the answer in bullets and each bullet store it in JSON format like this for example (DO NOT WRAP IT IN MARKDOWN!) :
-            {
+       Instructions:
+1. Provide 3 types of feedback: "positive", "neutral", and "negative".
+2. Format the feedback like this:
+
+{
   "score": 84,
-  "explanation": "• Uses clear section headers\n• Good keyword usage\n• Missing summary section\n• Dates are inconsistent\n•etc..."
+  "positiveFeedback": [
+    "Professional summary is well-written and concise",
+    "Good use of action verbs in experience descriptions"
+  ],
+  "neutralFeedback": [
+    "Work experience section could include more quantifiable achievements",
+    "Consider adding more industry-specific keywords"
+  ],
+  "negativeFeedback": [
+    "Education section is missing graduation dates",
+    "Contact information is incomplete"
+  ],
+  "sectionsToImprove": [
+    { "section": "Education", "suggestion": "Include graduation dates for each degree" },
+    { "section": "Contact", "suggestion": "Make sure email and phone number are listed clearly" }
+  ]
 }
+
+
 `;
 
     const response = await openai.chat.completions.create({
@@ -37,8 +59,11 @@ export async function aiResponse(cvText:string):Promise<{score:number;explanatio
     
         const parsed = JSON.parse(resultText);
         return {
-          score: parsed.score,
-          explanation: parsed.explanation
-        };
+            score: parsed.score,
+            positiveFeedback: parsed.positiveFeedback || [],
+            neutralFeedback: parsed.neutralFeedback || [],
+            negativeFeedback: parsed.negativeFeedback || [],
+            sectionsToImprove: parsed.sectionsToImprove || []
+        }
       
 }
