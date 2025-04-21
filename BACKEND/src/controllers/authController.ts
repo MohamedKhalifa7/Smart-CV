@@ -1,5 +1,7 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import * as userService from "../services/userService";
+import User from "../models/userModel";
+import { StatusCodes } from "http-status-codes";
 
 export const register = async (req: Request, res: Response) => {
   const result = await userService.register(req.body);
@@ -26,4 +28,38 @@ export const logout = (req: Request, res: Response) => {
     httpOnly: true,
   });
   res.status(200).json({ message: "Logged out successfully" });
+};
+
+export const verifyOTP = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { email, otp } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
+      return;
+    }
+
+    if (user.otp !== otp) {
+      res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid OTP" });
+      return;
+    }
+
+    if (user.otpExpires && user.otpExpires < new Date()) {
+      res.status(StatusCodes.BAD_REQUEST).json({ message: "OTP has expired" });
+      return;
+    }
+
+    user.otp = undefined;
+    user.otpExpires = undefined;
+    await user.save();
+
+    res.status(StatusCodes.OK).json({ message: "Email verified successfully" });
+  } catch (error) {
+    next(error);
+  }
 };

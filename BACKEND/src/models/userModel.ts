@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema(
       default: "normal user",
     },
     googleId: { type: String },
+    otp: { type: String },
+    otpExpires: { type: Date },
   },
   { timestamps: true }
 );

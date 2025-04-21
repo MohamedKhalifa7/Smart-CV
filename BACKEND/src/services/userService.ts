@@ -3,6 +3,21 @@ import User from "../models/userModel";
 import { RegisterParams, LoginParams } from "../types/user.types";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+
+const generateOTP = () =>
+  Math.floor(100000 + Math.random() * 900000).toString();
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
 
 // Register
 export const register = async ({
@@ -12,28 +27,64 @@ export const register = async ({
   password,
   role,
 }: RegisterParams) => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  const user = await User.create({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-    role,
-  });
+    const otp = generateOTP();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
-  return {
-    status: StatusCodes.CREATED,
-    message: "Registration successful",
-    user: {
-      id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      role: user.role,
-    },
-  };
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      role,
+      otp,
+      otpExpires,
+    });
+
+    try {
+      await transporter.sendMail({
+        from: `"Smart CV" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: "Email Verification - Your OTP Code",
+        html: `
+          <h2>Welcome to Smart CV!</h2>
+          <p>Your verification code is: <strong>${otp}</strong></p>
+          <p>This code will expire in 10 minutes.</p>
+          <p>If you didn't request this code, please ignore this email.</p>
+        `,
+      });
+      console.log("Verification email sent successfully");
+    } catch (emailError) {
+      console.error("Email sending error details:", emailError);
+      await User.findByIdAndDelete(user._id);
+      return {
+        status: StatusCodes.INTERNAL_SERVER_ERROR,
+        error: {
+          message: "Failed to send verification email. Please try again.",
+        },
+      };
+    }
+
+    return {
+      status: StatusCodes.CREATED,
+      message: "Registration successful. Check your email for the OTP.",
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+      },
+    };
+  } catch (error) {
+    return {
+      status: StatusCodes.BAD_REQUEST,
+      error: { message: "Registration failed" },
+    };
+  }
 };
 
 // Login
@@ -43,6 +94,13 @@ export const login = async ({ email, password }: LoginParams) => {
     return {
       status: StatusCodes.UNAUTHORIZED,
       error: { message: "Invalid credentials" },
+    };
+  }
+
+  if (user.otp) {
+    return {
+      status: StatusCodes.UNAUTHORIZED,
+      error: { message: "Please verify your email first" },
     };
   }
 
