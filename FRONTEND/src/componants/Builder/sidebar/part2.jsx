@@ -96,7 +96,7 @@ const Part2 = () => {
                         onClick={() => handleDelete(cv._id)}
                         sx={{ minWidth: 'auto', px: 1 }}
                     >
-                        <DeleteIcon /> {/* إضافة أيقونة الحذف */}
+                        <DeleteIcon />
                     </Button>
                 </Box>
             ))}
