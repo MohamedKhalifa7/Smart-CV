@@ -7,12 +7,12 @@ import { useCV } from '../../../context/CVcontext';
 
 const Personal = () => {
   const { formData, updateSection } = useCV();
-  const personal = formData.personal || {};
+  const personalInfo = formData.personalInfo|| {};
   const theme = useTheme();
 const isMobile=useMediaQuery(theme.breakpoints.down('md'))
   const handleChange = (e) => {
-    updateSection('personal', {
-      ...personal,
+    updateSection('personalInfo', {
+      ...personalInfo,
       [e.target.name]: e.target.value,
     });
   };
@@ -51,7 +51,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="firstName"
-            value={personal.firstName || ''}
+            value={personalInfo.firstName || ''}
             onChange={handleChange}
             placeholder="John"
             InputProps={{ disableUnderline: true }}
@@ -80,7 +80,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="lastName"
-            value={personal.lastName || ''}
+            value={personalInfo.lastName || ''}
             onChange={handleChange}
             placeholder="Smith"
             InputProps={{ disableUnderline: true }}
@@ -113,7 +113,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="professionalTitle"
-            value={personal.professionalTitle || ''}
+            value={personalInfo.professionalTitle || ''}
             onChange={handleChange}
             placeholder="Marketing Manager"
             InputProps={{ disableUnderline: true }}
@@ -146,7 +146,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="email"
-            value={personal.email || ''}
+            value={personalInfo.email || ''}
             onChange={handleChange}
             placeholder="john.smith@example.com"
             InputProps={{ disableUnderline: true }}
@@ -179,7 +179,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="phone"
-            value={personal.phone || ''}
+            value={personalInfo.phone || ''}
             onChange={handleChange}
             placeholder="+1 (555) 123-4567"
             InputProps={{ disableUnderline: true }}
@@ -212,7 +212,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             fullWidth
             variant="standard"
             name="location"
-            value={personal.location || ''}
+            value={personalInfo.location || ''}
             onChange={handleChange}
             placeholder="New York, NY"
             InputProps={{ disableUnderline: true }}
@@ -245,7 +245,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
           minRows={2}
           variant="outlined"
           name="summary"
-          value={personal.summary || ''}
+          value={personalInfo.summary || ''}
           onChange={handleChange}
           placeholder="Write your professional summary here..."
           sx={{ 

@@ -63,7 +63,7 @@ const RegisterPage = () => {
       if (response.status === 201) {
         setSuccess(true);
         setError("");
-        setTimeout(() => navigate("/login"), 3000);
+         setTimeout(() => navigate("/"), 3000);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
