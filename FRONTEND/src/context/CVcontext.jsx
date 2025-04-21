@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, useContext, useState } from 'react';
 
 const CVContext = createContext();
@@ -5,15 +6,17 @@ const CVContext = createContext();
 export const useCV = () => useContext(CVContext);
 
 export const CVProvider = ({ children }) => {
+  const [myCvs, setMyCvs] = useState([]);
+
   const [formData, setFormData] = useState({
-    personal: {
+    personalInfo: {
       firstName: '',
       lastName: '',
       email: '',
       phone: '',
       location: '',
       professionalTitle: '',
-      summary: ''
+      ProfessionalSummary: ''
     },
     experience: [
       {
@@ -125,6 +128,17 @@ export const CVProvider = ({ children }) => {
       };
     });
   };
+  const fetchUserCVs = async () => {
+    try {
+        const response = await axios.get('http://localhost:3001/cvbuilder/user', { withCredentials: true });
+        console.log('Fetched data:', response.data); 
+        return response.data.cvs || [];
+    } catch (error) {
+        console.error('Error fetching CVs:', error);
+        return []; 
+    }
+};
+
 
   return (
     <CVContext.Provider value={{ 
@@ -132,7 +146,7 @@ export const CVProvider = ({ children }) => {
       updateSection,
       updateArraySection,
       addArrayItem,
-      removeArrayItem
+      removeArrayItem,fetchUserCVs
     }}>
       {children}
     </CVContext.Provider>

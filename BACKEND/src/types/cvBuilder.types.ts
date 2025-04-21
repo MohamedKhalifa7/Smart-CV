@@ -1,13 +1,25 @@
 export interface CVParams {
-  title: string;
+  // title: string;
   personalInfo: {
     firstName: string;
     lastName: string;
     email: string;
     phone: string;
-    address: string;
-    summary: string;
+    location: string;
+    professionalTitle: string;  
+    ProfessionalSummary: string;
   };
+ 
+  experience?: [
+    {
+      jobTitle?: string;
+      company?: string;
+      location?: string;
+      startDate?: string;
+      endDate?: string;
+      description?: string;
+    }
+  ];
   education: [
     {
       institution: string;
@@ -18,15 +30,9 @@ export interface CVParams {
       description: string;
     }
   ];
-  experience?: [
-    {
-      company?: string;
-      position?: string;
-      location?: string;
-      startDate?: string;
-      endDate?: string;
-      description?: string;
-    }
-  ];
-  skills: string[];
+  skills:{
+    skills: string[];
+    languages?: string;
+    certifications?: string;
+  };
 }

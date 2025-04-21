@@ -8,7 +8,7 @@ import "./config/passportConfig";
 import authRouter from "./routes/authRouter";
 import cvRouter from "./routes/cvRouter";
 import cvBuilderRouter from "./routes/cvBuilderRouter";
-
+import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
@@ -19,6 +19,8 @@ app.use(
     credentials: true,
   })
 );
+//to get cookies from the frontend
+app.use(cookieParser());
 
 app.use(express.json());
 // Session middleware

@@ -13,6 +13,7 @@ import SpellcheckOutlinedIcon from '@mui/icons-material/SpellcheckOutlined';
 
 import { theme } from "../theme"
 import { useNavigate } from 'react-router-dom';
+import CVAnalysisResualt from "../CVAnalysis/CVAnalysisResualt";
 
 const GetStarted = () => {
     const muiTheme = useTheme();
@@ -121,6 +122,10 @@ const GetStarted = () => {
 
             </Box>
 
+<Box sx={{m:6, border:`2px solid ${theme.palette.background.gray}`, borderRadius:"10px", p:3}}>
+<CVAnalysisResualt ></CVAnalysisResualt>
+
+</Box>
         </>
     )
 }
