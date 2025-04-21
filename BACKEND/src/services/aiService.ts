@@ -18,33 +18,31 @@ export async function aiResponse(cvText:string):Promise<{
     ${cvText}
 
     Based on this, answer:
-        1. Read the CV content below.
+        Read the CV content below.
        Instructions:
-1. Provide 3 types of feedback: "positive", "neutral", and "negative".
-2. Format the feedback like this:
+          1. Provide 3 types of feedback: "positive", "neutral", and "negative".
+          2. Format the feedback like this:
 
-{
-  "score": 84,
-  "positiveFeedback": [
-    "Professional summary is well-written and concise",
-    "Good use of action verbs in experience descriptions"
-  ],
-  "neutralFeedback": [
-    "Work experience section could include more quantifiable achievements",
-    "Consider adding more industry-specific keywords"
-  ],
-  "negativeFeedback": [
-    "Education section is missing graduation dates",
-    "Contact information is incomplete"
-  ],
-  "sectionsToImprove": [
-    { "section": "Education", "suggestion": "Include graduation dates for each degree" },
-    { "section": "Contact", "suggestion": "Make sure email and phone number are listed clearly" }
-  ]
-}
-
-
-`;
+      {
+        "score": 84,
+        "positiveFeedback": [
+          "Professional summary is well-written and concise",
+          "Good use of action verbs in experience descriptions"
+        ],
+        "neutralFeedback": [
+          "Work experience section could include more quantifiable achievements",
+          "Consider adding more industry-specific keywords"
+        ],
+        "negativeFeedback": [
+          "Education section is missing graduation dates",
+          "Contact information is incomplete"
+        ],
+        "sectionsToImprove": [
+          { "section": "Education", "suggestion": "Include graduation dates for each degree" },
+          { "section": "Contact", "suggestion": "Make sure email and phone number are listed clearly" }
+        ]
+      }
+    `;
 
     const response = await openai.chat.completions.create({
         model:"gpt-4o-mini",
