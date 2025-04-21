@@ -20,19 +20,20 @@ function Header() {
             <Typography variant='h5' sx={{my:1}}>
                 CV Analysis Results
             </Typography>
+
             <Box sx={{ display: "flex", justifyContent: "space-between", }}>
-          {loading && 
-          <Box>
+          
+         
             <Typography variant='h6' sx={{fontSize:18,my:2}}>
                 CV Score
             </Typography>
             <Typography variant='h6' sx={{fontSize:18}}>
-                {score}/100
+                {50}/100
             </Typography>
+
             </Box>
-}
-            <BorderLinearProgress variant="determinate" value={score} />
-            </Box>
+            <BorderLinearProgress variant="determinate" value={50} />
+
             <Typography variant='body1' sx={{my:1,mb:4}}  >
                 feedback according to the CV score
             </Typography>

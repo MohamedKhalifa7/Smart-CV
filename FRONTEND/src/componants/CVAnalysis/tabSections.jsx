@@ -1,6 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
+import Feedback from './feedback';
+import Suggestion from './suggestion';
+import AtsCheck from './atsCheck';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,17 +71,17 @@ export default function FullWidthTabs() {
       >
         <Tab label="Feedback" {...a11yProps(0)} sx={tabStyle} />
         <Tab label="Suggestions" {...a11yProps(1)} sx={tabStyle} />
-        <Tab label="Keywords" {...a11yProps(2)} sx={tabStyle} />
+        <Tab label="ATS Check" {...a11yProps(2)} sx={tabStyle} />
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        Feedback Content
+        <Feedback />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Suggestions Content
+        <Suggestion />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Keywords Content
+        <AtsCheck />
       </TabPanel>
     </Box>
   );
