@@ -21,12 +21,12 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "builder", element: <Builder /> },
       { path: "getStart", element: <GetStarted /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "*", element: <Error /> },
     ],
   },
+  { path: "register", element: <RegisterPage /> },
+  { path: "login", element: <LoginPage /> },
 ]);
 
 function App() {

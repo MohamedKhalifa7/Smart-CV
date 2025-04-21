@@ -7,18 +7,9 @@ import {
   Divider,
   useMediaQuery,
   useTheme,
-  Drawer,
-  IconButton,
-  AppBar,
-  Toolbar,
-  Typography,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { ThemeProvider } from '@mui/material/styles';
-import { theme } from '../theme';
-
 import Personal from './Edit/Personal';
 import Experience from './Edit/Experience';
 import Education from './Edit/Education';

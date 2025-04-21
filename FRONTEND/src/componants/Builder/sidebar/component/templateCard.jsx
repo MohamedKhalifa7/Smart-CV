@@ -13,44 +13,58 @@ function TemplateCard(props) {
 
   const { title, img , disc, pro} = props;
   return (
-    <Card sx={{ maxWidth: 200 , border:'solid #6a11cb 3px'}} >
-      
-        <Box sx={{ position: 'relative' }}>
-          {/* Overlay Content */}
-          <Box
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              color: 'white',
-              px: 1,
-              py: 0.5,
-              zIndex: 1,
-                display: 'flex',
-                justifyContent: 'space-between',
-              
-            }}
-          >
-            <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-                <CheckCircleOutlineIcon sx={{ mr: 0.5 ,mt:0.5, color:"green"}} />
-            </Typography>
-            {(pro) &&
-                <Typography variant='caption' 
-                sx={{background:'#6a11cb',px:'8px',py:'4px',mx: 2,mt:0.5, borderRadius:'5px',fontWeight: 'bold'}}>
-                    Pro
-                    </Typography>}
-        
-          </Box>
+    <Card sx={{ maxWidth: 200, border: 'solid #6a11cb 3px' }}>
+  <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        color: 'white',
+        px: 1,
+        py: 0.5,
+        zIndex: 1,
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
+        <CheckCircleOutlineIcon sx={{ mr: 0.5, mt: 0.5, color: 'green' }} />
+      </Typography>
+      {pro && (
+        <Typography
+          variant="caption"
+          sx={{
+            background: '#6a11cb',
+            px: '8px',
+            py: '4px',
+            mx: 2,
+            mt: 0.5,
+            borderRadius: '5px',
+            fontWeight: 'bold',
+          }}
+        >
+          Pro
+        </Typography>
+      )}
+    </Box>
 
-          {/* Image */}
-          <CardMedia
-            component="img"
-            height="300"
-            image={img}
-            alt="template image"
-          />
-        </Box>
+    {/* Fixed-size Image */}
+    <CardMedia
+      component="img"
+      image={img}
+      alt="template image"
+      sx={{
+        height: 350,
+        width:210,
+        // width: '100%',
+        // objectFit: 'cover',
+      }}
+    />
+  </Box>
+
+       
 
         {/* Text Below Image */}
         <CardContent>

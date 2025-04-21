@@ -32,7 +32,7 @@ const Footer = () => {
               Features
             </Typography>
             <Box sx={{display:"flex", flexDirection:"column", gap:"8px"}}>
-            <Link href="#" color="text.secondary" underline="none" display="block">CV Builder</Link>
+            <Link href="/getStart" color="text.secondary" underline="none" display="block">CV Builder</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">CV Analyzer</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">Templates</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">Pro Features</Link>

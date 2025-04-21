@@ -10,10 +10,10 @@ const pages = [
 ];
 
 const userMenuItems = [
-  { label: "Profile", onClick: () => console.log("Profile clicked") },
-  { label: "Settings", onClick: () => console.log("Settings clicked") },
-  { label: "Logout", onClick: () => console.log("Logout clicked") }
-];
+  { label: "Profile",href:"profile"},
+  { label: "Settings",href:"settings"},
+  { label: "Logout"},
+]
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -99,9 +99,11 @@ function Navbar() {
                 {page.label}
               </Link>
             ))}
+              <Link href="/getStart">
             <Button sx={{ background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)', color: "white", fontSize: "12px" }}>
-              Get Started
+            Get Started
             </Button>
+              </Link>
           </Box>
           {/*User Avatar*/}
           <Box sx={{ flexGrow: 0,marginLeft:"20px" }}>

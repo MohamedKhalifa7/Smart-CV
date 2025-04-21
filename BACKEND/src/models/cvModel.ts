@@ -63,6 +63,10 @@ const CVSchema =new mongoose.Schema({
       years: Date,
     },
   ],
+  extractedText: String,
+  improvedText: String,   
+  improvementExplanation: String,
+  isImprovedAccepted: Boolean,
   createdAt: { type: Date, default: Date.now },
 });
 
