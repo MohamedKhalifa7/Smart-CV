@@ -7,6 +7,7 @@ export const useCV = () => useContext(CVContext);
 
 export const CVProvider = ({ children }) => {
   const [myCvs, setMyCvs] = useState([]);
+  const [personalFormValid, setPersonalFormValid] = useState({});
 
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -128,6 +129,21 @@ export const CVProvider = ({ children }) => {
       };
     });
   };
+  const validatePersonalInfo = () => {
+    const errors = {};
+    const { firstName, lastName, email ,professionalTitle} = formData.personalInfo || {};
+  
+    if (!firstName) errors.firstName = 'First Name is required';
+    if (!lastName) errors.lastName = 'Last Name is required';
+    if (!email) errors.email = 'Email is required';
+    if (!professionalTitle) errors.professionalTitle = 'Professional Title is required';
+  
+    setPersonalFormValid(errors);
+    return Object.keys(errors).length === 0;
+  };
+  
+  
+  
   const fetchUserCVs = async () => {
     try {
         const response = await axios.get('http://localhost:3001/cvbuilder/user', { withCredentials: true });
@@ -146,7 +162,7 @@ export const CVProvider = ({ children }) => {
       updateSection,
       updateArraySection,
       addArrayItem,
-      removeArrayItem,fetchUserCVs
+      removeArrayItem,fetchUserCVs,personalFormValid,validatePersonalInfo
     }}>
       {children}
     </CVContext.Provider>

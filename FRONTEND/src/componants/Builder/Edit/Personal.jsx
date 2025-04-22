@@ -4,19 +4,27 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import { useCV } from '../../../context/CVcontext';
+import { useEffect, useState } from 'react';
 
 const Personal = () => {
-  const { formData, updateSection } = useCV();
+  const { formData, updateSection,personalFormValid ,validatePersonalInfo} = useCV();
   const personalInfo = formData.personalInfo|| {};
   const theme = useTheme();
 const isMobile=useMediaQuery(theme.breakpoints.down('md'))
+
   const handleChange = (e) => {
-    updateSection('personalInfo', {
+
+    const updatedInfo = {
       ...personalInfo,
       [e.target.name]: e.target.value,
-    });
-  };
+    };
 
+    updateSection('personalInfo', updatedInfo);
+
+    validatePersonalInfo(updatedInfo);
+   
+  };
+ 
   return (
     <Box sx={{ 
       width: '100%',
@@ -54,7 +62,10 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             value={personalInfo.firstName || ''}
             onChange={handleChange}
             placeholder="John"
-            InputProps={{ disableUnderline: true }}
+            required
+            error={Boolean(personalFormValid.firstName)}
+  helperText={personalFormValid.firstName}
+           InputProps={{ disableUnderline: true }}
             sx={{ 
               '& .MuiInput-input': { 
                 border: '1px solid #ddd',
@@ -82,6 +93,9 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             name="lastName"
             value={personalInfo.lastName || ''}
             onChange={handleChange}
+            
+            error={Boolean(personalFormValid.lastName)}
+            helperText={personalFormValid.lastName}
             placeholder="Smith"
             InputProps={{ disableUnderline: true }}
             sx={{ 
@@ -115,6 +129,9 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             name="professionalTitle"
             value={personalInfo.professionalTitle || ''}
             onChange={handleChange}
+            error={Boolean(personalFormValid.professionalTitle)}
+            helperText={personalFormValid.professionalTitle}
+           
             placeholder="Marketing Manager"
             InputProps={{ disableUnderline: true }}
             sx={{ 
@@ -148,6 +165,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             name="email"
             value={personalInfo.email || ''}
             onChange={handleChange}
+            error={Boolean(personalFormValid.email)}
+            helperText={personalFormValid.email}
             placeholder="john.smith@example.com"
             InputProps={{ disableUnderline: true }}
             sx={{ 

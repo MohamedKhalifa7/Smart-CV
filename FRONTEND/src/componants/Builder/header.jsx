@@ -11,13 +11,21 @@ import { useState } from 'react';
 const Header = () => {
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
-  const { formData } = useCV();
   const navigate = useNavigate();
-  const {fetchUserCVs}=useCV();
+  const {formData,fetchUserCVs,validatePersonalInfo}=useCV();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
   const handelSave = async () => {
+    const isValid = validatePersonalInfo();
+    if (!isValid) {
+      setError('Please fill in all required fields.');
+      setTimeout(() => {
+       setError('');
+      }, 3000);
+      setSuccess(false);
+      return;
+    }
    try {
       const response = await axios.post('http://localhost:3001/cvbuilder/save', formData, {
         withCredentials: true,
@@ -31,6 +39,7 @@ const Header = () => {
       }, 3000);  // Hide success alert after 3 seconds
     } catch (error) {
       setError('Error saving CV');
+
       setSuccess(false);
     }
   };
