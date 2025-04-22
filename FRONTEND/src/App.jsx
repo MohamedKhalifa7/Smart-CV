@@ -12,6 +12,7 @@ import Home from "./componants/Home/Home";
 import LoginPage from "./componants/Auth/LoginPage";
 import RegisterPage from "./componants/Auth/RegisterPage";
 import GoogleAuthSuccess from "./componants/Auth/GoogleAuthSuccess";
+import VerifyOTP from "./componants/Auth/VerifyOTP";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
   },
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
+  { path: "verify-otp", element: <VerifyOTP /> },
 ]);
 
 function App() {

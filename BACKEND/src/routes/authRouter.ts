@@ -4,7 +4,13 @@ import jwt from "jsonwebtoken";
 import "../config/passportConfig";
 
 const router = Router();
-import { register, login, logout } from "../controllers/authController";
+import {
+  register,
+  login,
+  logout,
+  verifyOTP,
+  resendOTP,
+} from "../controllers/authController";
 import {
   validateRegisterInput,
   validateLoginInput,
@@ -13,8 +19,11 @@ import {
 router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
 router.post("/logout", logout);
+router.post("/verify-otp", verifyOTP);
+router.post("/resend-otp", resendOTP);
 
 // Google OAuth routes
+
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
