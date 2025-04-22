@@ -63,3 +63,9 @@ export const verifyOTP = async (
     next(error);
   }
 };
+
+export const resendOTP = async (req: Request, res: Response) => {
+  const { email } = req.body;
+  const result = await userService.resendOTP(email);
+  res.status(result.status).json(result);
+};

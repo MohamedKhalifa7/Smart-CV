@@ -9,6 +9,7 @@ import {
   login,
   logout,
   verifyOTP,
+  resendOTP,
 } from "../controllers/authController";
 import {
   validateRegisterInput,
@@ -19,6 +20,7 @@ router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
 router.post("/logout", logout);
 router.post("/verify-otp", verifyOTP);
+router.post("/resend-otp", resendOTP);
 
 // Google OAuth routes
 

@@ -10,63 +10,60 @@ import {
   Alert,
 } from "@mui/material";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const RegisterPage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState({});
+const VerifyOTP = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const [email] = useState(location.state?.email || "");
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isResending, setIsResending] = useState(false);
 
-  const validateFields = () => {
-    const errors = {};
+  const handleResendOtp = async () => {
+    setIsResending(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/auth/resend-otp",
+        { email }
+      );
 
-    if (!firstName) {
-      errors.firstName = "First name is required";
+      if (response.status === 200) {
+        setSuccess("New OTP has been sent to your email!");
+        setError("");
+        setTimeout(() => setSuccess(""), 5000);
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to resend OTP");
+      setSuccess("");
+    } finally {
+      setIsResending(false);
     }
-
-    if (!lastName) {
-      errors.lastName = "Last name is required";
-    }
-
-    if (!email) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.email = "Invalid email format";
-    }
-
-    if (!password) {
-      errors.password = "Password is required";
-    } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
-    }
-
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = async () => {
-    if (!validateFields()) {
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      setError("OTP is required");
       return;
     }
 
-    const formData = { firstName, lastName, email, password };
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/register",
-        formData
+        "http://localhost:3001/auth/verify-otp",
+        {
+          email,
+          otp,
+        }
       );
-      if (response.status === 201) {
+
+      if (response.status === 200) {
         setSuccess(true);
         setError("");
-        setTimeout(() => navigate("/verify-otp", { state: { email } }), 3000);
+        setTimeout(() => navigate("/login"), 3000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.response?.data?.message || "OTP verification failed");
       setSuccess(false);
     }
   };
@@ -99,7 +96,7 @@ const RegisterPage = () => {
           <Box
             component="img"
             src="Images/1.jpg"
-            alt="Register Illustration"
+            alt="OTP Verification Illustration"
             sx={{
               width: "100%",
               maxHeight: "550px",
@@ -130,12 +127,12 @@ const RegisterPage = () => {
                 fontSize: { xs: "1.5rem", sm: "2rem" },
               }}
             >
-              Register New Account
+              Verify Your Email
             </Typography>
 
             {success && (
               <Alert severity="success" sx={{ mb: 2 }}>
-                Registration successful! Redirecting...
+                OTP verified successfully! Redirecting to login...
               </Alert>
             )}
 
@@ -154,50 +151,26 @@ const RegisterPage = () => {
               }}
             >
               <TextField
-                label="First Name"
-                variant="outlined"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                error={!!fieldErrors.firstName}
-                helperText={fieldErrors.firstName}
-                required
-                fullWidth
-              />
-              <TextField
-                label="Last Name"
-                variant="outlined"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                error={!!fieldErrors.lastName}
-                helperText={fieldErrors.lastName}
-                fullWidth
-              />
-              <TextField
                 label="Email"
                 type="email"
                 variant="outlined"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={!!fieldErrors.email}
-                helperText={fieldErrors.email}
-                required
+                disabled
                 fullWidth
               />
               <TextField
-                label="Password"
-                type="password"
+                label="OTP"
+                type="text"
                 variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={!!fieldErrors.password}
-                helperText={fieldErrors.password}
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
                 required
                 fullWidth
               />
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSubmit}
+                onClick={handleVerifyOtp}
                 sx={{
                   mt: { xs: 1, sm: 2 },
                   padding: { xs: 1, sm: 1.5 },
@@ -205,7 +178,7 @@ const RegisterPage = () => {
                   fontSize: { xs: "0.9rem", sm: "1rem" },
                 }}
               >
-                Register
+                Verify OTP
               </Button>
 
               <Typography
@@ -215,17 +188,19 @@ const RegisterPage = () => {
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
                 }}
               >
-                Already a member?{" "}
-                <Link
-                  to="/login"
-                  style={{
-                    color: "#1976d2",
-                    textDecoration: "none",
+                Didn't receive the OTP?{" "}
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={handleResendOtp}
+                  disabled={isResending}
+                  sx={{
+                    textTransform: "none",
                     fontWeight: "bold",
                   }}
                 >
-                  Login
-                </Link>
+                  {isResending ? "Sending..." : "Resend OTP"}
+                </Button>
               </Typography>
             </FormControl>
           </Box>
@@ -235,4 +210,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default VerifyOTP;

@@ -127,3 +127,52 @@ export const login = async ({ email, password }: LoginParams) => {
     token,
   };
 };
+
+export const resendOTP = async (email: string) => {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return {
+        status: StatusCodes.NOT_FOUND,
+        error: { message: "User not found" },
+      };
+    }
+
+    const otp = generateOTP();
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+    user.otp = otp;
+    user.otpExpires = otpExpires;
+    await user.save();
+
+    try {
+      await transporter.sendMail({
+        from: `"Smart CV" <${process.env.EMAIL_USER}>`,
+        to: email,
+        subject: "Email Verification - Your New OTP Code",
+        html: `
+          <h2>Welcome to Smart CV!</h2>
+          <p>Your new verification code is: <strong>${otp}</strong></p>
+          <p>This code will expire in 10 minutes.</p>
+          <p>If you didn't request this code, please ignore this email.</p>
+        `,
+      });
+
+      return {
+        status: StatusCodes.OK,
+        message: "New OTP sent successfully",
+      };
+    } catch (emailError) {
+      console.error("Email sending error:", emailError);
+      return {
+        status: StatusCodes.INTERNAL_SERVER_ERROR,
+        error: { message: "Failed to send new OTP. Please try again." },
+      };
+    }
+  } catch (error) {
+    return {
+      status: StatusCodes.INTERNAL_SERVER_ERROR,
+      error: { message: "Failed to resend OTP" },
+    };
+  }
+};
