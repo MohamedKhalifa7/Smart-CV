@@ -7,10 +7,10 @@ import { useCV } from '../../../context/CVcontext';
 import { useEffect, useState } from 'react';
 
 const Personal = () => {
-  const { formData, updateSection,personalFormValid ,validatePersonalInfo} = useCV();
-  const personalInfo = formData.personalInfo|| {};
+  const { formData, updateSection, personalFormValid, validatePersonalInfo } = useCV();
+  const personalInfo = formData.personalInfo || {};
   const theme = useTheme();
-const isMobile=useMediaQuery(theme.breakpoints.down('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleChange = (e) => {
 
@@ -22,19 +22,19 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
     updateSection('personalInfo', updatedInfo);
 
     validatePersonalInfo(updatedInfo);
-   
+
   };
- 
+
   return (
-    <Box sx={{ 
+    <Box sx={{
       width: '100%',
-      maxWidth: isMobile?'90%':'800px',
+      maxWidth: isMobile ? '90%' : '800px',
       margin: '0 auto',
-        padding: '12px',
+      padding: '12px',
       fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif'
     }}>
       {/* Personal Information Section */}
-      <Typography variant="h3" sx={{ 
+      <Typography variant="h3" sx={{
         fontWeight: 'bold',
         marginBottom: '16px',
         color: '#333',
@@ -47,7 +47,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
       {/* First and Last Name */}
       <Box sx={{ marginBottom: '20px', display: 'flex', gap: '12px' }}>
         <Box sx={{ width: '50%' }}>
-          <Typography variant="subtitle1" sx={{ 
+          <Typography variant="subtitle1" sx={{
             marginBottom: '2px',
             textAlign: 'left',
             fontWeight: 'bold',
@@ -64,10 +64,10 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             placeholder="John"
             required
             error={Boolean(personalFormValid.firstName)}
-  helperText={personalFormValid.firstName}
-           InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            helperText={personalFormValid.firstName}
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -79,8 +79,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
         </Box>
 
         <Box sx={{ width: '50%' }}>
-          <Typography variant="subtitle1" sx={{ 
-            fontWeight: 'bold', 
+          <Typography variant="subtitle1" sx={{
+            fontWeight: 'bold',
             marginBottom: '2px',
             textAlign: 'left',
             fontSize: '0.85rem'
@@ -93,13 +93,12 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             name="lastName"
             value={personalInfo.lastName || ''}
             onChange={handleChange}
-            
             error={Boolean(personalFormValid.lastName)}
             helperText={personalFormValid.lastName}
             placeholder="Smith"
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -113,8 +112,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
 
       {/* Professional Title */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="subtitle1" sx={{ 
-          fontWeight: 'bold', 
+        <Typography variant="subtitle1" sx={{
+          fontWeight: 'bold',
           marginBottom: '2px',
           textAlign: 'left',
           fontSize: '0.85rem'
@@ -131,11 +130,10 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             onChange={handleChange}
             error={Boolean(personalFormValid.professionalTitle)}
             helperText={personalFormValid.professionalTitle}
-           
             placeholder="Marketing Manager"
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -149,8 +147,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
 
       {/* Email */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="subtitle1" sx={{ 
-          fontWeight: 'bold', 
+        <Typography variant="subtitle1" sx={{
+          fontWeight: 'bold',
           marginBottom: '2px',
           textAlign: 'left',
           fontSize: '0.85rem'
@@ -169,8 +167,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             helperText={personalFormValid.email}
             placeholder="john.smith@example.com"
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -184,8 +182,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
 
       {/* Phone */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="subtitle1" sx={{ 
-          fontWeight: 'bold', 
+        <Typography variant="subtitle1" sx={{
+          fontWeight: 'bold',
           marginBottom: '2px',
           textAlign: 'left',
           fontSize: '0.85rem'
@@ -202,8 +200,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             onChange={handleChange}
             placeholder="+1 (555) 123-4567"
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -217,8 +215,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
 
       {/* Location */}
       <Box sx={{ marginBottom: '20px' }}>
-        <Typography variant="subtitle1" sx={{ 
-          fontWeight: 'bold', 
+        <Typography variant="subtitle1" sx={{
+          fontWeight: 'bold',
           marginBottom: '2px',
           textAlign: 'left',
           fontSize: '0.85rem'
@@ -235,8 +233,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
             onChange={handleChange}
             placeholder="New York, NY"
             InputProps={{ disableUnderline: true }}
-            sx={{ 
-              '& .MuiInput-input': { 
+            sx={{
+              '& .MuiInput-input': {
                 border: '1px solid #ddd',
                 height: '26px',
                 padding: '4px 8px',
@@ -250,8 +248,8 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
 
       {/* Professional Summary */}
       <Box>
-        <Typography variant="subtitle1" sx={{ 
-          fontWeight: 'bold', 
+        <Typography variant="subtitle1" sx={{
+          fontWeight: 'bold',
           marginBottom: '2px',
           textAlign: 'left',
           fontSize: '0.85rem'
@@ -267,12 +265,12 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
           value={personalInfo.summary || ''}
           onChange={handleChange}
           placeholder="Write your professional summary here..."
-          sx={{ 
+          sx={{
             '& .MuiOutlinedInput-root': {
               padding: '6px',
               border: '1px solid #ddd',
               borderRadius: '8px',
-              '& textarea': { 
+              '& textarea': {
                 padding: '0',
                 fontSize: '0.85rem',
                 minHeight: '60px'

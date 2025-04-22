@@ -19,7 +19,6 @@ const Skills = () => {
   const [input, setInput] = useState('');
   const skills = formData.skills?.skills || [];
   
-  // Responsive check for mobile
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 

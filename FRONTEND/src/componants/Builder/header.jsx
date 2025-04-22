@@ -20,26 +20,30 @@ const Header = () => {
     const isValid = validatePersonalInfo();
     if (!isValid) {
       setError('Please fill in all required fields.');
+
       setTimeout(() => {
        setError('');
       }, 3000);
+
       setSuccess(false);
       return;
     }
    try {
+
       const response = await axios.post('http://localhost:3001/cvbuilder/save', formData, {
         withCredentials: true,
       });
+
       fetchUserCVs(); // Refresh the CVs list
       setSuccess(true);
       setError('');
-      console.log('CV saved successfully:', response.data);
+
       setTimeout(() => {
         setSuccess(false);
       }, 3000);  // Hide success alert after 3 seconds
+      
     } catch (error) {
       setError('Error saving CV');
-
       setSuccess(false);
     }
   };

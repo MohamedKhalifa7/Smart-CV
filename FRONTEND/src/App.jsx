@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Error from "./pages/Error";
 import store from "./redux/store/store";
 import Layout from "./pages/layout";
-import GetStarted from "./componants/Home/getStart";
+import GetStarted from "./componants/GetStart/getStart";
 import Builder from "./componants/Builder/Buldir";
 import { theme } from "./componants/theme";
 import Home from "./componants/Home/Home";
@@ -13,6 +13,7 @@ import LoginPage from "./componants/Auth/LoginPage";
 import RegisterPage from "./componants/Auth/RegisterPage";
 import GoogleAuthSuccess from "./componants/Auth/GoogleAuthSuccess";
 import VerifyOTP from "./componants/Auth/VerifyOTP";
+import GrammarCheck from "./componants/GrammarCheck/grammarCheck";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
       { path: "builder", element: <Builder /> },
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
+      { path: "grammarCheck", element: <GrammarCheck /> },
+
       { path: "*", element: <Error /> },
     ],
   },

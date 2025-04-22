@@ -6,8 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const Education = () => {
   const { formData, updateSection } = useCV();
   const educations = formData.education || [{}];
-const theme=useTheme();
-const isMobile=useMediaQuery(theme.breakpoints.down('md'))
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const handleChange = (index, e) => {
     const updatedEducations = [...educations];
     updatedEducations[index] = {
@@ -28,7 +28,7 @@ const isMobile=useMediaQuery(theme.breakpoints.down('md'))
   };
 
   return (
-    <Box sx={{ width: '100%', maxWidth: isMobile?'90%' :'800px', margin: '0 auto', padding: '12px' }}>
+    <Box sx={{ width: '100%', maxWidth: isMobile ? '90%' : '800px', margin: '0 auto', padding: '12px' }}>
       {/* Header row with title and add button */}
       <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
         <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.1rem' }}>
