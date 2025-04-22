@@ -30,12 +30,11 @@ const VerifyOTP = () => {
       );
 
       if (response.status === 200) {
-        setSuccess("New OTP has been sent to your email!");
-        setError("");
+        setSuccess("A new OTP has been sent to your email.");
         setTimeout(() => setSuccess(""), 5000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to resend OTP");
+      setError("Failed to resend OTP. Please try again.");
       setSuccess("");
     } finally {
       setIsResending(false);
@@ -44,7 +43,7 @@ const VerifyOTP = () => {
 
   const handleVerifyOtp = async () => {
     if (!otp) {
-      setError("OTP is required");
+      setError("Please enter the OTP.");
       return;
     }
 
@@ -58,13 +57,12 @@ const VerifyOTP = () => {
       );
 
       if (response.status === 200) {
-        setSuccess(true);
-        setError("");
+        setSuccess("OTP verified successfully! Redirecting to login...");
         setTimeout(() => navigate("/login"), 3000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "OTP verification failed");
-      setSuccess(false);
+      setError("Invalid OTP. Please try again.");
+      setSuccess("");
     }
   };
 
@@ -132,14 +130,14 @@ const VerifyOTP = () => {
 
             {success && (
               <Alert severity="success" sx={{ mb: 2 }}>
-                OTP verified successfully! Redirecting to login...
+                {success}
               </Alert>
             )}
 
             {error && (
-              <Typography color="error" sx={{ mb: 2, textAlign: "center" }}>
+              <Alert severity="error" sx={{ mb: 2 }}>
                 {error}
-              </Typography>
+              </Alert>
             )}
 
             <FormControl
