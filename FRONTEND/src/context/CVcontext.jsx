@@ -129,16 +129,17 @@ export const CVProvider = ({ children }) => {
       };
     });
   };
-  const validatePersonalInfo = () => {
+  const validatePersonalInfo = (data) => {
     const errors = {};
-    const { firstName, lastName, email ,professionalTitle} = formData.personalInfo || {};
-  
+    const { firstName, lastName, email ,professionalTitle} = data || {};
+
     if (!firstName) errors.firstName = 'First Name is required';
     if (!lastName) errors.lastName = 'Last Name is required';
     if (!email) errors.email = 'Email is required';
     if (!professionalTitle) errors.professionalTitle = 'Professional Title is required';
   
     setPersonalFormValid(errors);
+    //return true if no errors
     return Object.keys(errors).length === 0;
   };
   

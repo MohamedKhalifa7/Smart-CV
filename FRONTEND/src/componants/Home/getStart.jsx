@@ -1,13 +1,10 @@
-import { Box, Typography } from "@mui/material";
-import { ThemeProvider, useTheme } from '@mui/material/styles';
+import { Box, Typography,useMediaQuery,useTheme } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SpellcheckOutlinedIcon from '@mui/icons-material/SpellcheckOutlined';
 
@@ -17,6 +14,8 @@ import CVAnalysisResualt from "../CVAnalysis/CVAnalysisResualt";
 
 const GetStarted = () => {
     const muiTheme = useTheme();
+    const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
+
     const navigat=useNavigate()
     return (
         <>
@@ -32,7 +31,10 @@ const GetStarted = () => {
 
             </Box>
             {/* Card Section */}
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: "20px", height: "400px" ,gap:"50px"}}>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", 
+                 height: isMobile?"1000px":"400px" ,gap:"50px",  px: 2,
+                 my: 2,
+                 flexDirection: isMobile ? "column" : "row"}}>
 
                 <Card sx={{
                     maxWidth: 270, height: "85%", mt: "40px", display: "flex", my: "10px",
