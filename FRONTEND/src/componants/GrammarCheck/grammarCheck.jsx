@@ -1,24 +1,80 @@
 import { Box, Button, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Tabs, Tab, Card, CardContent, Chip } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const GrammarCheck = () => {
-    const [content, setContent] = useState("")
+    const [grammarText, setGrammarText] = useState("");
+    const [grammarResult, setGrammarResult] = useState("");
+    const [selectedTab, setSelectedTab] = useState("All");
+    const [issues, setIssues] = useState([]);
+
     const navigat = useNavigate();
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
     const handleContentChange = (event) => {
-        setContent(event.target.value);
-    }
-    const handleClear = () => {
-        setContent("");
+        setGrammarText(event.target.value);
     };
+
+    const handleClear = () => {
+        setGrammarText("");
+    };
+
+    const handleCheckGrammar = async () => {
+        const response = await axios.post("http://localhost:3001/api/ai/grammarcheck", { grammarText: grammarText }, { withCredentials: true });
+        if (response.status === 200) {
+            setGrammarResult(response.data);
+            console.log("Grammar check result:", response.data);
+        } else {
+            console.error("Error checking grammar:", response.statusText);
+        }
+    };
+
+    useEffect(() => {
+        if (grammarResult) {
+            const categories = {
+                Spelling: grammarResult?.Spelling || [],
+                Punctuation: grammarResult?.Punctuation || [],
+                Style: grammarResult?.Style || [],
+            };
+
+            const allIssues = Object.entries(categories)
+                .flatMap(([type, issues]) =>
+                    issues.map((item, idx) => ({
+                        id: `${type}-${idx}`,
+                        type,
+                        severity: type === "Grammar" ? "medium" : type === "Punctuation" ? "low" : "low",
+                        suggestion: item,
+                    }))
+                );
+
+            setIssues(allIssues); // Store issues after result
+        }
+    }, [grammarResult]);
+
+    const filteredIssues = selectedTab === "All"
+        ? issues
+        : issues.filter((issue) => issue.type === selectedTab);
+
+    // Function to fix and remove the card
+    const handleFix = (errorText, correctText, issueId) => {
+        // Apply the fix
+        const updatedText = grammarText.replace(errorText, correctText);
+        setGrammarText(updatedText);
+
+        // Remove the fixed issue from the issues list
+        const updatedIssues = issues.filter((issue) => issue.id !== issueId);
+        setIssues(updatedIssues);
+    };
+
     return (
         <>
             {/* Header Section */}
-            <Box sx={{ display: "flex", height: "20vh", width: "70vw", alignSelf: "center", justifyContent: "center", flexDirection: "column", m: "auto", mt: 3, }}>
-                <Button variant="text" sx={{ display: "flex", alignSelf: "start", mt: "12px", color: "gray" }} onClick={() => navigat("/getStart")}
-                    startIcon={<ArrowBackIcon></ArrowBackIcon>}>
+            <Box sx={{ display: "flex", height: "20vh", width: "70vw", alignSelf: "center", justifyContent: "center", flexDirection: "column", m: "auto", mt: 3 }}>
+                <Button variant="text" sx={{ display: "flex", alignSelf: "start", mt: "12px", color: "gray" }} onClick={() => navigat("/getStart")} startIcon={<ArrowBackIcon />}>
                     Back to Get Started
                 </Button>
                 <Typography sx={{
@@ -30,8 +86,10 @@ const GrammarCheck = () => {
                     Grammar & Style Checker
                 </Typography>
                 {!isMobile && (<Typography sx={{ margin: "auto", fontSize: "16px", color: "gray" }}>
-                    Perfect your CV content with our advanced grammar and style checker</Typography>)}
+                    Perfect your CV content with our advanced grammar and style checker
+                </Typography>)}
             </Box>
+
             {/* Main Content Section */}
             <Box sx={{
                 display: "flex", minHeight: "60vh", width: "70vw", alignSelf: "center",
@@ -43,29 +101,114 @@ const GrammarCheck = () => {
                         rows={12}
                         sx={{ width: "100%" }}
                         placeholder="Paste your CV content here for grammar and style checking"
-                        value={content}
+                        value={grammarText}
                         onChange={handleContentChange}
                     />
                     <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
                         <Button variant="outlined" color="secondary" onClick={handleClear}>
                             Clear
                         </Button>
-                        <Button variant="contained">
+                        <Button variant="contained" onClick={handleCheckGrammar}>
                             Check Grammar
                         </Button>
                     </Box>
                 </Box>
-                <Box sx={{ width: isMobile ? "90%" : "35%", alignSelf: "flex-start", minHeight: "150px", bgcolor: "background.gray", borderRadius: "10px" }}>
-                    <Typography sx={{ fontSize: "16px", fontWeight: "bold", p: 2 }}>
+
+                <Box sx={{ width: isMobile ? "90%" : "35%", alignSelf: "flex-start", minHeight: "150px", bgcolor: "#f5f5f5", borderRadius: "10px" }}>
+                    <Typography sx={{ fontSize: "16px", fontWeight: "bold", p: 1.5 }}>
                         Grammar Check Result
                     </Typography>
-                    {!content && (
-                        <Typography sx={{ fontSize: "14px", p: 2 }}>
-                            Paste your CV content and click "Check Grammar" to get started.                            </Typography>
+
+                    {!grammarResult && (
+                        <Typography sx={{ fontSize: "14px", p: 1.5 }}>
+                            Paste your CV content and click "Check Grammar" to get started.
+                        </Typography>
+                    )}
+
+                    {grammarResult && (
+                        <>
+                            <Tabs
+                                value={selectedTab}
+                                onChange={(e, newValue) => setSelectedTab(newValue)}
+                                variant="standard"
+                                sx={{
+                                    px: 1,
+                                    minHeight: "30px",
+                                    "& .MuiTabs-flexContainer": { justifyContent: "space-between" },
+                                    "& .MuiTab-root": {
+                                        minHeight: "30px",
+                                        minWidth: "auto",
+                                        fontSize: "11px",
+                                        px: 1,
+                                        mx: 0.5,
+                                    },
+                                }}
+                            >
+                                <Tab label={`All (${issues.length})`} value="All" />
+                                <Tab label="Spelling" value="Spelling" />
+                                <Tab label="Punctuation" value="Punctuation" />
+                                <Tab label="Style" value="Style" />
+                            </Tabs>
+
+                            <Box sx={{ p: 1.5 }}>
+                                {filteredIssues.length === 0 ? (
+                                    <Typography sx={{ fontSize: "12px" }}>
+                                        No issues found in this category.
+                                    </Typography>
+                                ) : (
+                                    filteredIssues.map((issue) => {
+                                        // تقسيم الاقتراح إلى جزئين قبل وبعد السهم
+                                        const [beforeArrow, afterArrow] = issue.suggestion.split("→").map(str => str.trim());
+
+                                        return (
+                                            <Card key={issue.id} sx={{ mb: 1, p: 1, backgroundColor: "#f9f9f9" }}>
+                                                <CardContent sx={{ display: "flex", flexDirection: "column", gap: 0.5, p: 1 }}>
+                                                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                                        <Chip
+                                                            label={issue.type}
+                                                            size="small"
+                                                            sx={{
+                                                                fontSize: "13px",
+                                                                fontWeight: "bold",
+                                                                backgroundColor:
+                                                                    issue.type === "Spelling"
+                                                                        ? "#fdecea"
+                                                                        : issue.type === "Punctuation"
+                                                                            ? "#e8f4fd"
+                                                                            : "#e9f7ef",
+                                                                color:
+                                                                    issue.type === "Spelling"
+                                                                        ? "#b71c1c"
+                                                                        : issue.type === "Punctuation"
+                                                                            ? "#0d47a1"
+                                                                            : "#1b5e20",
+                                                            }}
+                                                        />
+                                                        <Button
+                                                            size="small"
+                                                            variant="outlined"
+                                                            sx={{ fontSize: "10px", px: 1, py: 0.5 }}
+                                                            onClick={() => handleFix(beforeArrow, afterArrow, issue.id)}
+                                                        >
+                                                            Fix
+                                                        </Button>
+                                                    </Box>
+
+                                                    <Typography sx={{ fontSize: "14px" }}>
+                                                        <span style={{ textDecoration: 'line-through' }}>{beforeArrow}</span> → {afterArrow}
+                                                    </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        );
+                                    })
+                                )}
+                            </Box>
+                        </>
                     )}
                 </Box>
             </Box>
         </>
-    )
-}
+    );
+};
+
 export default GrammarCheck;
