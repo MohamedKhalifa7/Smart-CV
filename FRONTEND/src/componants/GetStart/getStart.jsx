@@ -11,12 +11,30 @@ import SpellcheckOutlinedIcon from '@mui/icons-material/SpellcheckOutlined';
 import { theme } from "../theme"
 import { useNavigate } from 'react-router-dom';
 import CVAnalysisResualt from "../CVAnalysis/CVAnalysisResualt";
+import { useState, useRef } from "react";
+import { useFile } from "../../context/fileContext";
 
 const GetStarted = () => {
     const muiTheme = useTheme();
     const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 
     const navigat = useNavigate()
+
+    const {uploadedFile, setUploadedFile} = useFile();
+    const fileInputRef = useRef();
+
+    const handleButtonClick = () => {
+        fileInputRef.current.click(); // open file picker
+      };
+    
+      const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          setUploadedFile(file); // store the uploaded file
+          console.log('File uploaded:', file);
+        }
+      };
+
     return (
         <>
             {/* Header Section */}
@@ -62,9 +80,16 @@ const GetStarted = () => {
                             sx={{ width: "80%", alignSelf: "end", mb: "15px" }}
                             align="center"
                             variant="contained"
+                            onClick={handleButtonClick}
                         >
                             Upload CV
                         </Button>
+                        <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
                     </CardActions>
                 </Card>
 

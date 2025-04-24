@@ -1,20 +1,38 @@
 import { Box, Typography, Divider } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFile } from '../../context/fileContext';
+import { cvAnalyzeAction } from '../../redux/store/slices/cvAnalyzeSlice';
+
+
 
 function Feedback() {
-    const [good, setGood] = useState([
-        { id: 1, text: "Well-structured CV layout" },
-        { id: 2, text: "Clear contact information" },
-    ]);
-    const [bad, setBad] = useState([
-        { id: 1, text: "No specific job title mentioned" },
-        { id: 2, text: "Lack of quantifiable achievements" },
-    ]);
-    const [warning, setWarning] = useState([
-        { id: 1, text: "Generic objective statement" },
-        { id: 2, text: "Missing recent experience details" },
-    ]);
+
+const dispatch = useDispatch();
+const analyzeData = useSelector((state) => state.cvAnalyze);
+const { uploadedFile } = useFile();
+
+
+const [good, setGood] = useState([]);
+const [bad, setBad] = useState([]);
+const [warning, setWarning] = useState([]);
+
+useEffect(()=>{
+ if(uploadedFile){
+    dispatch(cvAnalyzeAction(uploadedFile));
+ }
+},[dispatch, uploadedFile]);
+
+useEffect(()=>{
+    if(analyzeData?.cvAnalyze){
+        setGood(analyzeData.cvAnalyze.positiveFeedback || []);
+        setBad(analyzeData.cvAnalyze.negativeFeedback || []);
+        setWarning(analyzeData.cvAnalyze.neutralFeedback || []);
+    }
+},[analyzeData]);
+
+   
 
     const renderFeedbackSection = (title, items, severity) => (
         items.length > 0 && (
@@ -22,9 +40,9 @@ function Feedback() {
                 <Typography variant="h6" sx={{ mb: 1, fontWeight: 'bold', color: `${severity}.main` }}>
                     {title}
                 </Typography>
-                {items.map(item => (
+                {items.map((item,index) => (
                     <Alert
-                        key={`${severity}-${item.id}`}
+                        key={`${severity}-${index}`}
                         severity={severity}
                         sx={{
                             mb: 1,
@@ -33,7 +51,7 @@ function Feedback() {
                             boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
                         }}
                     >
-                        {item.text}
+                        {item}
                     </Alert>
                 ))}
             </Box>

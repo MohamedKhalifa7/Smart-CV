@@ -4,16 +4,31 @@ import { BorderLinearProgress } from './linearProgress'
 import FullWidthTabs from './tabSections'
 import { useDispatch, useSelector } from 'react-redux';
 import { cvScoreAction } from '../../redux/store/slices/cvScoreSlice';
+import { cvAnalyzeAction } from '../../redux/store/slices/cvAnalyzeSlice';
+import { useFile } from '../../context/fileContext';
 
 function Header() {
-    // const [cvScore, setCvScore] = useState(); 
+    const [cvScore, setCvScore] = useState(0); 
     const dispatch = useDispatch();
-    const score= useSelector((state) => state.cvScore.cvScore);
-    useEffect(()=>{
-        // setCvScore(score);
-        dispatch(cvScoreAction())
-},[])
-    const loading = useSelector((state) => state.cvScore.loading);
+    const analyzeData= useSelector((state) => state.cvAnalyze);
+    const { uploadedFile } = useFile();
+
+    useEffect(() => {
+        console.log("Uploading file:*******", uploadedFile);
+        if (uploadedFile) {
+            dispatch(cvAnalyzeAction(uploadedFile));
+        }
+    }, [dispatch, uploadedFile]);
+    
+    useEffect(() => {
+        console.log("Analyzed Data:", analyzeData); 
+        if (analyzeData?.cvAnalyze?.atsScore) {
+            setCvScore(analyzeData.cvAnalyze.atsScore);
+        }
+    }, [analyzeData]);
+    
+
+    const loading = useSelector((state) => state.cvAnalyze.loading);
 
     return (
         <Box>
@@ -28,11 +43,11 @@ function Header() {
                 CV Score
             </Typography>
             <Typography variant='h6' sx={{fontSize:18}}>
-                {50}/100
+                {cvScore}/100
             </Typography>
 
             </Box>
-            <BorderLinearProgress variant="determinate" value={50} />
+            <BorderLinearProgress variant="determinate" value={cvScore} />
 
             <Typography variant='body1' sx={{my:1,mb:4}}  >
                 feedback according to the CV score
