@@ -36,6 +36,7 @@ const GrammarCheck = () => {
     useEffect(() => {
         if (grammarResult) {
             const categories = {
+                Grammar: grammarResult?.Grammar || [],
                 Spelling: grammarResult?.Spelling || [],
                 Punctuation: grammarResult?.Punctuation || [],
                 Style: grammarResult?.Style || [],
@@ -46,7 +47,7 @@ const GrammarCheck = () => {
                     issues.map((item, idx) => ({
                         id: `${type}-${idx}`,
                         type,
-                        severity: type === "Grammar" ? "medium" : type === "Punctuation" ? "low" : "low",
+                        severity: type === "Grammar" ? "high" : type === "Punctuation" ? "low" : "medium",
                         suggestion: item,
                     }))
                 );
@@ -139,12 +140,13 @@ const GrammarCheck = () => {
                                         minHeight: "30px",
                                         minWidth: "auto",
                                         fontSize: "11px",
-                                        px: 1,
+                                        px: 0,
                                         mx: 0.5,
                                     },
                                 }}
                             >
                                 <Tab label={`All (${issues.length})`} value="All" />
+                                <Tab label="Grammar" value="Grammar" />
                                 <Tab label="Spelling" value="Spelling" />
                                 <Tab label="Punctuation" value="Punctuation" />
                                 <Tab label="Style" value="Style" />
@@ -171,17 +173,21 @@ const GrammarCheck = () => {
                                                                 fontSize: "13px",
                                                                 fontWeight: "bold",
                                                                 backgroundColor:
-                                                                    issue.type === "Spelling"
+                                                                    issue.type === "Grammar"
                                                                         ? "#fdecea"
                                                                         : issue.type === "Punctuation"
                                                                             ? "#e8f4fd"
-                                                                            : "#e9f7ef",
+                                                                            : issue.type === "Spelling"
+                                                                                ? "#fff3e0"
+                                                                                : "#e9f7ef",
                                                                 color:
-                                                                    issue.type === "Spelling"
+                                                                    issue.type === "Grammar"
                                                                         ? "#b71c1c"
                                                                         : issue.type === "Punctuation"
                                                                             ? "#0d47a1"
-                                                                            : "#1b5e20",
+                                                                            : issue.type === "Spelling"
+                                                                                ? "#e65100"
+                                                                                : "#1b5e20",
                                                             }}
                                                         />
                                                         <Button
