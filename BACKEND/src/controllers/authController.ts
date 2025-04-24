@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import * as userService from "../services/userService";
 import User from "../models/userModel";
 import { StatusCodes } from "http-status-codes";
+import { CustomRequest } from "../middleware/validateJWTMiddleware";
 
 export const register = async (req: Request, res: Response) => {
   const result = await userService.register(req.body);
@@ -34,7 +35,7 @@ export const verifyOTP = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {
+) => {
   try {
     const { email, otp } = req.body;
     const user = await User.findOne({ email });
@@ -68,4 +69,17 @@ export const resendOTP = async (req: Request, res: Response) => {
   const { email } = req.body;
   const result = await userService.resendOTP(email);
   res.status(result.status).json(result);
+};
+
+export const getCurrentUser = (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  res.status(200).json({
+    user: customReq.user,
+  });
 };

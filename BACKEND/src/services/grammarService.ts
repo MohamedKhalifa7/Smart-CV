@@ -7,7 +7,8 @@ const openai = new OpenAI({
 export async function grammarCheck (grammarText:String):Promise<{
     Spelling:String[],
     Punctuation:String[],
-    Style:String[]
+    Style:String[],
+    Grammar:String[]
 }>{
     const prompt = `
     
@@ -25,6 +26,10 @@ Return only a valid JSON in this format (DO NOT ADD ANY MARKDOWN or extra text):
   ],
   "Style": [
     "very good → excellent"
+  ],
+  "Grammar":[
+    "I Omar → I'am Omar",
+    ...etc
   ]
 }
 
@@ -53,7 +58,8 @@ const parsed = JSON.parse(cleaned);
     return{
         Spelling:parsed.Spelling || [],
         Punctuation:parsed.Punctuation || [],
-        Style:parsed.Style || []
+        Style:parsed.Style || [],
+        Grammar:parsed.Grammar||[]
 
     }
 

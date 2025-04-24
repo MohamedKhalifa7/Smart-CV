@@ -10,17 +10,20 @@ import {
   logout,
   verifyOTP,
   resendOTP,
+  getCurrentUser,
 } from "../controllers/authController";
 import {
   validateRegisterInput,
   validateLoginInput,
 } from "../middleware/validationMiddleware";
+import { authenticateToken } from "../middleware/validateJWTMiddleware";
 
 router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
 router.post("/logout", logout);
 router.post("/verify-otp", verifyOTP);
 router.post("/resend-otp", resendOTP);
+router.get("/verify-token", authenticateToken, getCurrentUser);
 
 // Google OAuth routes
 
