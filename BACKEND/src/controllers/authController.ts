@@ -34,7 +34,7 @@ export const verifyOTP = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<void> => {
+) => {
   try {
     const { email, otp } = req.body;
     const user = await User.findOne({ email });

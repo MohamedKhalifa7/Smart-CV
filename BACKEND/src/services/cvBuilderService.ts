@@ -23,10 +23,11 @@ export const createCV = async (cvData: CVParams & { userId: string }) => {
 export const getCVsByUser = async (userId: string) => {
   try {
     const cvs = await CV.find({ userId });
-    return {
-      status: StatusCodes.OK,
-      cvs,
-    };
+    return cvs || [];
+    // return {
+    //   status: StatusCodes.OK,
+    //   cvs,
+    // };
   } catch (error) {
     return {
       status: StatusCodes.BAD_REQUEST,

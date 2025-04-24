@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-
 export interface CustomRequest extends Request {
   user?: {
     userId: string;
     email: string;
+    role?: string;
   };
 }
 
@@ -16,7 +16,8 @@ export const authenticateToken = (
 ): void => {
   const customReq = req as CustomRequest;
 
-  const token = customReq.cookies?.token || customReq.headers.authorization?.split(" ")[1];
+  const token =
+    customReq.cookies?.token || customReq.headers.authorization?.split(" ")[1];
 
   if (!token) {
     res.status(401).json({ message: "Access denied. No token provided." });
@@ -27,12 +28,14 @@ export const authenticateToken = (
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET_Key || "jwt_secret"
-    ) as { userId: string; email: string };
+    ) as { userId: string; email: string; role:string };
 
     customReq.user = {
       userId: decoded.userId,
       email: decoded.email,
+      role: decoded.role,
     };
+    console.log("user info", customReq.user);
 
     next();
   } catch (err) {

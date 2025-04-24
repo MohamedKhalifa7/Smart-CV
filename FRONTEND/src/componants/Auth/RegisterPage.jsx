@@ -63,7 +63,7 @@ const RegisterPage = () => {
       if (response.status === 201) {
         setSuccess(true);
         setError("");
-        setTimeout(() => navigate("/verify-otp", { state: { email } }), 3000);
+        setTimeout(() => navigate("/verify-otp", { state: { email } }), 1000);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
