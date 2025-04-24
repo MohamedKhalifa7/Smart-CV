@@ -11,8 +11,8 @@ import { requireProUser } from "../middleware/roleMiddleware";
 
 const router = Router();
 router.get("/exports/:cvId",validateLoginInput,authenticateToken,requireProUser, exportCVController);
-// router.post("/upload-cv",validateLoginInput,upload.single("cv"),importCVController);
-router.post("/upload-cv",upload.single("cv"),importCVController);
+router.post("/upload-cv",validateLoginInput,upload.single("cv"),importCVController);
+// router.post("/upload-cv",upload.single("cv"),importCVController);
 
 router.post("/analyze", upload.single("cv"), analyzeCVController);
 router.post(

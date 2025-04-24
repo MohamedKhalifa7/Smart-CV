@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import Typography from '@mui/material/Typography';
-import { Box, CircularProgress, IconButton, TextField } from '@mui/material';
+import { Autocomplete, Box, CircularProgress, IconButton, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,6 +16,21 @@ import { useEffect, useState } from 'react';
 
 const generatedSection = ['Professional Summary', 'Work Experience', 'Skills', 'Education'];
 const experienceLevel = ['Entry Level (0-2 years)', 'Mid Level (3-5 years)', 'Senior Level (6-10 years)'];
+const industryOptions = [
+  'Software',
+  'Technology',
+  'Information Technology',
+  'Artificial Intelligence',
+  'Healthcare',
+  'Finance',
+  'Education',
+  'Retail',
+  'E-commerce',
+  'Construction',
+  'Media',
+
+];
+
 
 function AIWritingAssistDialog(props) {
   const { onClose, selectedValue, open } = props;
@@ -136,14 +151,44 @@ function AIWritingAssistDialog(props) {
               <Typography variant="body2" sx={{ mb: 1 }}>
                 Industry
               </Typography>
-              <TextField
+
+
+              {/* <TextField
                 fullWidth
                 placeholder="e.g. Technology"
                 variant="outlined"
                 name="industry"
                 value={formData.industry}
                 onChange={handleChange}
-              />
+              /> */}
+
+
+<Autocomplete
+  freeSolo
+  options={industryOptions}
+  value={formData.industry}
+  onChange={(event, newValue) => {
+    setFormData((prev) => ({
+      ...prev,
+      industry: newValue || '',
+    }));
+  }}
+  onInputChange={(event, newInputValue) => {
+    setFormData((prev) => ({
+      ...prev,
+      industry: newInputValue,
+    }));
+  }}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Select or type industry"
+      variant="outlined"
+    />
+  )}
+/>
+
+
             </Box>
 
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
