@@ -17,7 +17,8 @@ const Header = () => {
   const [error, setError] = useState('');
 
   const handelSave = async () => {
-    const isValid = validatePersonalInfo();
+    const isValid = validatePersonalInfo(formData.personalInfo);
+
     if (!isValid) {
       setError('Please fill in all required fields.');
 
@@ -43,8 +44,17 @@ const Header = () => {
       }, 3000);  // Hide success alert after 3 seconds
       
     } catch (error) {
-      setError('Error saving CV');
-      setSuccess(false);
+      if (error.response && error.response.status === 403) {
+        setError(error.response.data.message); 
+        setTimeout(() => {
+          setError('');
+         }, 10000);
+      } else {
+        setError('Error saving CV');
+        setTimeout(() => {
+          setError('');
+         }, 3000);
+      }
     }
   };
 
