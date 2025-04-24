@@ -15,6 +15,7 @@ import GoogleAuthSuccess from "./componants/Auth/GoogleAuthSuccess";
 import VerifyOTP from "./componants/Auth/VerifyOTP";
 import GrammarCheck from "./componants/GrammarCheck/grammarCheck";
 import { FileProvider } from "./context/fileContext.jsx";
+import { TemplateProvider } from "./context/choosenTempContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,11 +40,13 @@ function App() {
   return (
     <Provider store={store}>
       <CVProvider>
-        <FileProvider>
-        <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-        </FileProvider>
+        <TemplateProvider>
+          <FileProvider>
+            <ThemeProvider theme={theme}>
+              <RouterProvider router={router} />
+            </ThemeProvider>
+          </FileProvider>
+        </TemplateProvider>
       </CVProvider>
     </Provider>
   );

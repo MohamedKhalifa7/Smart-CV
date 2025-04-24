@@ -8,10 +8,18 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { useTemplate } from '../../../../context/choosenTempContext';
 
 function TemplateCard(props) {
 
   const { title, img , disc, pro} = props;
+  const {choosenTemp, setChoosenTemp} = useTemplate();
+
+  const handleSelect = (e)=>{
+    e.preventDefault();
+    setChoosenTemp(title);
+  }
+
   return (
     <Card sx={{ maxWidth: 200, border: 'solid #6a11cb 3px' }}>
   <Box sx={{ position: 'relative' }}>
@@ -78,7 +86,8 @@ function TemplateCard(props) {
       
 
       <CardActions>
-        <Button size="small" color="primary" variant='contained' fullWidth>
+        <Button size="small" color="primary" variant='contained' fullWidth
+          onClick={handleSelect}>
           Select
         </Button>
       </CardActions>
