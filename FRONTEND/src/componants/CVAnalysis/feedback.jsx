@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFile } from '../../context/fileContext';
 import { cvAnalyzeAction } from '../../redux/store/slices/cvAnalyzeSlice';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -17,6 +18,8 @@ const { uploadedFile } = useFile();
 const [good, setGood] = useState([]);
 const [bad, setBad] = useState([]);
 const [warning, setWarning] = useState([]);
+
+const loading = useSelector((state) => state.cvAnalyze.loading);
 
 useEffect(()=>{
  if(uploadedFile){
@@ -59,27 +62,25 @@ useEffect(()=>{
     );
 
     return (
-        <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            p: 3,
-            mt: 3,
-            backgroundColor: "#fafafa",
-            borderRadius: 2,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
-        }}>
-            <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
-                Feedback Summary
-            </Typography>
-
-            <Divider sx={{ mb: 2 }} />
-
-            {renderFeedbackSection("✅ Strengths", good, "success")}
-            {renderFeedbackSection("⚠️ Warnings", warning, "warning")}
-            {renderFeedbackSection("❌ Issues", bad, "error")}
+        <Box sx={{ display: "flex", flexDirection: "column", width: "100%", p: 3, mt: 3, backgroundColor: "#fafafa", borderRadius: 2, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <>
+                    <Typography variant="h5" sx={{ mb: 2, fontWeight: 'bold' }}>
+                        Feedback Summary
+                    </Typography>
+                    <Divider sx={{ mb: 2 }} />
+                    {renderFeedbackSection("✅ Strengths", good, "success")}
+                    {renderFeedbackSection("⚠️ Warnings", warning, "warning")}
+                    {renderFeedbackSection("❌ Issues", bad, "error")}
+                </>
+            )}
         </Box>
     );
+    
 }
 
 export default Feedback;

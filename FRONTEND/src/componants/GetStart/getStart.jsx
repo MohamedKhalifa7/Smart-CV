@@ -152,11 +152,14 @@ const GetStarted = () => {
 
 
             </Box>
-
-            <Box sx={{ m: 6, border: `2px solid ${theme.palette.background.gray}`, borderRadius: "10px", p: 3 }}>
+            {uploadedFile && (
+                <Box sx={{ m: 6, border: `2px solid ${theme.palette.background.gray}`, borderRadius: "10px", p: 3 }}>
                 <CVAnalysisResualt ></CVAnalysisResualt>
 
             </Box>
+            )}
+
+            
         </>
     )
 }
