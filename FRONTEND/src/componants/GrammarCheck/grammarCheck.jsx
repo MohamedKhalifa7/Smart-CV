@@ -159,8 +159,7 @@ const GrammarCheck = () => {
                                     </Typography>
                                 ) : (
                                     filteredIssues.map((issue) => {
-                                        // تقسيم الاقتراح إلى جزئين قبل وبعد السهم
-                                        const [beforeArrow, afterArrow] = issue.suggestion.split("→").map(str => str.trim());
+                                        const [wrong, correct] = issue.suggestion.split("→").map(str => str.trim());
 
                                         return (
                                             <Card key={issue.id} sx={{ mb: 1, p: 1, backgroundColor: "#f9f9f9" }}>
@@ -194,14 +193,14 @@ const GrammarCheck = () => {
                                                             size="small"
                                                             variant="outlined"
                                                             sx={{ fontSize: "10px", px: 1, py: 0.5 }}
-                                                            onClick={() => handleFix(beforeArrow, afterArrow, issue.id)}
+                                                            onClick={() => handleFix(wrong, correct, issue.id)}
                                                         >
                                                             Fix
                                                         </Button>
                                                     </Box>
 
                                                     <Typography sx={{ fontSize: "14px" }}>
-                                                        <span style={{ textDecoration: 'line-through' }}>{beforeArrow}</span> → {afterArrow}
+                                                        <span style={{ textDecoration: 'line-through' }}>{wrong}</span> → {correct}
                                                     </Typography>
                                                 </CardContent>
                                             </Card>
