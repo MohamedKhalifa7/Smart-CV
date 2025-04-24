@@ -11,12 +11,14 @@ import {
   verifyOTP,
   resendOTP,
   getCurrentUser,
+  upgradeToPro,
 } from "../controllers/authController";
 import {
   validateRegisterInput,
   validateLoginInput,
 } from "../middleware/validationMiddleware";
 import { authenticateToken } from "../middleware/validateJWTMiddleware";
+import User from "../models/userModel"; 
 
 router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
@@ -24,6 +26,7 @@ router.post("/logout", logout);
 router.post("/verify-otp", verifyOTP);
 router.post("/resend-otp", resendOTP);
 router.get("/verify-token", authenticateToken, getCurrentUser);
+router.post("/upgrade", upgradeToPro);
 
 // Google OAuth routes
 
@@ -37,33 +40,49 @@ router.get(
   passport.authenticate("google", {
     failureRedirect: "http://localhost:5173/login",
   }),
-  (req: any, res) => {
-    const user = req.user;
-    const userData = {
-      id: user._id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      role: user.role,
-    };
+  async (req: any, res) => {
+    console.log("User info from Google OAuth:", req.user); 
 
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET_Key || "jwt_secret",
-      { expiresIn: "1d" }
-    );
+    try {
+      const user = req.user;
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
-    });
+      
+      const dbUser = await User.findById(user._id);
 
-    res.redirect(
-      `http://localhost:5173/auth/success?token=${token}&user=${encodeURIComponent(
-        JSON.stringify(userData)
-      )}`
-    );
+      if (!dbUser) {
+         res.status(404).json({ message: "User not found" });
+         return;
+      }
+
+      const userData = {
+        id: dbUser._id,
+        email: dbUser.email,
+        firstName: dbUser.firstName,
+        lastName: dbUser.lastName,
+        role: dbUser.role, 
+      };
+
+      const token = jwt.sign(
+        { userId: dbUser._id, email: dbUser.email, role: dbUser.role },
+        process.env.JWT_SECRET_Key || "jwt_secret",
+        { expiresIn: "1d" }
+      );
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+
+      res.redirect(
+        `http://localhost:5173/auth/success?token=${token}&user=${encodeURIComponent(
+          JSON.stringify(userData)
+        )}`
+      );
+    } catch (error) {
+      console.error("Error in Google OAuth callback:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
 );
 
