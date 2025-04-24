@@ -149,7 +149,7 @@ export const CVProvider = ({ children }) => {
     try {
         const response = await axios.get('http://localhost:3001/cvbuilder/user', { withCredentials: true });
         console.log('Fetched data:', response.data); 
-        return response.data.cvs || [];
+        return response.data|| []; // Return the CVs or an empty array if none found
     } catch (error) {
         console.error('Error fetching CVs:', error);
         return []; 

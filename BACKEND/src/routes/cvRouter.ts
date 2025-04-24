@@ -17,6 +17,7 @@ router.get(
   requireProUser,
   exportCVController
 );
+// router.post("/upload-cv",validateLoginInput,upload.single("cv"),importCVController);
 router.post(
   "/upload-cv",
   validateLoginInput,
