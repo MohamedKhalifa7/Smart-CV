@@ -3,17 +3,29 @@ import React from "react";
 const ClassicCV = ({
   name,
   email,
-  experience = [],
-  education = {},
+  phone,
+  location,
+  professionalTitle,
+  summary,
   skills,
   languages = [],
   certifications = [],
+  experience = [],
+  education = [],
 }) => {
   return (
     <div style={styles.body}>
       <div style={styles.header}>
         <div style={styles.name}>{name}</div>
+        <div style={styles.subHeader}>{professionalTitle}</div>
         <div style={styles.email}>{email}</div>
+        <div style={styles.email}>{phone}</div>
+        <div style={styles.email}>{location}</div>
+      </div>
+
+      <div style={styles.section}>
+        <h2 style={styles.sectionTitle}>Summary</h2>
+        <p>{summary}</p>
       </div>
 
       <div style={styles.section}>
@@ -23,8 +35,10 @@ const ClassicCV = ({
             <li key={index} style={styles.entry}>
               <div style={styles.entryTitle}>{exp.role}</div>
               <div style={styles.entrySub}>
-                {exp.company} — {exp.years}
+                {exp.company} — {exp.startDate} to {exp.endDate}
               </div>
+              <div style={styles.entrySub}>{exp.location}</div>
+              <p>{exp.description}</p>
             </li>
           ))}
         </ul>
@@ -32,10 +46,18 @@ const ClassicCV = ({
 
       <div style={styles.section}>
         <h2 style={styles.sectionTitle}>Education</h2>
-        <div style={styles.entry}>
-          <div style={styles.entryTitle}>{education.university}</div>
-          <div style={styles.entrySub}>{education.degree}</div>
-        </div>
+        <ul style={styles.list}>
+          {education.map((edu, index) => (
+            <li key={index} style={styles.entry}>
+              <div style={styles.entryTitle}>{edu.institution}</div>
+              <div style={styles.entrySub}>
+                {edu.degree} ({edu.startYear} - {edu.endYear})
+              </div>
+              <div style={styles.entrySub}>{edu.location}</div>
+              <p>{edu.description}</p>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div style={styles.section}>
@@ -48,7 +70,7 @@ const ClassicCV = ({
         <ul style={styles.list}>
           {languages.map((lang, index) => (
             <li key={index}>
-              {lang.name} — {lang.degree}
+              {lang.name}
             </li>
           ))}
         </ul>
@@ -59,7 +81,7 @@ const ClassicCV = ({
         <ul style={styles.list}>
           {certifications.map((cert, index) => (
             <li key={index}>
-              {cert.name} from {cert.company} ({cert.years})
+              {cert.name} 
             </li>
           ))}
         </ul>
@@ -76,18 +98,23 @@ const styles = {
     lineHeight: "1.6",
   },
   header: {
-    borderBottom: "2px solid #0056b3",
+    borderBottom: "2px solid ",
     marginBottom: "20px",
   },
   name: {
     fontSize: "28px",
     fontWeight: "bold",
-    color: "#0056b3",
+    // color: "#0056b3",
+  },
+  subHeader: {
+    fontSize: "18px",
+    // color: "#0077cc",
+    marginTop: "4px",
   },
   email: {
-    color: "#555",
+    // color: "#555",
     fontSize: "15px",
-    marginTop: "4px",
+    marginTop: "2px",
   },
   section: {
     marginBottom: "25px",
@@ -95,7 +122,7 @@ const styles = {
   sectionTitle: {
     fontSize: "18px",
     marginTop: "30px",
-    color: "#004080",
+    // color: "#004080",
     borderBottom: "1px solid #ddd",
     paddingBottom: "5px",
   },
@@ -104,7 +131,7 @@ const styles = {
     paddingLeft: "0",
   },
   entry: {
-    marginBottom: "10px",
+    marginBottom: "15px",
   },
   entryTitle: {
     fontWeight: "bold",
@@ -112,7 +139,7 @@ const styles = {
   },
   entrySub: {
     fontSize: "14px",
-    color: "#666",
+    // color: "#666",
   },
   skills: {
     marginTop: "10px",

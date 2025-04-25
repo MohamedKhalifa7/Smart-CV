@@ -8,6 +8,7 @@ const Education = () => {
   const educations = formData.education || [{}];
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  
   const handleChange = (index, e) => {
     const updatedEducations = [...educations];
     updatedEducations[index] = {
