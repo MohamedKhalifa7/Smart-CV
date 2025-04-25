@@ -1,38 +1,83 @@
-import { Box, Button, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, TextField, Typography, useMediaQuery, useTheme, CircularProgress, Alert } from "@mui/material";
 import { Tabs, Tab, Card, CardContent, Chip } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const GrammarCheck = () => {
     const [grammarText, setGrammarText] = useState("");
     const [grammarResult, setGrammarResult] = useState("");
     const [selectedTab, setSelectedTab] = useState("All");
     const [issues, setIssues] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(false); 
+    const [error, setError] = useState(""); 
+    const [isButtonVisible, setIsButtonVisible] = useState(false); 
     const navigat = useNavigate();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const token = Cookies.get("token");
 
     const handleContentChange = (event) => {
         setGrammarText(event.target.value);
+        setIsButtonVisible(event.target.value.trim() !== ""); 
     };
 
     const handleClear = () => {
         setGrammarText("");
+        setIsButtonVisible(false); 
+        setError(""); 
     };
 
     const handleCheckGrammar = async () => {
-        const response = await axios.post("http://localhost:3001/api/ai/grammarcheck", { grammarText: grammarText }, { withCredentials: true });
-        if (response.status === 200) {
-            setGrammarResult(response.data);
-            console.log("Grammar check result:", response.data);
-        } else {
-            console.error("Error checking grammar:", response.statusText);
+        setIsLoading(true); 
+        try {
+            const response = await axios.post(
+                "http://localhost:3001/api/ai/grammarcheck",
+                { grammarText: grammarText },
+                { withCredentials: true }
+            );
+    
+            if (response.status === 200) {
+                setGrammarResult(response.data);
+                console.log("Grammar check result:", response.data);
+                setError(""); // Clear any previous error messages
+            }
+        } catch (error) {
+            if (error.response) {
+                // Handle errors returned from the server
+                if (error.response.status === 403) {
+                    setError("You must go pro to access this feature.");
+                    setGrammarResult("");
+
+                } else {
+                    setError("Error checking grammar: " + error.response.data.message);
+                    setGrammarResult("");
+
+                }
+            } else if (error.request) {
+                // Handle network errors (no response)
+                if (error.code === 'ERR_NETWORK') {
+                    setError("Network error: Unable to reach the server. Please try again later.");
+                    setGrammarResult("");
+
+                } else {
+                    setError("Error: " + error.message);
+                    setGrammarResult("");
+
+                }
+            } else {
+                // Any other errors 
+                setErrorMessage("Error: " + error.message);
+                setGrammarResult("");
+
+            }
+        } finally {
+            setIsLoading(false); 
         }
     };
-
+    
     useEffect(() => {
         if (grammarResult) {
             const categories = {
@@ -52,7 +97,7 @@ const GrammarCheck = () => {
                     }))
                 );
 
-            setIssues(allIssues); // Store issues after result
+            setIssues(allIssues);
         }
     }, [grammarResult]);
 
@@ -60,13 +105,10 @@ const GrammarCheck = () => {
         ? issues
         : issues.filter((issue) => issue.type === selectedTab);
 
-    // Function to fix and remove the card
     const handleFix = (errorText, correctText, issueId) => {
-        // Apply the fix
         const updatedText = grammarText.replace(errorText, correctText);
         setGrammarText(updatedText);
 
-        // Remove the fixed issue from the issues list
         const updatedIssues = issues.filter((issue) => issue.id !== issueId);
         setIssues(updatedIssues);
     };
@@ -109,21 +151,36 @@ const GrammarCheck = () => {
                         <Button variant="outlined" color="secondary" onClick={handleClear}>
                             Clear
                         </Button>
-                        <Button variant="contained" onClick={handleCheckGrammar}>
-                            Check Grammar
+                        <Button
+                            variant="contained"
+                            onClick={handleCheckGrammar}
+                            disabled={isLoading || !isButtonVisible} 
+                        > Check Grammar
                         </Button>
                     </Box>
+                 
                 </Box>
-
+              
                 <Box sx={{ width: isMobile ? "90%" : "35%", alignSelf: "flex-start", minHeight: "150px", bgcolor: "#f5f5f5", borderRadius: "10px" }}>
+                {error && (
+                        <Alert severity="error" sx={{  fontSize: "14px", mt: 1}}>
+                            {error}
+                        </Alert>
+                    )}      
                     <Typography sx={{ fontSize: "16px", fontWeight: "bold", p: 1.5 }}>
                         Grammar Check Result
                     </Typography>
 
-                    {!grammarResult && (
+                    {!grammarResult && !isLoading && (
                         <Typography sx={{ fontSize: "14px", p: 1.5 }}>
                             Paste your CV content and click "Check Grammar" to get started.
                         </Typography>
+                    )}
+
+                    {isLoading && (
+                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "150px" }}>
+                            <CircularProgress />
+                        </Box>
                     )}
 
                     {grammarResult && (
