@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
       .then((res) => {
         if (res.data && res.data.user) {
           setUser(res.data.user);
-          setToken("from-cookie"); // Just a placeholder to make isAuthenticated true
+          setToken("from-cookiee"); // Just a placeholder to make isAuthenticated true
         } else {
           throw new Error("Invalid response from server.");
         }
