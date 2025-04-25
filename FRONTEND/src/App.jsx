@@ -16,6 +16,8 @@ import VerifyOTP from "./componants/Auth/VerifyOTP";
 import GrammarCheck from "./componants/GrammarCheck/grammarCheck";
 import { FileProvider } from "./context/fileContext.jsx";
 import { TemplateProvider } from "./context/choosenTempContext.jsx";
+import ProtectedRoute from "./guard/ProtectedRoute.jsx";
+import AuthProvider from "./context/Auth/AuthContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "builder", element: <Builder /> },
+      { path: "builder", element:<ProtectedRoute><Builder /></ProtectedRoute> },
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
+    <AuthProvider>
     <Provider store={store}>
       <CVProvider>
         <TemplateProvider>
@@ -49,6 +52,7 @@ function App() {
         </TemplateProvider>
       </CVProvider>
     </Provider>
+    </AuthProvider>
   );
 }
 
