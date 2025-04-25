@@ -126,7 +126,7 @@ export const login = async ({ email, password }: LoginParams) => {
     status: StatusCodes.OK,
     message: "Login successful",
     token,
-    user
+   
   };
 };
 

@@ -19,8 +19,7 @@ export const login = async (req: Request, res: Response) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
     res.status(result.status).json({ message: result.message ,
-      user: result.user, 
-      token: result.token 
+
     });
   } else {
     res.status(result.status).json(result);
