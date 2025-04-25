@@ -261,8 +261,8 @@ const Personal = () => {
           multiline
           minRows={2}
           variant="outlined"
-          name="summary"
-          value={personalInfo.summary || ''}
+          name="ProfessionalSummary"
+          value={personalInfo.ProfessionalSummary || ''}
           onChange={handleChange}
           placeholder="Write your professional summary here..."
           sx={{

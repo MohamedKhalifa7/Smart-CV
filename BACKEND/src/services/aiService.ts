@@ -10,6 +10,8 @@ export async function aiResponse(cvText:string):Promise<{
     neutralFeedback: string[];
     negativeFeedback: string[];
     sectionsToImprove: { section: string; suggestion: string }[];
+    atsCheckerNotes: string[];
+    matchJobTitle: string;
  }>{
 
     const prompt = `you are an AI CV analayzer that checks if a resume is compatable with ATS (application tracking system)
@@ -40,7 +42,13 @@ export async function aiResponse(cvText:string):Promise<{
         "sectionsToImprove": [
           { "section": "Education", "suggestion": "Include graduation dates for each degree" },
           { "section": "Contact", "suggestion": "Make sure email and phone number are listed clearly" }
-        ]
+        ],
+        "atsCheckerNotes": [
+          "The CV is ATS-friendly with a simple layout",
+          "Avoid using images or graphics that ATS might not read correctly",
+          "Match Job Description: Use exact words and phrases from the job posting.
+        ],
+        "matchJobTitle": "your cv is a not match for the job title, it is a good match for AI engineer"
       }
     `;
 
@@ -61,7 +69,9 @@ export async function aiResponse(cvText:string):Promise<{
             positiveFeedback: parsed.positiveFeedback || [],
             neutralFeedback: parsed.neutralFeedback || [],
             negativeFeedback: parsed.negativeFeedback || [],
-            sectionsToImprove: parsed.sectionsToImprove || []
+            sectionsToImprove: parsed.sectionsToImprove || [],
+            atsCheckerNotes: parsed.atsCheckerNotes || [],
+            matchJobTitle: parsed.matchJobTitle || ""
         }
       
 }
