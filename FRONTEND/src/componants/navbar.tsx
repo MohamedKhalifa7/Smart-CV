@@ -43,7 +43,7 @@ function Navbar() {
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#f5f5f5" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#f5f5f5",  borderBottom: "1px solid #ddd" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
