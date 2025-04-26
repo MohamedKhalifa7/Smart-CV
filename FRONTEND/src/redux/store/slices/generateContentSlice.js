@@ -41,7 +41,7 @@ export const generateContentAction = createAsyncThunk(
     "generateContent",
     async function fetchAIContent(data) {
         try {
-          const response = await axios.post('http://localhost:3001/api/ai/ai-writing-assist', data);
+          const response = await axios.post('http://localhost:3001/api/ai/ai-writing-assist', data,{withCredentials: true});  
           console.log('Response from server:', response.data); 
       
           if (response.status === 200) {

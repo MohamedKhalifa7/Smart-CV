@@ -18,6 +18,9 @@ import { FileProvider } from "./context/fileContext.jsx";
 import { TemplateProvider } from "./context/choosenTempContext.jsx";
 import ProtectedRoute from "./guard/ProtectedRoute.jsx";
 import AuthProvider from "./context/Auth/AuthContext.jsx";
+import './i18n';
+import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+  }, [i18n.language]);
   return (
     <AuthProvider>
     <Provider store={store}>

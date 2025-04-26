@@ -4,7 +4,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const GrammarCheck = () => {
     const [grammarText, setGrammarText] = useState("");
