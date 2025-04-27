@@ -4,11 +4,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DescriptionIcon from '@mui/icons-material/Description';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import i18n from '../i18n';
+import { useTranslation } from 'react-i18next';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     try {
@@ -20,7 +23,7 @@ function Navbar() {
   };
 
   const pages = [
-    { label: "Home", href: "/" },
+    { label: t('Home'), href: "/" },
     { label: "Blogs", href: "/Blogs" },
     { label: "Tips", href: "/Tips" }
   ];
@@ -109,6 +112,10 @@ function Navbar() {
 
           {/* Desktop Navbar */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: "40px", justifyContent: "end", alignItems: "center" }}>
+          <div>
+      <button onClick={() => i18n.changeLanguage('en')}>English</button>
+      <button onClick={() => i18n.changeLanguage('ar')}>العربية</button>
+    </div>
             {pages.map((page) => (
               <Typography
                 key={page.label}
@@ -125,7 +132,7 @@ function Navbar() {
             ))}
             <Button
               onClick={() => navigate('/getStart')}
-              sx={{ background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)', color: "white", fontSize: "12px" }}
+              sx={{ background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)', color: "white", fontSize: "12px",marginInlineEnd:2 }}
             >
               Get Started
             </Button>

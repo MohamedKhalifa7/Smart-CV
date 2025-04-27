@@ -17,9 +17,17 @@ export const login = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
+      sameSite: "strict",
     });
-    res.status(result.status).json({ message: result.message ,
 
+    res.status(result.status).json({
+      message: result.message,
+      token: result.token,
+      user: {
+        userId: result.userId,
+        email: result.email,
+        role: result.role,
+      },
     });
   } else {
     res.status(result.status).json(result);
