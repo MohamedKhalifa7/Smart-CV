@@ -10,6 +10,11 @@ import {cvTemplateAction} from '../../../../redux/store/slices/cvTemplateSlice';
 function ChooseTemplateDialog(props) {
     const { onClose, open } = props;
 
+    const [open2, setOpen] = useState(true);
+    // const handleCloseDialog = () => {
+    //     setOpen(false);
+    //   };
+
      const muiTheme = useTheme();
       const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
     
@@ -21,10 +26,11 @@ function ChooseTemplateDialog(props) {
     }, [])   
 
     const handleClose = () => {
+        setOpen(false);
         onClose();
     }
     return (
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog onClose={handleClose} open={open && open2}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <DialogTitle>Choose Template</DialogTitle>
                 <CloseIcon
@@ -42,6 +48,7 @@ function ChooseTemplateDialog(props) {
                         img={template.img}
                         disc={template.disc}
                         pro={template.pro}
+                        onCloseDialog={handleClose}
                     ></TemplateCard>
                     </Grid>
                 ))}

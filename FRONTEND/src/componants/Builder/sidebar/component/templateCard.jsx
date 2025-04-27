@@ -9,19 +9,23 @@ import CardActions from '@mui/material/CardActions';
 import Box from '@mui/material/Box';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useTemplate } from '../../../../context/choosenTempContext';
+import { usePreview } from '../../../../context/previewContext';
 
 function TemplateCard(props) {
 
-  const { title, img , disc, pro} = props;
+  const { title, img , disc, pro, onCloseDialog} = props;
   const {choosenTemp, setChoosenTemp} = useTemplate();
+  const { setGoToPreview } = usePreview();
 
   const handleSelect = (e)=>{
     e.preventDefault();
     setChoosenTemp(title);
-  }
+    onCloseDialog();
+    setGoToPreview(true);  // switch to Preview tab
+    }
 
   return (
-    <Card sx={{ maxWidth: 200, border: 'solid #6a11cb 3px' }}>
+    <Card sx={{ maxWidth: 200, border: choosenTemp === title? 'solid #6a11cb 3px' :'' }}>
   <Box sx={{ position: 'relative' }}>
     <Box
       sx={{
@@ -38,7 +42,7 @@ function TemplateCard(props) {
       }}
     >
       <Typography variant="caption" sx={{ fontWeight: 'bold' }}>
-        <CheckCircleOutlineIcon sx={{ mr: 0.5, mt: 0.5, color: 'green' }} />
+      {choosenTemp === title? <CheckCircleOutlineIcon sx={{ mr: 0.5, mt: 0.5, color: 'green' }} />:<div></div>}
       </Typography>
       {pro && (
         <Typography

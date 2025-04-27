@@ -21,6 +21,7 @@ import AuthProvider from "./context/Auth/AuthContext.jsx";
 import './i18n';
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { PreviewProvider } from "./context/previewContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ function App() {
     <AuthProvider>
     <Provider store={store}>
       <CVProvider>
+        <PreviewProvider>
         <TemplateProvider>
           <FileProvider>
             <ThemeProvider theme={theme}>
@@ -57,6 +59,7 @@ function App() {
             </ThemeProvider>
           </FileProvider>
         </TemplateProvider>
+        </PreviewProvider>
       </CVProvider>
     </Provider>
     </AuthProvider>
