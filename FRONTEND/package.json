@@ -17,10 +17,7 @@
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
     "framer-motion": "^12.7.4",
-<<<<<<< HEAD
-=======
     "i18next": "^25.0.1",
->>>>>>> fcbb21e2441eed3310963b37852c076080219ac7
     "js-cookie": "^3.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -1,9 +1,9 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema} from "mongoose";
 
 interface IExperience {
   role: string;
   company: string;
-  years: Date;
+  years: string;
 }
 
 interface IEducation {
@@ -19,7 +19,7 @@ interface ILanguage {
 interface ICertification {
   name: string;
   company: string;
-  years: Date;
+  years: string;
 }
 
 export interface ICV {
