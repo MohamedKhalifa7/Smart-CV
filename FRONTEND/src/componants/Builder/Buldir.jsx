@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Paper,
@@ -17,10 +17,12 @@ import Skills from './Edit/Skills';
 import Preview from './Preview';
 import SideBar from './sidebar/sideBar';
 import Header from './header';
+import { usePreview } from '../../context/previewContext';
 const Builder = () => {
   const [editMode, setEditMode] = useState(true);
   const [activeTab, setActiveTab] = useState('personal');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { goToPreview, setGoToPreview } = usePreview();
 
   const muiTheme = useTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
@@ -28,6 +30,13 @@ const Builder = () => {
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
+
+  useEffect(() => {
+    if (goToPreview) {
+      setEditMode(false); // switch to Preview tab
+      setGoToPreview(false); // reset after switching
+    }
+  }, [goToPreview]);
 
   return (
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default',overflowX: 'hidden'  }}>
