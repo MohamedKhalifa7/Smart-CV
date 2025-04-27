@@ -18,7 +18,7 @@ import {
   validateLoginInput,
 } from "../middleware/validationMiddleware";
 import { authenticateToken } from "../middleware/validateJWTMiddleware";
-import User from "../models/userModel"; 
+import User from "../models/userModel";
 
 router.post("/register", validateRegisterInput, register);
 router.post("/login", validateLoginInput, login);
@@ -41,17 +41,16 @@ router.get(
     failureRedirect: "http://localhost:5173/login",
   }),
   async (req: any, res) => {
-    console.log("User info from Google OAuth:", req.user); 
+    console.log("User info from Google OAuth:", req.user);
 
     try {
       const user = req.user;
 
-      
       const dbUser = await User.findById(user._id);
 
       if (!dbUser) {
-         res.status(404).json({ message: "User not found" });
-         return;
+        res.status(404).json({ message: "User not found" });
+        return;
       }
 
       const userData = {
@@ -59,7 +58,7 @@ router.get(
         email: dbUser.email,
         firstName: dbUser.firstName,
         lastName: dbUser.lastName,
-        role: dbUser.role, 
+        role: dbUser.role,
       };
 
       const token = jwt.sign(
@@ -72,6 +71,7 @@ router.get(
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 24 * 60 * 60 * 1000,
+        sameSite: "strict",
       });
 
       res.redirect(
