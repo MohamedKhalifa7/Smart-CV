@@ -4,11 +4,28 @@ import fs from "fs";
 import path from "path";
 import { ICV } from "../models/cvModel";
 
-  
+// Function to format dates to "MMM YYYY" (e.g., "Jan 2020")
+const formatDate = (dateString: string | undefined): string => {
+    if (!dateString) return "Present"; // If no endDate, assume "Present"
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+};
 
 export const exportPdfCV = async (CV: ICV, templateName: string) => {
     const templatePath = path.join(__dirname, `../templates/${templateName}.html`);
     const source = fs.readFileSync(templatePath, "utf-8");
+
+    const formattedExperience = CV.experience.map(exp => ({
+        ...exp,
+        startDate: formatDate(exp.startDate),
+        endDate: formatDate(exp.endDate),
+    }));
+
+    const formattedEducation = CV.education.map(edu => ({
+        ...edu,
+        startDate: formatDate(edu.startYear),
+        endDate: formatDate(edu.endYear),
+    }));
 
     const template = Handlebars.compile(source);
     const rendered = template({
@@ -18,17 +35,17 @@ export const exportPdfCV = async (CV: ICV, templateName: string) => {
         phone: CV.personalInfo.phone,
         location: CV.personalInfo.location,
         professionalTitle: CV.personalInfo.professionalTitle,
-        professionalSummary: CV.personalInfo.professionalSummary,
-        skills: CV.skills &&CV.skills.skills && Array.isArray(CV.skills.skills) ? CV.skills.skills.join(", ") : "",
-        experience: CV.experience,
-        education: CV.education,
+        professionalSummary: CV.personalInfo.ProfessionalSummary,
+        skills: CV.skills?.skills?.join(", ") || "",
+        experience: formattedExperience,
+        education: formattedEducation,
         languages: CV.skills.languages,
         certifications: CV.skills.certifications,
     });
 
     fs.mkdirSync(path.join(__dirname, "../exports"), { recursive: true });
 
-    const filePath = path.join(__dirname, "../exports", `${CV.personalInfo.firstName}_CV.pdf`);
+    const filePath = path.join(__dirname, "../exports", `${CV.personalInfo.firstName} ${CV.personalInfo.lastName}_CV.pdf`);
 
     const browser = await puppeteer.launch();
     const Page = await browser.newPage();

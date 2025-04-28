@@ -31,7 +31,7 @@ async function exportWordCV(CV: ICV): Promise<string> {
               new TextRun({ break: 1 }),
               new TextRun(`Professional Title: ${CV.personalInfo.professionalTitle}`),
               new TextRun({ break: 1 }),
-              new TextRun(`Summary: ${CV.personalInfo.professionalSummary}`),
+              new TextRun(`Summary: ${CV.personalInfo.ProfessionalSummary}`),
             ],
             spacing: { after: 400 },
           }),
