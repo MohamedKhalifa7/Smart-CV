@@ -14,7 +14,7 @@ export const exportPdfCV= async(CV:ICV,templateName:string)=>{
     const template = Handlebars.compile(source)
     const rendered = template({
         ...CV,
-        skills:CV.skills.join(", ")
+        skills: CV.skills ? Object.values(CV.skills).flat().join(", ") : ""
     })
 
     fs.mkdirSync(path.join(__dirname,"../exports"),{recursive:true})
