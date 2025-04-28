@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>{{name}} - LinkedIn Style CV</title>
+  <title>{{firstName}} {{lastName}} - LinkedIn Style CV</title>
   <style>
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -67,7 +67,7 @@
 </head>
 <body>
   <div class="header">
-    <div class="name">{{name}}</div>
+    <div class="name">{{firstName}} {{lastName}}</div>
     <div class="email">{{email}}</div>
   </div>
 
@@ -76,8 +76,9 @@
     <ul>
       {{#each experience}}
       <li class="entry">
-        <div class="entry-title">{{role}}</div>
-        <div class="entry-sub">{{company}} — {{years}}</div>
+        <div class="entry-title">{{jobTitle}}</div>
+        <div class="entry-sub">{{company}} — {{startDate}} to {{endDate}}</div>
+        <div class="entry-sub">{{description}}</div>
       </li>
       {{/each}}
     </ul>
@@ -85,33 +86,35 @@
 
   <div class="section">
     <h2>Education</h2>
-    <div class="entry">
-      <div class="entry-title">{{education.university}}</div>
-      <div class="entry-sub">{{education.degree}}</div>
-    </div>
+    {{#each education}}
+      <div class="entry">
+        <div class="entry-title">{{institution}}</div>
+        <div class="entry-sub">{{degree}} — {{startDate}} to {{endDate}}</div>
+        <div class="entry-sub">{{description}}</div>
+      </div>
+    {{/each}}
   </div>
 
   <div class="section">
     <h2>Skills</h2>
-    <div class="skills">{{skills}}</div>
+    <div class="skills">
+     {{skills}}
+    </div>
   </div>
 
   <div class="section">
     <h2>Languages</h2>
     <ul>
-      {{#each languages}}
-      <li>{{name}} — {{degree}}</li>
-      {{/each}}
+     {{languages}}
     </ul>
   </div>
-
+  
   <div class="section">
     <h2>Certifications</h2>
     <ul>
-      {{#each certifications}}
-      <li>{{name}} from {{company}} ({{years}})</li>
-      {{/each}}
+      {{certifications}}
     </ul>
   </div>
+  
 </body>
 </html>
