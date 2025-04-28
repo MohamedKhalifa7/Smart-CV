@@ -35,7 +35,7 @@ const Personal = () => {
         fontWeight: 'bold',
         marginBottom: '16px',
         color: '#333',
-        textAlign: 'left',
+        textAlign: 'start',
         fontSize: '1.1rem'
       }}>
         {t('Personal Information')}
