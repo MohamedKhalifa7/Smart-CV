@@ -6,9 +6,11 @@ import TemplateCard from './templateCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect , useState} from 'react';
 import {cvTemplateAction} from '../../../../redux/store/slices/cvTemplateSlice';
+import { useAuth } from '../../../../context/Auth/AuthContext';
 
 function ChooseTemplateDialog(props) {
     const { onClose, open } = props;
+    
 
     const [open2, setOpen] = useState(true);
     // const handleCloseDialog = () => {

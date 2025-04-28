@@ -4,25 +4,22 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import { useCV } from '../../../context/CVcontext';
-import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next'; // اضفت useTranslation
 
 const Personal = () => {
   const { formData, updateSection, personalFormValid, validatePersonalInfo } = useCV();
   const personalInfo = formData.personalInfo || {};
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useTranslation(); 
 
   const handleChange = (e) => {
-
     const updatedInfo = {
       ...personalInfo,
       [e.target.name]: e.target.value,
     };
-
     updateSection('personalInfo', updatedInfo);
-
     validatePersonalInfo(updatedInfo);
-
   };
 
   return (
@@ -38,10 +35,10 @@ const Personal = () => {
         fontWeight: 'bold',
         marginBottom: '16px',
         color: '#333',
-        textAlign: 'left',
+        textAlign: 'start',
         fontSize: '1.1rem'
       }}>
-        Personal Information
+        {t('Personal Information')}
       </Typography>
 
       {/* First and Last Name */}
@@ -49,11 +46,11 @@ const Personal = () => {
         <Box sx={{ width: '50%' }}>
           <Typography variant="subtitle1" sx={{
             marginBottom: '2px',
-            textAlign: 'left',
+            textAlign: 'start',
             fontWeight: 'bold',
             fontSize: '0.85rem'
           }}>
-            First Name
+            {t('First Name')}
           </Typography>
           <TextField
             fullWidth
@@ -61,7 +58,7 @@ const Personal = () => {
             name="firstName"
             value={personalInfo.firstName || ''}
             onChange={handleChange}
-            placeholder="John"
+            placeholder={t("John")}
             required
             error={Boolean(personalFormValid.firstName)}
             helperText={personalFormValid.firstName}
@@ -82,10 +79,10 @@ const Personal = () => {
           <Typography variant="subtitle1" sx={{
             fontWeight: 'bold',
             marginBottom: '2px',
-            textAlign: 'left',
+            textAlign: 'start',
             fontSize: '0.85rem'
           }}>
-            Last Name
+            {t('Last Name')}
           </Typography>
           <TextField
             fullWidth
@@ -95,7 +92,7 @@ const Personal = () => {
             onChange={handleChange}
             error={Boolean(personalFormValid.lastName)}
             helperText={personalFormValid.lastName}
-            placeholder="Smith"
+            placeholder={t("Smith")}
             InputProps={{ disableUnderline: true }}
             sx={{
               '& .MuiInput-input': {
@@ -115,10 +112,10 @@ const Personal = () => {
         <Typography variant="subtitle1" sx={{
           fontWeight: 'bold',
           marginBottom: '2px',
-          textAlign: 'left',
+          textAlign: 'start',
           fontSize: '0.85rem'
         }}>
-          Professional Title
+          {t('Professional Title')}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <WorkIcon sx={{ color: '#555', fontSize: '1rem' }} />
@@ -130,7 +127,7 @@ const Personal = () => {
             onChange={handleChange}
             error={Boolean(personalFormValid.professionalTitle)}
             helperText={personalFormValid.professionalTitle}
-            placeholder="Marketing Manager"
+            placeholder={t("Marketing Manager")}
             InputProps={{ disableUnderline: true }}
             sx={{
               '& .MuiInput-input': {
@@ -150,10 +147,10 @@ const Personal = () => {
         <Typography variant="subtitle1" sx={{
           fontWeight: 'bold',
           marginBottom: '2px',
-          textAlign: 'left',
+          textAlign: 'start',
           fontSize: '0.85rem'
         }}>
-          Email
+          {t('Email')}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <EmailIcon sx={{ color: '#555', fontSize: '1rem' }} />
@@ -185,10 +182,10 @@ const Personal = () => {
         <Typography variant="subtitle1" sx={{
           fontWeight: 'bold',
           marginBottom: '2px',
-          textAlign: 'left',
+          textAlign: 'start',
           fontSize: '0.85rem'
         }}>
-          Phone
+          {t('Phone')}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <PhoneIcon sx={{ color: '#555', fontSize: '1rem' }} />
@@ -218,10 +215,10 @@ const Personal = () => {
         <Typography variant="subtitle1" sx={{
           fontWeight: 'bold',
           marginBottom: '2px',
-          textAlign: 'left',
+          textAlign: 'start',
           fontSize: '0.85rem'
         }}>
-          Location
+          {t('Location')}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <LocationOnIcon sx={{ color: '#555', fontSize: '1rem' }} />
@@ -231,7 +228,7 @@ const Personal = () => {
             name="location"
             value={personalInfo.location || ''}
             onChange={handleChange}
-            placeholder="New York, NY"
+            placeholder={t("New York, NY")}
             InputProps={{ disableUnderline: true }}
             sx={{
               '& .MuiInput-input': {
@@ -251,10 +248,10 @@ const Personal = () => {
         <Typography variant="subtitle1" sx={{
           fontWeight: 'bold',
           marginBottom: '2px',
-          textAlign: 'left',
+          textAlign: 'start',
           fontSize: '0.85rem'
         }}>
-          Professional Summary
+          {t('Professional Summary')}
         </Typography>
         <TextField
           fullWidth
@@ -264,7 +261,7 @@ const Personal = () => {
           name="ProfessionalSummary"
           value={personalInfo.ProfessionalSummary || ''}
           onChange={handleChange}
-          placeholder="Write your professional summary here..."
+          placeholder={t("Write your professional summary here...")}
           sx={{
             '& .MuiOutlinedInput-root': {
               padding: '6px',
