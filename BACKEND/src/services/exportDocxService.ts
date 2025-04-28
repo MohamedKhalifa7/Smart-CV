@@ -3,16 +3,20 @@ import { ICV } from "../models/cvModel";
 import path from "path";
 import fs from "fs";
 
+function formatDate(date: string | Date): string {
+  const d = new Date(date);
+  return d.toLocaleString('default', { month: 'short', year: 'numeric' });
+}
+
 async function exportWordCV(CV: ICV): Promise<string> {
   const skillsText = CV.skills?.skills?.join(", ") || "No skills listed";
-  const languagesText = CV.skills?.languages || "No languages listed";
-  const certificationsText = CV.skills?.certifications || "No certifications listed";
+  const languagesText = Array.isArray(CV.skills?.languages) ? CV.skills.languages.join(", ") : (CV.skills?.languages || "No languages listed");
+  const certificationsText = Array.isArray(CV.skills?.certifications) ? CV.skills.certifications.join(", ") : (CV.skills?.certifications || "No certifications listed");
 
   const doc = new Document({
     sections: [
       {
         children: [
-          
           new Paragraph({
             children: [
               new TextRun({ text: "Personal Information", bold: true, size: 28 }),
@@ -36,7 +40,6 @@ async function exportWordCV(CV: ICV): Promise<string> {
             spacing: { after: 400 },
           }),
 
-          
           new Paragraph({
             children: [new TextRun({ text: "Experience", bold: true, size: 28 })],
             spacing: { after: 200 },
@@ -48,7 +51,7 @@ async function exportWordCV(CV: ICV): Promise<string> {
                 new TextRun({ break: 1 }),
                 new TextRun(`Location: ${exp.location}`),
                 new TextRun({ break: 1 }),
-                new TextRun(`From ${new Date(exp.startDate).toLocaleDateString()} to ${new Date(exp.endDate).toLocaleDateString()}`),
+                new TextRun(`From ${formatDate(exp.startDate)} to ${formatDate(exp.endDate)}`),
                 new TextRun({ break: 1 }),
                 new TextRun(`Description: ${exp.description}`),
               ],
@@ -56,7 +59,6 @@ async function exportWordCV(CV: ICV): Promise<string> {
             })
           ),
 
-          
           new Paragraph({
             children: [new TextRun({ text: "Education", bold: true, size: 28 })],
             spacing: { after: 200 },
@@ -70,7 +72,7 @@ async function exportWordCV(CV: ICV): Promise<string> {
                 new TextRun({ break: 1 }),
                 new TextRun(`Location: ${edu.location}`),
                 new TextRun({ break: 1 }),
-                new TextRun(`Years: ${edu.startYear} - ${edu.endYear}`),
+                new TextRun(`From ${formatDate(edu.startYear)} to ${formatDate(edu.endYear)}`),
                 new TextRun({ break: 1 }),
                 new TextRun(`Description: ${edu.description}`),
               ],
@@ -78,11 +80,8 @@ async function exportWordCV(CV: ICV): Promise<string> {
             })
           ),
 
-          
           new Paragraph({
-            children: [
-              new TextRun({ text: "Skills", bold: true, size: 28 }),
-            ],
+            children: [new TextRun({ text: "Skills", bold: true, size: 28 })],
             spacing: { after: 200 },
           }),
           new Paragraph({
@@ -90,31 +89,21 @@ async function exportWordCV(CV: ICV): Promise<string> {
             spacing: { after: 400 },
           }),
 
-          
           new Paragraph({
-            children: [
-              new TextRun({ text: "Languages", bold: true, size: 28 }),
-            ],
+            children: [new TextRun({ text: "Languages", bold: true, size: 28 })],
             spacing: { after: 200 },
           }),
           new Paragraph({
-            children: [
-              new TextRun(languagesText),
-            ],
+            children: [new TextRun(languagesText)],
             spacing: { after: 400 },
           }),
 
-         
           new Paragraph({
-            children: [
-              new TextRun({ text: "Certifications", bold: true, size: 28 }),
-            ],
+            children: [new TextRun({ text: "Certifications", bold: true, size: 28 })],
             spacing: { after: 200 },
           }),
           new Paragraph({
-            children: [
-              new TextRun(certificationsText),
-            ],
+            children: [new TextRun(certificationsText)],
             spacing: { after: 400 },
           }),
         ],

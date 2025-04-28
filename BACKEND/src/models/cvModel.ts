@@ -35,6 +35,7 @@ interface ISkills{
   certifications:string;
 }
 
+
 export interface ICV extends Document {
   userId: mongoose.Types.ObjectId | string;
   personalInfo: IPersonalInfo;
@@ -82,7 +83,7 @@ const CVSchema = new Schema<ICV>({
   skills: {
     skills: [{ type: String, required: true }],
     languages: { type: String },
-    certifications: { type: String },
+    certifications:{type:String,required:true},
   },
 
 
