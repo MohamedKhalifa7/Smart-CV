@@ -2,68 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>{{name}} - CV</title>
+  <title>{{firstName}} {{lastName}} - CV</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      color: #333;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    .section {
-      margin-bottom: 25px;
-    }
-    .bold {
-      font-weight: bold;
-    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { background-color: #1e293b; color: #fff; width: 30%; padding: 40px 25px; }
+    .main { width: 70%; padding: 40px; }
+    h1 { font-size: 28px; margin-bottom: 5px; }
+    h2 { font-size: 18px; color: #1e293b; border-bottom: 1px solid #e0e0e0; margin-bottom: 10px; padding-bottom: 5px; }
+    .section { margin-bottom: 20px; }
+    .label { font-weight: bold; margin-bottom: 6px; display: inline-block; }
+    ul { list-style: none; padding-left: 0; }
+    li { margin-bottom: 6px; }
+    .sidebar-section { margin-bottom: 25px; }
+    .small { font-size: 14px; }
   </style>
 </head>
 <body>
-  <h1>{{name}}</h1>
-  <p><strong>Email:</strong> {{email}}</p>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h1>{{firstName}} {{lastName}}</h1>
+      <p class="small">{{email}}</p>
 
-  <div class="section">
-    <h2>Experience</h2>
-    <ul>
-      {{#each experience}}
-        <li><span class="bold">{{role}}</span> at {{company}} ({{years}})</li>
-      {{/each}}
-    </ul>
-  </div>
+      <div class="sidebar-section">
+        <div class="label">Skills</div>
+        <p class="small">{{skills}}</p>
+      </div>
 
-  <div class="section">
-    <h2>Education</h2>
-    <p>{{education.university}} — {{education.degree}}</p>
-  </div>
+      <div class="sidebar-section">
+        <div class="label">Languages</div>
+        <p class="small">{{languages}}</p>
+      </div>
 
-  <div class="section">
-    <h2>Skills</h2>
-    <p>{{skills}}</p>
-  </div>
+      <div class="sidebar-section">
+        <div class="label">Certifications</div>
+        <p class="small">{{certifications}}</p>
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>Languages</h2>
-    <ul>
-      {{#each languages}}
-        <li>{{name}}: {{degree}}</li>
-      {{/each}}
-    </ul>
-  </div>
+    <!-- Main Content -->
+    <div class="main">
+      <div class="section">
+        <h2>Experience</h2>
+        <ul>
+          {{#each experience}}
+            <li><strong>{{jobTitle}}</strong> at {{company}} ({{startDate}} to {{endDate}})</li>
+          {{/each}}
+        </ul>
+      </div>
 
-  <div class="section">
-    <h2>Certifications</h2>
-    <ul>
-      {{#each certifications}}
-        <li>{{name}} from {{company}} ({{years}})</li>
-      {{/each}}
-    </ul>
+      <div class="section">
+        <h2>Education</h2>
+        <ul>
+          {{#each education}}
+            <li><strong>{{institution}}</strong> — {{degree}} ({{startDate}} to {{endDate}})</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
   </div>
 </body>
 </html>
