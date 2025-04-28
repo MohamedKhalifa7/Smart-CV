@@ -10,12 +10,16 @@ import Box from '@mui/material/Box';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useTemplate } from '../../../../context/choosenTempContext';
 import { usePreview } from '../../../../context/previewContext';
+import { useAuth } from '../../../../context/Auth/AuthContext';
 
 function TemplateCard(props) {
 
   const { title, img , disc, pro, onCloseDialog} = props;
   const {choosenTemp, setChoosenTemp} = useTemplate();
   const { setGoToPreview } = usePreview();
+
+  const {user} = useAuth();
+      const isPro = user.role === 'pro user';
 
   const handleSelect = (e)=>{
     e.preventDefault();
@@ -90,7 +94,7 @@ function TemplateCard(props) {
       
 
       <CardActions>
-        <Button size="small" color="primary" variant='contained' fullWidth
+        <Button disabled={!isPro && pro} size="small" color="primary" variant='contained' fullWidth
           onClick={handleSelect}>
           Select
         </Button>
