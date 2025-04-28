@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCV } from '../../context/CVcontext';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const muiTheme = useTheme();
@@ -15,6 +16,7 @@ const Header = () => {
   const {formData,fetchUserCVs,validatePersonalInfo}=useCV();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const { t } = useTranslation();
 
   const handelSave = async () => {
     const isValid = validatePersonalInfo(formData.personalInfo);
@@ -128,10 +130,12 @@ const Header = () => {
             fullWidth={isMobile}
             sx={{
               mr: isMobile ? 0 : 2,
+              m:2,
+              pl: 2,
             }}
             variant="outlined"
           >
-            Save
+           {t('Save')}
           </Button>
           <Button
             startIcon={<DownloadIcon />}

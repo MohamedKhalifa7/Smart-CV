@@ -22,15 +22,12 @@ const AuthProvider = ({ children }) => {
 
     axios
       .get("http://localhost:3001/auth/verify-token", {
-        headers: {
-          Authorization: `Bearer ${storedToken}`,
-        },
         withCredentials: true,
       })
       .then((res) => {
         if (res.data && res.data.user) {
           setUser(res.data.user);
-          setToken(storedToken);
+          setToken("storedToken");
         } else {
           throw new Error("Invalid response from server.");
         }
