@@ -46,6 +46,10 @@ export const CVProvider = ({ children }) => {
     }
   });
 
+  const updateFormData = (cvData) => {
+    setFormData(cvData);
+  };
+
   // Enhanced update function that handles arrays properly
   const updateSection = (section, data) => {
     setFormData(prev => {
@@ -160,7 +164,10 @@ export const CVProvider = ({ children }) => {
   return (
     <CVContext.Provider value={{ 
       formData, 
+      setFormData,
+      updateFormData,
       updateSection,
+      myCvs,
       updateArraySection,
       addArrayItem,
       removeArrayItem,fetchUserCVs,personalFormValid,validatePersonalInfo
