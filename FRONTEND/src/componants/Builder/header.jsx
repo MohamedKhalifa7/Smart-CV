@@ -22,7 +22,7 @@ const Header = () => {
     const isValid = validatePersonalInfo(formData.personalInfo);
 
     if (!isValid) {
-      setError('Please fill in all required fields.');
+      setError(t('Please fill in all required fields.'));
 
       setTimeout(() => {
        setError('');
@@ -52,7 +52,7 @@ const Header = () => {
           setError('');
          }, 10000);
       } else {
-        setError('Error saving CV');
+        setError(t('Error saving CV'));
         setTimeout(() => {
           setError('');
          }, 3000);
@@ -83,10 +83,10 @@ const Header = () => {
             component="div"
             sx={{
               color: muiTheme.customStyles.gradientText,
-              textAlign: isMobile ? 'center' : 'left'
+              textAlign: isMobile ? 'center' : 'start'
             }}
           >
-            CV Builder
+            {t("CV Builder")}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -97,7 +97,7 @@ const Header = () => {
               textAlign: isMobile ? 'center' : 'left'
             }}
           >
-            Create your professional CV with our easy-to-use tools
+            {t("Create your professional CV with our easy-to-use tools")}
           </Typography>
         </Box>
 
@@ -116,7 +116,7 @@ const Header = () => {
         >
            {success && (
             <Alert severity="success" sx={{ mr: 2 }}>
-              CV saved successfully!
+              {t("CV saved successfully!")}
             </Alert>
           )}
           {error && (
@@ -126,7 +126,7 @@ const Header = () => {
           )}
           <Button
             onClick={handelSave}
-            startIcon={<SaveIcon />}
+            startIcon={<SaveIcon sx={{marginInlineEnd:1}}/>}
             fullWidth={isMobile}
             sx={{
               mr: isMobile ? 0 : 2,
@@ -138,11 +138,11 @@ const Header = () => {
            {t('Save')}
           </Button>
           <Button
-            startIcon={<DownloadIcon />}
+            startIcon={<DownloadIcon sx={{marginInlineEnd:1}}/>}
             fullWidth={isMobile}
             variant="contained"
           >
-            Download
+            {t("Download")}
           </Button>
         </Box>
       </Toolbar>

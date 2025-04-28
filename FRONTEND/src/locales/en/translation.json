@@ -1,5 +1,31 @@
 {
     "Home": "Home",
-    "Save": "Save"
+    "CV Builder": "CV Builder",
+    "Create your professional CV with our easy-to-use tools": "Create your professional CV with our easy-to-use tools",
+    "Save": "Save",
+  "Download": "Download",
+  "CV saved successfully!": "CV saved successfully!",
+  "Error saving CV": "Error saving CV",
+  "Please fill in all required fields.": "Please fill in all required fields.",
+    "Edit": "Edit",
+    "Preview": "Preview",
+    "Personal": "Personal",
+    "Experience": "Experience",
+    "Education": "Education",
+    "Skills": "Skills",
+    "Personal Information": "Personal Information",
+    "First Name": "First Name",
+    "Last Name": "Last Name",
+    "Professional Title": "Professional Title",
+    "Email": "Email",
+    "Phone": "Phone",
+    "Location": "Location",
+    "Professional Summary": "Professional Summary",
+    "New York, NY": "New York, NY",
+    "Marketing Manager": "Marketing Manager",
+    "John":"John",
+    "Smith":"Smith", 
+    "Write your professional summary here...": "Write your professional summary here..."
+
    
   }

@@ -46,13 +46,17 @@ const GrammarCheck = () => {
             }
         } catch (error) {
             if (error.response) {
+                if (error.response.status === 401) {
+                    setError("Please login first to use the grammar checker.");
+                    setGrammarResult("");
+                }
                 // Handle errors returned from the server
-                if (error.response.status === 403) {
+               else if (error.response.status === 403) {
                     setError("You must go pro to access this feature.");
                     setGrammarResult("");
 
                 } else {
-                    setError("Error checking grammar: " + error.response.data.message);
+                    // setError("Error checking grammar: " + error.response.data.message);
                     setGrammarResult("");
 
                 }
@@ -63,7 +67,7 @@ const GrammarCheck = () => {
                     setGrammarResult("");
 
                 } else {
-                    setError("Error: " + error.message);
+                    // setError("Error: " + error.message);
                     setGrammarResult("");
 
                 }
