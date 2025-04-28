@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createContext, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const CVContext = createContext();
 
@@ -8,7 +9,7 @@ export const useCV = () => useContext(CVContext);
 export const CVProvider = ({ children }) => {
   const [myCvs, setMyCvs] = useState([]);
   const [personalFormValid, setPersonalFormValid] = useState({});
-
+const {t}=useTranslation()
   const [formData, setFormData] = useState({
     personalInfo: {
       firstName: '',
@@ -133,10 +134,10 @@ export const CVProvider = ({ children }) => {
     const errors = {};
     const { firstName, lastName, email ,professionalTitle} = data || {};
 
-    if (!firstName) errors.firstName = 'First Name is required';
-    if (!lastName) errors.lastName = 'Last Name is required';
-    if (!email) errors.email = 'Email is required';
-    if (!professionalTitle) errors.professionalTitle = 'Professional Title is required';
+    if (!firstName) errors.firstName = t('First Name is required');
+    if (!lastName) errors.lastName = t('Last Name is required');
+    if (!email) errors.email = t('Email is required');
+    if (!professionalTitle) errors.professionalTitle = t('Professional Title is required');
   
     setPersonalFormValid(errors);
     //return true if no errors

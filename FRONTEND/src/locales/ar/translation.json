@@ -26,5 +26,9 @@
     "Marketing Manager": "مدير تسويق",
     "John": "مصطفى",
     "Smith": "سمير",
-    "Write your professional summary here...": "اكتب ملخصك المهني هنا..."
+    "Write your professional summary here...": "اكتب ملخصك المهني هنا...",
+    "First Name is required": "الاسم الأول مطلوب",
+    "Last Name is required": "الاسم الأخير مطلوب",
+    "Email is required": "البريد الإلكتروني مطلوب",
+    "Professional Title is required": "المسمى الوظيفي مطلوب"
 }
