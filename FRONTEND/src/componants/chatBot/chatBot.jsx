@@ -99,7 +99,7 @@ const ChatBot = () => {
                         height: "50px",
                         background: 'linear-gradient(135deg,rgb(35, 8, 65) 0%,rgb(116, 41, 182) 100%)',
                         boxShadow: 2,
-                        // mb: 2,
+                        mb: 2,
                         // overflowX:"hidden",
 
                         display: 'flex',
@@ -158,7 +158,7 @@ const ChatBot = () => {
                             sx={{
                                 display: 'flex',
                                 justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start',
-                                mb: 1
+                                m: 1
                             }}
                         >
                             <Paper
@@ -187,7 +187,7 @@ const ChatBot = () => {
                 </Box>
 
                 {/* Chat input */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1,mb: 1 }}>
                     <TextField
                         variant="outlined"
                         placeholder="Type your message..."
