@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useCV } from '../../context/CVcontext';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import UpdateIcon from '@mui/icons-material/Update';
 
 const Header = () => {
   const muiTheme = useTheme();
@@ -60,6 +61,44 @@ const Header = () => {
     }
   };
 
+  const handleEdit = async () => {
+    const isValid = validatePersonalInfo(formData.personalInfo);
+  
+    if (!isValid) {
+      setError(t('Please fill in all required fields.'));
+      setTimeout(() => setError(''), 3000);
+      setSuccess(false);
+      return;
+    }
+  
+    if (!formData._id) {
+      setError(t('CV ID is missing.'));
+      return;
+    }
+  
+    try {
+      const response = await axios.put(`http://localhost:3001/cvbuilder/${formData._id}`, formData, {
+        withCredentials: true,
+      });
+  
+      fetchUserCVs();
+      setSuccess(true);
+      setError('');
+      setTimeout(() => setSuccess(false), 3000);
+    } catch (error) {
+      console.error("Update error:", error);
+      if (error.response && error.response.status === 403) {
+        setError(error.response.data.message);
+        setTimeout(() => setError(''), 10000);
+      } else {
+        setError(t('Error updating CV'));
+        setTimeout(() => setError(''), 3000);
+      }
+    }
+  };
+  
+  
+
   return (
     <AppBar position="static" sx={{ 
       bgcolor: 'white',
@@ -103,48 +142,60 @@ const Header = () => {
 
         {/* Buttons */}
         <Box
-          sx={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            alignItems: isMobile ? 'stretch' : 'center',
-            justifyContent: 'center',
-            width: isMobile ? '50%' : 'auto',
-            mx: isMobile ? "auto" : 2,
-            mt: isMobile ? 2 : 0,
-            gap: isMobile ? 1 : 0,
-          }}
-        >
-           {success && (
-            <Alert severity="success" sx={{ mr: 2 }}>
-              {t("CV saved successfully!")}
-            </Alert>
-          )}
-          {error && (
-            <Alert severity="error" sx={{ m: 2 }}>
-              {error}
-            </Alert>
-          )}
-          <Button
-            onClick={handelSave}
-            startIcon={<SaveIcon sx={{marginInlineEnd:1}}/>}
-            fullWidth={isMobile}
-            sx={{
-              mr: isMobile ? 0 : 2,
-              m:2,
-              pl: 2,
-            }}
-            variant="outlined"
-          >
-           {t('Save')}
-          </Button>
-          <Button
-            startIcon={<DownloadIcon sx={{marginInlineEnd:1}}/>}
-            fullWidth={isMobile}
-            variant="contained"
-          >
-            {t("Download")}
-          </Button>
-        </Box>
+  sx={{
+    display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row',
+    alignItems: isMobile ? 'stretch' : 'center',
+    justifyContent: 'center',
+    width: isMobile ? '90%' : 'auto',
+    mx: isMobile ? "auto" : 2,
+    mt: isMobile ? 2 : 0,
+    gap: 2, // Add consistent spacing between buttons
+    flexWrap: 'wrap' // optional: wrap on smaller screens
+  }}
+>
+  {success && (
+    <Alert severity="success" sx={{ width: '100%' }}>
+      {t("CV saved successfully!")}
+    </Alert>
+  )}
+  {error && (
+    <Alert severity="error" sx={{ width: '100%' }}>
+      {error}
+    </Alert>
+  )}
+
+{formData && formData._id && (
+  <Button
+    onClick={handleEdit}
+    startIcon={<UpdateIcon sx={{ marginInlineEnd: 1 }} />}
+    fullWidth={isMobile}
+    variant="outlined"
+  >
+    {t('Update')}
+  </Button>
+)}
+
+
+  <Button
+    onClick={handelSave}
+    startIcon={<SaveIcon sx={{ marginInlineEnd: 1 }} />}
+    fullWidth={isMobile}
+    variant="outlined"
+  >
+    {t('Save')}
+  </Button>
+
+  <Button
+    startIcon={<DownloadIcon sx={{ marginInlineEnd: 1 }} />}
+    fullWidth={isMobile}
+    variant="contained"
+  >
+    {t("Download")}
+  </Button>
+</Box>
+
+
       </Toolbar>
     </AppBar>
   );
