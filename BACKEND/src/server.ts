@@ -9,6 +9,7 @@ import authRouter from "./routes/authRouter";
 import cvRouter from "./routes/cvRouter";
 import cvBuilderRouter from "./routes/cvBuilderRouter";
 import cookieParser from "cookie-parser";
+import chatBotRouter from "./routes/chatBotRouter";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
@@ -40,6 +41,7 @@ app.use(passport.session());
 app.use("/auth", authRouter);
 app.use("/api/ai", cvRouter);
 app.use("/cvbuilder", cvBuilderRouter);
+app.use("/api/chatbot", chatBotRouter);
 
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
