@@ -22,6 +22,7 @@ import './i18n';
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { PreviewProvider } from "./context/previewContext.jsx";
+import ChatBot from "./componants/chatBot/chatBot.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
+      { path: "chatbot", element: <ChatBot /> },
 
       { path: "*", element: <Error /> },
     ],
