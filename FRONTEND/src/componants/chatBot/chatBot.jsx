@@ -3,10 +3,14 @@ import { useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HistoryIcon from '@mui/icons-material/History'
+import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 const ChatBot = () => {
     const theme = useTheme();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const navigate = useNavigate();
 
     const handleSend = () => {
         if (!input.trim()) return;
@@ -103,10 +107,21 @@ const ChatBot = () => {
                         // overflowX:"hidden",
 
                         display: 'flex',
-                        justifyContent: 'space-between',
                         alignItems: 'center',
                     }}
                 >
+                    <Button
+                        onClick={() => navigate(-1)}
+                        sx={{
+                            minWidth: 20,
+                            minHeight: 40,
+                            color: 'white',
+                            pr: 0
+
+                        }}
+                    >
+                        <ArrowBackIcon />
+                    </Button>
                     <Typography
                         variant="h6"
                         sx={{
@@ -114,7 +129,7 @@ const ChatBot = () => {
                             fontWeight: 'bold',
                             letterSpacing: 1,
                             flexGrow: 1,
-                            paddingInlineStart:2
+                            paddingInlineStart: 2
 
                         }}
                     >
@@ -187,7 +202,7 @@ const ChatBot = () => {
                 </Box>
 
                 {/* Chat input */}
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1,mb: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                     <TextField
                         variant="outlined"
                         placeholder="Type your message..."
