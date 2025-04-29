@@ -21,19 +21,16 @@ const ChatBot = () => {
     return (
         <Box sx={{
             display: 'flex',
-            height: '90vh',
+            height: '100vh',
             width: '100%',
-            bgcolor: 'background.default'
+            bgcolor: 'background.default',
         }}>
             {/* Left side - style section */}
             <Box
                 sx={{
                     width: '40%',
                     position: 'relative',
-                    bgcolor: 'primary.main',
                     color: 'white',
-                    p: 0,
-                    borderRadius: '8px',
                     overflow: 'hidden',
                 }}
             >
@@ -93,7 +90,7 @@ const ChatBot = () => {
             }}>
         
                 {/* Chat Header */}
-                
+
                 {/* <Box sx={{
                     width: '96%',
                     bgcolor: "primary.main",

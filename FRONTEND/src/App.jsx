@@ -34,11 +34,12 @@ const router = createBrowserRouter([
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
-      { path: "chatbot", element: <ChatBot /> },
 
       { path: "*", element: <Error /> },
     ],
   },
+  { path: "chatbot", element: <ChatBot /> },
+
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
   { path: "verify-otp", element: <VerifyOTP /> },
