@@ -2,20 +2,20 @@ import mongoose, { Schema, Document } from "mongoose";
 
 interface IPersonalInfo {
   firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  location: string;
-  professionalTitle: string;
-  professionalSummary: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    location: string;
+    professionalTitle: string;  
+    ProfessionalSummary: string;
 }
 
 interface IExperience {
   jobTitle: string;
   company: string;
   location: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   description: string;
 }
 
