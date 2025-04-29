@@ -1,6 +1,8 @@
 import { Box, Typography, TextField, Button, Paper, useTheme } from '@mui/material';
 import { useState } from 'react';
 import SendIcon from '@mui/icons-material/Send';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HistoryIcon from '@mui/icons-material/History'
 const ChatBot = () => {
     const theme = useTheme();
     const [messages, setMessages] = useState([]);
@@ -86,28 +88,69 @@ const ChatBot = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                p: 1
+                // p: 1
             }}>
-        
+
                 {/* Chat Header */}
 
-                {/* <Box sx={{
-                    width: '96%',
-                    bgcolor: "primary.main",
-                    padding: 2,
-                    display: 'flex',
-                    borderRadius: '20px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                }}>
-                    <Typography variant="h5" sx={{
-                        fontWeight: 'bold',
-                        color: 'white',
-                    }}>
-                        Chat with our AI Assistant
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: "50px",
+                        background: 'linear-gradient(135deg,rgb(35, 8, 65) 0%,rgb(116, 41, 182) 100%)',
+                        boxShadow: 2,
+                        // mb: 2,
+                        // overflowX:"hidden",
+
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            color: 'white',
+                            fontWeight: 'bold',
+                            letterSpacing: 1,
+                            flexGrow: 1,
+                            paddingInlineStart:2
+
+                        }}
+                    >
+                        ChatBot
                     </Typography>
-                </Box> */}
+
+                    <Box sx={{ display: 'flex', }}>
+                        <Button
+                            sx={{
+                                minWidth: 20,
+                                minHeight: 40,
+                                color: 'white',
+                                '&:hover': {
+                                    borderColor: '#fff',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                }
+                            }}
+                        >
+                            <AddCircleOutlineIcon />
+                        </Button>
+                        <Button
+                            sx={{
+                                minWidth: 20,
+                                minHeight: 40,
+                                borderColor: 'white',
+                                color: 'white',
+                                '&:hover': {
+                                    borderColor: '#fff',
+                                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                }
+                            }}
+                        >
+                            <HistoryIcon />
+                        </Button>
+                    </Box>
+                </Box>
                 <Box sx={{ overflowY: 'auto', flexGrow: 1, mb: 2 }}>
                     {messages.map((msg, index) => (
                         <Box
