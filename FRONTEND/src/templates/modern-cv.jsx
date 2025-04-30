@@ -67,49 +67,77 @@ const ModernCV = ({
 };
 
 const styles = {
+  cvWrapper: {
+    backgroundColor: '#e5e7eb', // Light gray for PDF-like background
+    padding: '50px 20px',
+    display: 'flex',
+    justifyContent: 'center',
+    minHeight: '100vh',
+  },
   container: {
     display: 'flex',
-    minHeight: '100vh',
-    fontFamily: `'Segoe UI', sans-serif`,
-    color: '#333',
+    width: '900px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    minHeight: '1122px', // A4 height at 96dpi
   },
+  
   sidebar: {
-    backgroundColor: '#1e293b',
-    color: '#fff',
     width: '30%',
+    backgroundColor: '#1e293b',
+    color: '#ffffff',
     padding: '40px 25px',
   },
   sidebarHeader: {
-    fontSize: '24px',
-    marginBottom: '10px',
+    fontSize: '22px',
+    marginBottom: '20px',
   },
   sidebarSection: {
-    fontSize: '20px',
+    fontSize: '18px',
     marginTop: '30px',
     marginBottom: '10px',
-    borderBottom: '1px solid #fff',
+    borderBottom: '1px solid #ffffff',
     paddingBottom: '5px',
+  },
+  sidebarList: {
+    paddingLeft: '20px',
+    fontSize: '14px',
+    marginTop: '5px',
   },
   main: {
     width: '70%',
     padding: '40px',
+    color: '#333',
+    fontFamily: `"Segoe UI", sans-serif`,
+    backgroundColor: '#ffffff',
   },
   section: {
     marginBottom: '30px',
   },
   sectionTitle: {
-    fontSize: '24px',
-    marginBottom: '10px',
+    fontSize: '22px',
     borderBottom: '2px solid #1e293b',
     paddingBottom: '5px',
+    marginBottom: '10px',
+  },
+  list: {
+    listStyleType: 'none',
+    paddingLeft: '0',
   },
   entry: {
     marginBottom: '20px',
   },
   entryTitle: {
-    fontSize: '18px',
-    margin: '5px 0',
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  entrySub: {
+    fontSize: '14px',
+    marginBottom: '5px',
   },
 };
+
 
 export default ModernCV;
