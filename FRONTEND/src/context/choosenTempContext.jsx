@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const TemplateContext = createContext();
 
 export const TemplateProvider = ({ children }) => {
-    const [choosenTemp, setChoosenTemp] = useState('classic');
+    const [choosenTemp, setChoosenTemp] = useState('classic-cv');
 
     return (
         <TemplateContext.Provider value={{ choosenTemp, setChoosenTemp }}>

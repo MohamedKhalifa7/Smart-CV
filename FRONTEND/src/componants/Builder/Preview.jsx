@@ -72,9 +72,9 @@ const Preview = () => {
   })
   return (
     <>
-      {choosenTemp === "classic" && <ClassicCV {...commonProps} />}
-      {choosenTemp === "linkedin" && <LinkedInCV {...commonProps} />}
-      {choosenTemp === "modern" && <ModernCV {...commonProps} />}
+      {choosenTemp === "classic-cv" && <ClassicCV {...commonProps} />}
+      {choosenTemp === "linkedin-cv" && <LinkedInCV {...commonProps} />}
+      {choosenTemp === "modern-cv" && <ModernCV {...commonProps} />}
     </>
   );
 };

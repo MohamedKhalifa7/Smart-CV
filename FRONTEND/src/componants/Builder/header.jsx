@@ -9,6 +9,7 @@ import { useCV } from '../../context/CVcontext';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import UpdateIcon from '@mui/icons-material/Update';
+import { useTemplate } from '../../context/choosenTempContext';
 
 const Header = () => {
   const muiTheme = useTheme();
@@ -18,6 +19,15 @@ const Header = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const { t } = useTranslation();
+
+    const { choosenTemp } = useTemplate();
+  
+
+  const {exportCV}=useCV()
+
+  const handleDownload = () => {
+    exportCV(formData._id, choosenTemp); 
+  };
 
   const handelSave = async () => {
     const isValid = validatePersonalInfo(formData.personalInfo);
@@ -190,6 +200,7 @@ const Header = () => {
     startIcon={<DownloadIcon sx={{ marginInlineEnd: 1 }} />}
     fullWidth={isMobile}
     variant="contained"
+    onClick={handleDownload}
   >
     {t("Download")}
   </Button>

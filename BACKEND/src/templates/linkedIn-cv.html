@@ -5,38 +5,61 @@
   <title>{{firstName}} {{lastName}} - LinkedIn Style CV</title>
   <style>
     body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      margin: 40px;
+      /* background-color: #f4f7fb; */
+      display: flex;
+      justify-content: center;
+      /* padding: 10px 5px; */
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
       line-height: 1.6;
-      background-color: #f4f7f6;
+    }
+
+    .cv-container {
+      max-width: 900px;
+      width: 100%;
+      /* background-color: #fff; */
+      padding: 40px;
+      /* box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); */
+      border-radius: 12px;
     }
 
     .header {
-      border-bottom: 3px solid #0056b3;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
+      border-bottom: 2px solid #0056b3;
+      padding-bottom: 16px;
+      margin-bottom: 30px;
+      text-align: center;
     }
 
     .name {
-      font-size: 36px;
+      font-size: 32px;
       font-weight: bold;
       color: #0056b3;
-      margin-bottom: 5px;
     }
 
-    .email {
-      font-size: 16px;
-      color: #555;
+    .prof-title {
+      font-size: 24px;
+      font-weight: 500;
+      color: #0077cc;
       margin-top: 4px;
     }
 
-    h2 {
+    .contact-info {
+      font-size: 15px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section h2 {
       font-size: 20px;
-      margin-top: 30px;
+      margin-bottom: 10px;
       color: #004080;
-      border-bottom: 2px solid #0056b3;
-      padding-bottom: 5px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
     }
 
     ul {
@@ -45,45 +68,13 @@
     }
 
     .entry {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
 
     .entry-title {
-      font-weight: bold;
-      font-size: 18px;
-      color: #003366;
-    }
-
-    .entry-sub {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-
-    .skills, .languages, .certifications {
       font-size: 16px;
-      color: #333;
-      margin-top: 10px;
-    }
-
-    .skills ul, .languages ul, .certifications ul {
-      padding-left: 0;
-      list-style-type: none;
-    }
-
-    .skills ul li, .languages ul li, .certifications ul li {
-      background: #f2f2f2;
-      padding: 5px;
-      margin-bottom: 5px;
-      border-radius: 4px;
-    }
-
-    .section {
-      margin-bottom: 30px;
-    }
-
-    .section:last-child {
-      margin-bottom: 0;
+      font-weight: bold;
+      color: #222;
     }
 
     .entry-sub {
@@ -91,65 +82,88 @@
       color: #666;
     }
 
+    .paragraph {
+      font-size: 14px;
+      margin-top: 6px;
+      color: #444;
+    }
+
+    .skills {
+      margin-top: 10px;
+      font-size: 14px;
+      background-color: #eaf4ff;
+      padding: 10px;
+      border-radius: 6px;
+      line-height: 1.8;
+    }
+
+    .section ul li {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <div class="name">{{firstName}} {{lastName}}</div>
-    <div class="email">{{email}}</div>
+  <div class="cv-container">
+    <div class="header">
+      <div class="name">{{firstName}} {{lastName}}</div>
+      <div class="prof-title">{{professionalTitle}}</div>
+      <div class="contact-info">{{email}} | {{phone}} | {{location}}</div>
+    </div>
+
+    <div class="section">
+      <h2>Summary</h2>
+      <p class="paragraph">{{professionalSummary}}</p>
+    </div>
+
+    <div class="section">
+      <h2>Experience</h2>
+      <ul>
+        {{#each experience}}
+        <li class="entry">
+          <div class="entry-title">{{role}}</div>
+          <div class="entry-sub">{{company}} — {{startDate}} to {{endDate}}</div>
+          <p class="paragraph">{{description}}</p>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Education</h2>
+      <ul>
+        {{#each education}}
+        <li class="entry">
+          <div class="entry-title">{{institution}}</div>
+          <div class="entry-sub">{{degree}} ({{startYear}} - {{endYear}})</div>
+          <div class="entry-sub">{{location}}</div>
+          <p class="paragraph">{{description}}</p>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Skills</h2>
+      <div class="skills">{{skills}}</div>
+    </div>
+
+    <div class="section">
+      <h2>Languages</h2>
+      <ul>
+       {{languages}}
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Certifications</h2>
+      <ul>
+        {{certifications}}
+      </ul>
+    </div>
   </div>
-
-  <div class="section">
-    <h2>professional Summary:</h2>
-    <h4 class="entry-sub">{{professionalSummary}}</h4>
-  </div>
-
-  <div class="section">
-    <h2>Experience</h2>
-    <ul>
-      {{#each experience}}
-      <li class="entry">
-        <div class="entry-title">{{jobTitle}}</div>
-        <div class="entry-sub">{{company}} — {{startDate}} to {{endDate}}</div>
-        <div class="entry-sub">{{description}}</div>
-      </li>
-      {{/each}}
-    </ul>
-  </div>
-
-  
-  <div class="section">
-    <h2>Education</h2>
-    {{#each education}}
-      <div class="entry">
-        <div class="entry-title">{{institution}}</div>
-        <div class="entry-sub">{{degree}} — {{startDate}} to {{endDate}}</div>
-        <div class="entry-sub">{{description}}</div>
-      </div>
-    {{/each}}
-  </div>
-
-  <div class="section">
-  <h2>Skills</h2>
-  <div class="skills">
-   {{skills}}
-  </div>
-</div>
-
-<div class="section">
-  <h2>Languages</h2>
-  <ul>
-   {{languages}}
-  </ul>
-</div>
-
-<div class="section">
-  <h2>Certifications</h2>
-  <ul>
-    {{certifications}}
-  </ul>
-</div>
 
 </body>
 </html>
