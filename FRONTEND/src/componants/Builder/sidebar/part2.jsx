@@ -4,12 +4,15 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCV } from '../../../context/CVcontext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Part2 = () => {
     const [myCvs, setMyCvs] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-    const { fetchUserCVs } = useCV();
+
+    const { fetchUserCVs, setFormData } = useCV(); 
+    const navigate = useNavigate(); // Add this
 
     useEffect(() => {
         const getCVs = async () => {
@@ -43,6 +46,11 @@ const Part2 = () => {
             setError(error.response ? error.response.data : 'Error deleting CV');
             setSuccess(false);
         }
+    };
+
+    const handlePreview = (cv) => {
+        setFormData(cv);      // 1. Update formData with the selected CV
+        // navigate('/preview'); // 2. Navigate to the preview page
     };
 
     return (
@@ -82,7 +90,10 @@ const Part2 = () => {
                         justifyContent: 'space-between',
                         width: '100%',
                         gap: 1,
+                        cursor: 'pointer',
+                        '&:hover': { bgcolor: '#f5f5f5' }
                     }}
+                    onClick={() => handlePreview(cv)}
                 >
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <TextSnippetIcon />
@@ -101,7 +112,20 @@ const Part2 = () => {
                 </Box>
             ))}
 
-            <Button variant='outlined' sx={{ mt: 2 }} fullWidth>+ New CV</Button>
+            <Button variant='outlined'
+             sx={{ mt: 2 }} 
+             fullWidth
+             onClick={()=>{ setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                education: [],
+                experience: [],
+                skills: [], // <-- Important!
+                summary: '',
+              });
+              ;}}
+              >+ New CV</Button>
         </Box>
     );
 };

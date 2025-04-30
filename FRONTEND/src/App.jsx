@@ -22,6 +22,7 @@ import './i18n';
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { PreviewProvider } from "./context/previewContext.jsx";
+import ChatBot from "./componants/chatBot/chatBot.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
       { path: "*", element: <Error /> },
     ],
   },
+  { path: "chatbot", element: <ChatBot /> },
+
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
   { path: "verify-otp", element: <VerifyOTP /> },

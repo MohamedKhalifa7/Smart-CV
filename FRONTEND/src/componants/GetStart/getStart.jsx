@@ -7,6 +7,7 @@ import CardActions from '@mui/material/CardActions';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SpellcheckOutlinedIcon from '@mui/icons-material/SpellcheckOutlined';
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 
 import { theme } from "../theme"
 import { useNavigate } from 'react-router-dom';
@@ -20,25 +21,25 @@ const GetStarted = () => {
 
     const navigat = useNavigate()
 
-    const {uploadedFile, setUploadedFile} = useFile();
+    const { uploadedFile, setUploadedFile } = useFile();
     const fileInputRef = useRef();
 
     const handleButtonClick = () => {
         fileInputRef.current.click(); // open file picker
-      };
-    
-      const handleFileChange = (event) => {
+    };
+
+    const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-          setUploadedFile(file); // store the uploaded file
-          console.log('File uploaded:', file);
+            setUploadedFile(file); // store the uploaded file
+            console.log('File uploaded:', file);
         }
-      };
+    };
 
     return (
         <>
             {/* Header Section */}
-            <Box sx={{ bgcolor: "background.gray", width: "100%", height: "200px"}}>
+            <Box sx={{ bgcolor: "background.gray", width: "100%", height: "200px" }}>
                 <Typography variant="h4"
                     sx={{ textAlign: "center", paddingTop: "50px", color: muiTheme.customStyles.gradientText }}>
                     Let's Create Your Perfect CV
@@ -85,11 +86,11 @@ const GetStarted = () => {
                             Upload CV
                         </Button>
                         <input
-        type="file"
-        ref={fileInputRef}
-        style={{ display: 'none' }}
-        onChange={handleFileChange}
-      />
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                        />
                     </CardActions>
                 </Card>
 
@@ -133,7 +134,7 @@ const GetStarted = () => {
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div" align="center">
                                 Grammar Check
-                                </Typography>
+                            </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
                                 Check your CV for grammar, spelling, and style improvements                            </Typography>
                         </CardContent>
@@ -151,15 +152,17 @@ const GetStarted = () => {
                 </Card>
 
 
+              
+
             </Box>
             {uploadedFile && (
                 <Box sx={{ m: 6, border: `2px solid ${theme.palette.background.gray}`, borderRadius: "10px", p: 3 }}>
-                <CVAnalysisResualt ></CVAnalysisResualt>
+                    <CVAnalysisResualt ></CVAnalysisResualt>
 
-            </Box>
+                </Box>
             )}
 
-            
+
         </>
     )
 }

@@ -70,6 +70,7 @@ const Personal = () => {
                 padding: '4px 8px',
                 borderRadius: '8px',
                 fontSize: '0.85rem'
+                
               },
             }}
           />
