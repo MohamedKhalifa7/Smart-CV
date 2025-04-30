@@ -1,28 +1,95 @@
-import { Box, Typography, TextField, Button, Paper, useTheme } from '@mui/material';
-import { useState } from 'react';
+import { Box, Typography, TextField, Button, Paper, useTheme, Avatar } from '@mui/material';
+import { useEffect, useState, useRef } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HistoryIcon from '@mui/icons-material/History'
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import axios from 'axios';
 const ChatBot = () => {
     const theme = useTheme();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [chatId, setChatId] = useState(null);
+    const messagesEndRef = useRef(null);
+
     const navigate = useNavigate();
 
-    const handleSend = () => {
-        if (!input.trim()) return;
 
-        const newMessages = [
-            ...messages,
-            { type: 'user', text: input },
-            { type: 'bot', text: 'Response coming soon...' }
-        ];
-        setMessages(newMessages);
+    // 1. Create a new chat on first load
+    useEffect(() => {
+        const createChat = async () => {
+            try {
+                const res = await axios.post('http://localhost:3001/api/chatbot/create', { messages }, {
+                    withCredentials: true,
+                });
+                console.log(res.data);
+                setChatId(res.data._id);
+            } catch (err) {
+                console.error('Error creating chat:', err);
+            }
+        };
+
+        createChat();
+    }, []);
+
+    // 2. Send user message and receive bot response
+    const handleSend = async () => {
+        if (!input.trim() || !chatId) return;
+
+        const userMsg = { type: 'user', text: input };
+        setMessages(prev => [...prev, userMsg]);
         setInput('');
+
+
+        const typingMsg = { type: 'bot', text: ' Typing...' };
+        setMessages(prev => [...prev, typingMsg]);
+
+        try {
+            const res = await axios.post('http://localhost:3001/api/chatbot', {
+                message: input,
+                chatId
+            }, {
+                withCredentials: true,
+            });
+
+            const botMsg = { type: 'bot', text: res.data.response };
+            setMessages(prev => {
+                const updated = [...prev];
+                updated.pop(); // remove "Typing..."
+                return [...updated, { type: 'bot', text: res.data.response }];
+            });
+
+
+        } catch (err) {
+            console.error('Error sending message:', err);
+            if (err.code === 'ERR_NETWORK') {
+                setMessages(prev => [
+                    ...prev,
+                    {
+                        type: 'bot',
+                        text: '❌ Network error. Please check your internet connection and try again.'
+                    }
+                ]);
+            } else {
+                setMessages(prev => [
+                    ...prev,
+                    {
+                        type: 'bot',
+                        text: '⚠️ Something went wrong. Please try again later.'
+                    }
+                ]);
+            }
+        }
     };
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
 
     return (
         <Box sx={{
@@ -173,7 +240,7 @@ const ChatBot = () => {
                             sx={{
                                 display: 'flex',
                                 justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start',
-                                m: 1
+                                m: 1,
                             }}
                         >
                             <Paper
@@ -186,18 +253,24 @@ const ChatBot = () => {
                                         ? 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)'
                                         : theme.palette.background.gray,
                                     color: msg.type === 'user' ? 'white' : theme.palette.text.primary,
+                                    display: 'flex',
+                                    //    alignItems: 'center',
+                                    gap: 1, // space between avatar and text
                                 }}
                             >
-                                {/* {msg.type === 'bot' && (
-                                    <Typography variant="caption" sx={{ color: 'gray', mb: 0.5 }}>
-                                        AI Assistant
-                                    </Typography>
-                                )} */}
-
-                                <Typography variant="body2">{msg.text}</Typography>
-
+                                {msg.type === 'bot' && (
+                                    <Avatar
+                                        src="/Images/bot.jpg"
+                                        sx={{ width: 24, height: 24 }}
+                                    />
+                                )}
+                                <Typography variant="body2" sx={{ whiteSpace: 'pre-line' }}>
+                                    {msg.text}
+                                </Typography>
                             </Paper>
+                            <div ref={messagesEndRef} />
                         </Box>
+
                     ))}
                 </Box>
 
@@ -215,9 +288,11 @@ const ChatBot = () => {
                                 height: 45,
                                 fontSize: '0.9rem',
                                 padding: 0,
+                                width: '99%',
+                                alignSelf: 'end',
                             },
                             '& input': {
-                                padding: '8px 12px',
+                                // padding: '8px 12px',
                             }
                         }}
                     />
@@ -226,8 +301,8 @@ const ChatBot = () => {
                         onClick={handleSend}
                         sx={{
                             minWidth: 40,
-                            minHeight: 40,
-                            padding: 0,
+                            minHeight: 43,
+                            m: 1,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',

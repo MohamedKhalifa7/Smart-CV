@@ -1,7 +1,7 @@
 import { Fab, Tooltip } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from 'react-router-dom';
-
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 const FloatingChatButton = () => {
     const navigate = useNavigate();
 
@@ -10,7 +10,7 @@ const FloatingChatButton = () => {
             <Fab
                 color="primary"
                 aria-label="chat"
-                onClick={() => navigate('/chat')}
+                onClick={() => navigate('/chatbot')}
                 sx={{
                     position: 'fixed',
                     bottom: 24,
@@ -19,8 +19,8 @@ const FloatingChatButton = () => {
                     boxShadow: 3,
                 }}
             >
-                <ChatIcon />
-            </Fab>
+                <SmartToyIcon />
+                </Fab>
         </Tooltip>
     );
 };
