@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../componants/navbar';
 import Footer from '../componants/footer';
 import { Outlet } from 'react-router-dom';
-import FloatingChatButton from '../componants/chatBot/FloatingChatButton';
+import ChatBot from '../componants/chatBot/chatBot';
 
 const Layout = () => {
   return (
@@ -11,7 +11,7 @@ const Layout = () => {
       <main style={{ minHeight: '80vh' }}>
         <Outlet />
       </main>
-      <FloatingChatButton />
+      <ChatBot></ChatBot>
       <Footer />
     </>
   );
