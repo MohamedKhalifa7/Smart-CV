@@ -4,110 +4,52 @@
   <meta charset="UTF-8" />
   <title>{{firstName}} {{lastName}} - CV</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      color: #333;
-    }
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
-    .sidebar {
-      background-color: #1e293b;
-      color: #fff;
-      width: 30%;
-      padding: 40px 25px;
-    }
-    .sidebar h2 {
-      font-size: 20px;
-      margin-top: 30px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #fff;
-      padding-bottom: 5px;
-    }
-    .sidebar p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-    .main {
-      width: 70%;
-      padding: 40px;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-    .section h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      border-bottom: 2px solid #1e293b;
-      padding-bottom: 5px;
-    }
-    .experience, .education {
-      margin-bottom: 20px;
-    }
-    .experience h3, .education h3 {
-      font-size: 18px;
-      margin: 5px 0;
-    }
-    .experience p, .education p {
-      margin: 3px 0;
-      font-size: 14px;
-    }
+    body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
+    h1, h2 { color: #333; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+    ul { padding-left: 20px; }
+    .section { margin-bottom: 25px; }
+    .bold { font-weight: bold; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <h1>{{firstName}} {{lastName}}</h1>
-      <p><strong>Title:</strong> {{professionalTitle}}</p>
-      <p><strong>Email:</strong> {{email}}</p>
-      <p><strong>Phone:</strong> {{phone}}</p>
-      <p><strong>Location:</strong> {{location}}</p>
+  <h1>{{firstName}} {{lastName}}</h1>
+  <p><strong>Email:</strong> {{email}}</p>
 
-      <h2>Skills</h2>
-      <p>{{skills}}</p>
+  <div class="section">
+    <h2>Professional Summary:</h2>
+    <p>{{professionalSummary}}</p>
+  </div>
+  <div class="section">
+    <h2>Experience</h2>
+    <ul>
+      {{#each experience}}
+        <li><span class="bold">{{jobTitle}}</span> at {{company}} ({{startDate}} to {{endDate}})</li>
+      {{/each}}
+    </ul>
+  </div>
 
-      <h2>Languages</h2>
-      <p>{{languages}}</p>
+  <div class="section">
+    <h2>Education</h2>
+    <ul>
+      {{#each education}}
+        <li><strong>{{institution}}</strong> — {{degree}} ({{startDate}} to {{endDate}})</li>
+      {{/each}}
+    </ul>
+  </div>
 
-      <h2>Certifications</h2>
-      <p>{{certifications}}</p>
-    </div>
+  <div class="section">
+    <h2>Skills</h2>
+    <p>{{skills}}</p>
+  </div>
 
-    <div class="main">
-      <div class="section">
-        <h2>Professional Summary</h2>
-        <p>{{professionalSummary}}</p>
-      </div>
+  <div class="section">
+    <h2>Languages</h2>
+    <p>{{languages}}</p>
+  </div>
 
-      <div class="section">
-        <h2>Experience</h2>
-        {{#each experience}}
-          <div class="experience">
-            <h3>{{jobTitle}} at {{company}}</h3>
-            <p><strong>Location:</strong> {{location}}</p>
-            <p><strong>From:</strong> {{startDate}} <strong>To:</strong> {{endDate}}</p>
-            <p>{{description}}</p>
-          </div>
-        {{/each}}
-      </div>
-
-      <div class="section">
-        <h2>Education</h2>
-        {{#each education}}
-          <div class="education">
-            <h3>{{degree}} - {{institution}}</h3>
-            <p><strong>Location:</strong> {{location}}</p>
-            <p><strong>Years:</strong> {{startYear}} - {{endYear}}</p>
-            <p>{{description}}</p>
-          </div>
-        {{/each}}
-      </div>
-    </div>
+  <div class="section">
+    <h2>Certifications</h2>
+    <p>{{certifications}}</p>
   </div>
 </body>
 </html>

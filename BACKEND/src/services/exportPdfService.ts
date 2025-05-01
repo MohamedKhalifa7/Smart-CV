@@ -4,9 +4,8 @@ import fs from "fs";
 import path from "path";
 import { ICV } from "../models/cvModel";
 
-// Function to format dates to "MMM YYYY" (e.g., "Jan 2020")
 const formatDate = (dateString: string | undefined): string => {
-    if (!dateString) return "Present"; // If no endDate, assume "Present"
+    if (!dateString) return "Present";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 };
@@ -14,6 +13,7 @@ const formatDate = (dateString: string | undefined): string => {
 export const exportPdfCV = async (CV: ICV, templateName: string) => {
     const templatePath = path.join(__dirname, `../templates/${templateName}.html`);
     const source = fs.readFileSync(templatePath, "utf-8");
+
 
     const formattedExperience = CV.experience.map(exp => ({
         ...exp,

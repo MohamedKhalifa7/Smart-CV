@@ -8,86 +8,58 @@ const ModernCV = ({
   professionalTitle,
   summary,
   skills,
-  languages,
-  certifications,
-  experience,
-  education,
+  languages = [],
+  certifications = [],
+  experience = [],
+  education = [],
 }) => {
   return (
     <div style={styles.container}>
-      {/* Sidebar */}
       <div style={styles.sidebar}>
-        <h1 style={styles.name}>{name}</h1>
-        <h1 style={styles.name}>{professionalTitle}</h1>
+        <h1 style={styles.sidebarHeader}>{name}</h1>
+        <p><strong>Title:</strong> {professionalTitle}</p>
+        <p><strong>Email:</strong> {email}</p>
+        <p><strong>Phone:</strong> {phone}</p>
+        <p><strong>Location:</strong> {location}</p>
 
-        <p style={styles.small}>{email}</p>
-        <p style={styles.small}>{phone}</p>
-        <p style={styles.small}>{location}</p>
+        <h2 style={styles.sidebarSection}>Skills</h2>
+        <p>{skills}</p>
 
-        <div style={styles.sidebarSection}>
-          <div style={styles.label}>Skills</div>
-          <p style={styles.small}>{skills}</p>
-        </div>
+        <h2 style={styles.sidebarSection}>Languages</h2>
+        <p>{languages.map(lang => lang.name).join(", ")}</p>
 
-        <div style={styles.sidebarSection}>
-          <div style={styles.label}>Languages</div>
-          <ul style={styles.list}>
-            {languages.map((lang, index) => (
-              <li key={index} style={styles.small}>
-                {lang.name} 
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div style={styles.sidebarSection}>
-          <div style={styles.label}>Certifications</div>
-          <ul style={styles.list}>
-            {certifications.map((cert, index) => (
-              <li key={index} style={styles.small}>
-                {cert.name} 
-              </li>
-            ))}
-          </ul>
-        </div>
+        <h2 style={styles.sidebarSection}>Certifications</h2>
+        <p>{certifications.map(cert => cert.name).join(", ")}</p>
       </div>
 
-      {/* Main Content */}
       <div style={styles.main}>
-
         <div style={styles.section}>
-          <h2 style={styles.sectionTitle}>Summary</h2>
-          <pre style={styles.small}>{summary}</pre>
-
+          <h2 style={styles.sectionTitle}>Professional Summary</h2>
+          <p>{summary}</p>
         </div>
 
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Experience</h2>
-          <ul style={styles.list}>
-            {experience.map((exp, index) => (
-              <li key={index}>
-                <strong>{exp.role}</strong> at {exp.company} {exp.startDate} - {exp.endDate}
-                <p>{exp.location}</p>
-                <p>{exp.description}</p>
-              </li>
-            ))}
-          </ul>
+          {experience.map((exp, index) => (
+            <div key={index} style={styles.entry}>
+              <h3 style={styles.entryTitle}>{exp.role} at {exp.company}</h3>
+              <p><strong>Location:</strong> {exp.location}</p>
+              <p><strong>From:</strong> {exp.startDate} <strong>To:</strong> {exp.endDate}</p>
+              <p>{exp.description}</p>
+            </div>
+          ))}
         </div>
 
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>Education</h2>
-          <ul style={styles.list}>
-            {
-              education.map((edu, index) => (
-                <li key={index}>
-                  <strong>{edu.institution}</strong> — {edu.degree} ({edu.startYear} - {edu.endYear})
-                  <p>{edu.location}</p>
-                  <p>{edu.description}</p>
-                </li>
-              ))
-            }
-          </ul>
-
+          {education.map((edu, index) => (
+            <div key={index} style={styles.entry}>
+              <h3 style={styles.entryTitle}>{edu.degree} - {edu.institution}</h3>
+              <p><strong>Location:</strong> {edu.location}</p>
+              <p><strong>Years:</strong> {edu.startYear} - {edu.endYear}</p>
+              <p>{edu.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -95,52 +67,77 @@ const ModernCV = ({
 };
 
 const styles = {
+  cvWrapper: {
+    backgroundColor: '#e5e7eb', // Light gray for PDF-like background
+    padding: '50px 20px',
+    display: 'flex',
+    justifyContent: 'center',
+    minHeight: '100vh',
+  },
   container: {
-    display: "flex",
-    height: "100vh",
-    fontFamily: "'Segoe UI', sans-serif",
-    margin: 0,
-    color: "#333",
+    display: 'flex',
+    width: '900px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    minHeight: '1122px', // A4 height at 96dpi
   },
+  
   sidebar: {
-    backgroundColor: "#1e293b",
-    color: "#fff",
-    width: "30%",
-    padding: "40px 25px",
+    width: '30%',
+    backgroundColor: '#1e293b',
+    color: '#ffffff',
+    padding: '40px 25px',
   },
-  main: {
-    width: "70%",
-    padding: "40px",
-  },
-  name: {
-    fontSize: "28px",
-    marginBottom: "5px",
-  },
-  small: {
-    fontSize: "14px",
-  },
-  section: {
-    marginBottom: "20px",
+  sidebarHeader: {
+    fontSize: '22px',
+    marginBottom: '20px',
   },
   sidebarSection: {
-    marginBottom: "25px",
+    fontSize: '18px',
+    marginTop: '30px',
+    marginBottom: '10px',
+    borderBottom: '1px solid #ffffff',
+    paddingBottom: '5px',
   },
-  label: {
-    fontWeight: "bold",
-    marginBottom: "6px",
-    display: "inline-block",
+  sidebarList: {
+    paddingLeft: '20px',
+    fontSize: '14px',
+    marginTop: '5px',
+  },
+  main: {
+    width: '70%',
+    padding: '40px',
+    color: '#333',
+    fontFamily: `"Segoe UI", sans-serif`,
+    backgroundColor: '#ffffff',
+  },
+  section: {
+    marginBottom: '30px',
   },
   sectionTitle: {
-    fontSize: "18px",
-    color: "#1e293b",
-    borderBottom: "1px solid #e0e0e0",
-    marginBottom: "10px",
-    paddingBottom: "5px",
+    fontSize: '22px',
+    borderBottom: '2px solid #1e293b',
+    paddingBottom: '5px',
+    marginBottom: '10px',
   },
   list: {
-    listStyle: "none",
-    paddingLeft: 0,
+    listStyleType: 'none',
+    paddingLeft: '0',
+  },
+  entry: {
+    marginBottom: '20px',
+  },
+  entryTitle: {
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  entrySub: {
+    fontSize: '14px',
+    marginBottom: '5px',
   },
 };
+
 
 export default ModernCV;
