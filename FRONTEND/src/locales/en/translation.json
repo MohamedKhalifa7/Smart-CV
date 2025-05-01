@@ -69,6 +69,23 @@
   "cvDeletedSuccessfully": "CV deleted successfully!",
   "errorFetchingCVs": "Error fetching CVs",
   "errorDeletingCV": "Error deleting CV",
-  "newCV": "+ New CV"
+  "newCV": "+ New CV",
+  "backToStart": "Back to Get Started",
+  "grammarCheckerTitle": "Grammar & Style Checker",
+  "grammarCheckerSubtitle": "Perfect your CV content with our advanced grammar and style checker",
+  "inputPlaceholder": "Paste your CV content here for grammar and style checking",
+  "clear": "Clear",
+  "checkGrammar": "Check Grammar",
+  "resultTitle": "Grammar Check Result",
+  "promptToCheck": "Paste your CV content and click \"Check Grammar\" to get started.",
+  "noIssuesFound": "No issues found in this category.",
+  "fix": "Fix",
+  "grammar": "Grammar",
+  "spelling": "Spelling",
+  "punctuation": "Punctuation",
+  "style": "Style",
+  "pleaseLogin": "Please login first to use the grammar checker.",
+  "proRequired": "You must go pro to access this feature.",
+  "networkError": "Network error Please try again later."
   
 }
