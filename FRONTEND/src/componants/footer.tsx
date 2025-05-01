@@ -35,7 +35,7 @@ const Footer = () => {
             <Link href="/getStart" color="text.secondary" underline="none" display="block">CV Builder</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">CV Analyzer</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">Templates</Link>
-            <Link href="#" color="text.secondary" underline="none" display="block">Pro Features</Link>
+            <Link href="/payment-check" color="text.secondary" underline="none" display="block">Pro Features</Link>
             </Box>
           </Grid>
 

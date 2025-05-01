@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { PreviewProvider } from "./context/previewContext.jsx";
 import ChatBot from "./componants/chatBot/chatBot.jsx";
+import ProPaymentForm from "./componants/payment/payment.js";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
   { path: "verify-otp", element: <VerifyOTP /> },
+  {path:"payment-check",element:<ProPaymentForm/>}
 ]);
 
 function App() {
