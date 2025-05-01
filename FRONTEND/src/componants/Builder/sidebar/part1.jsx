@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import AIWritingAssistDialog from './component/AIWritingAssist';
 import ChooseTemplateDialog from './component/chooseTemplate';
 import { usePreview } from '../../../context/previewContext';
+import { useAuth } from '../../../context/Auth/AuthContext';
+import ProWarning from './component/proWarning';
 
 function Part1() {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
-    const [dialogKey, setDialogKey] = useState(0);  // Track the key for the dialog
+    const [dialogKey, setDialogKey] = useState(0); // Track the key for the dialog
+    const [openPaymentDialog, setOpenPaymentDialog] = useState(false); // State to handle the payment dialog
 
     const { setGoToPreview } = usePreview();
+    const { user } = useAuth();
+    const isPro = user.role === 'pro user';
+
 
     const handleClickOpen = () => {
-        setOpen(true);
+        if (isPro) {
+            setOpen(true);
+        } else {
+            setOpenPaymentDialog(true); // Open the payment dialog for non-pro users
+        }
     };
 
     const handleClose = () => {
@@ -24,7 +34,7 @@ function Part1() {
     const handleClickOpen2 = () => {
         setGoToPreview(false);
         setOpen2(false);
-        
+
         // Increment the dialog key to force a remount
         setDialogKey(prevKey => prevKey + 1);
 
@@ -37,6 +47,8 @@ function Part1() {
     const handleClose2 = () => {
         setOpen2(false);
     };
+
+   
 
     return (
         <>
@@ -58,7 +70,7 @@ function Part1() {
                 <ChooseTemplateDialog
                     open={open2}
                     onClose={handleClose2}
-                    key={dialogKey}  // Set the key to force remount on state change
+                    key={dialogKey} // Set the key to force remount on state change
                 />
 
                 <Button sx={{ my: 1 }}
@@ -75,6 +87,15 @@ function Part1() {
                     onClose={handleClose}
                     selectedValue={''}
                 />
+
+                <ProWarning
+                    openPaymentDialog={openPaymentDialog}
+                    setOpenPaymentDialog={setOpenPaymentDialog}
+                    onClose={() => setOpenPaymentDialog(false)}
+                
+                ></ProWarning>
+
+               
             </Box>
         </>
     );
