@@ -14,6 +14,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SmartToyIcon from '@mui/icons-material/SmartToy'; import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/Auth/AuthContext';
+import ProWarning from '../Builder/sidebar/component/proWarning';
 
 const ChatBot = () => {
     const theme = useTheme();
@@ -24,6 +26,9 @@ const ChatBot = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate=useNavigate()
     const messagesEndRef = useRef(null);
+    const { user } = useAuth();
+    const isPro = user.role === 'pro user';
+    const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
 
     useEffect(() => {
         const createChat = async () => {
@@ -94,7 +99,14 @@ const ChatBot = () => {
                 >
                     <Fab
                         color="primary"
-                        onClick={() => setOpen(true)}
+                        onClick={() => {
+                            if (isPro) {
+                                setOpen(true);
+                            } else {
+                                setOpenPaymentDialog(true);
+                            }
+                        }}
+                        
                     >
                         <SmartToyIcon />
                     </Fab>
@@ -234,6 +246,12 @@ const ChatBot = () => {
 
                 </Paper>
             )}
+            <ProWarning
+    openPaymentDialog={openPaymentDialog}
+    setOpenPaymentDialog={setOpenPaymentDialog}
+    onClose={() => setOpenPaymentDialog(false)}
+/>
+
         </>
     );
 };

@@ -5,11 +5,12 @@ import {
   getChatHistoryController,
 } from "../controllers/chatBotController";
 import { authenticateToken } from "../middleware/validateJWTMiddleware";
+import { requireProUser } from "../middleware/roleMiddleware";
 
 const router = Router();
 
-router.post("/", authenticateToken, chatBotController);
-router.post("/create", authenticateToken, createChatController);
-router.get("/history", authenticateToken, getChatHistoryController);
+router.post("/", authenticateToken, requireProUser,chatBotController);
+router.post("/create", authenticateToken,requireProUser, createChatController);
+router.get("/history", authenticateToken, requireProUser,getChatHistoryController);
 
 export default router;
