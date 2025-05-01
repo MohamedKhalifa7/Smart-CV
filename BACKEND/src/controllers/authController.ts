@@ -91,6 +91,7 @@ export const getCurrentUser = (req: Request, res: Response) => {
 
   res.status(200).json({
     user: customReq.user,
+    token: req.cookies.token,
   });
 };
 
