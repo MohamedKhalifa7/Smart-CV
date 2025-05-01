@@ -13,6 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import SmartToyIcon from '@mui/icons-material/SmartToy'; import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const ChatBot = () => {
     const theme = useTheme();
@@ -20,6 +21,8 @@ const ChatBot = () => {
     const [input, setInput] = useState('');
     const [chatId, setChatId] = useState(null);
     const [open, setOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate=useNavigate()
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
@@ -32,7 +35,11 @@ const ChatBot = () => {
                 );
                 setChatId(res.data._id);
             } catch (err) {
-                console.error('Error creating chat:', err);
+                if (err.response?.status === 401) {
+                    setErrorMessage('🔒 You need to log in to start the chatbot.');
+                } else {
+                    console.error('Error creating chat:', err);
+                }
             }
         };
         createChat();
@@ -41,11 +48,7 @@ const ChatBot = () => {
     const handleSend = async () => {
         if (!input.trim() || !chatId) return;
 
-        const userMsg = { type: 'user', text: input };
-        setMessages((prev) => [...prev, userMsg]);
-        setInput('');
-
-        setMessages((prev) => [...prev, { type: 'bot', text: 'Typing...' }]);
+        setErrorMessage(''); // امسحي أي رسالة خطأ قديمة
 
         try {
             const res = await axios.post(
@@ -54,24 +57,22 @@ const ChatBot = () => {
                 { withCredentials: true }
             );
 
+            const userMsg = { type: 'user', text: input };
             const botMsg = { type: 'bot', text: res.data.response };
-            setMessages((prev) => {
-                const updated = [...prev];
-                updated.pop(); // remove "Typing..."
-                return [...updated, botMsg];
-            });
+            setMessages((prev) => [...prev, userMsg, botMsg]);
+            setInput('');
         } catch (err) {
             console.error('Error sending message:', err);
-            const errorMsg =
-                err.code === 'ERR_NETWORK'
-                    ? '❌ Network error. Please check your internet connection.'
-                    : '⚠️ Something went wrong. Please try again later.';
-            setMessages((prev) => [
-                ...prev.slice(0, -1),
-                { type: 'bot', text: errorMsg },
-            ]);
+            if (err.response && err.response.status === 401) {
+                setErrorMessage('🔒 You need to log in to use the chatbot.');
+            } else if (err.code === 'ERR_NETWORK') {
+                setErrorMessage('❌ Network error. Please check your internet connection.');
+            } else {
+                setErrorMessage('⚠️ Something went wrong. Please try again later.');
+            }
         }
     };
+
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -194,28 +195,43 @@ const ChatBot = () => {
                     <Box
                         sx={{
                             display: 'flex',
-                            alignItems: 'center',
+                            flexDirection: 'column',
                             px: 1,
                             py: 1,
                             borderTop: '1px solid #ccc',
                         }}
                     >
-                        <TextField
-                            fullWidth
-                            placeholder="Type your message..."
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            size="small"
-                        />
-                        <Button
-                            variant="contained"
-                            onClick={handleSend}
-                            sx={{ ml: 1, minWidth: 40, height: 40 }}
-                        >
-                            <SendIcon fontSize="small" />
-                        </Button>
+                        {/* Error Message */}
+                        {errorMessage && (
+                            <Typography
+                                variant="body2"
+                                color="error"
+                                sx={{ mb: 1 }}
+                            >
+                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>LogIn</span>
+                            </Typography>
+                        )}
+
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <TextField
+                                fullWidth
+                                placeholder="Type your message..."
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                                size="small"
+                            />
+                            <Button
+                            disabled={errorMessage?true:false}
+                                variant="contained"
+                                onClick={handleSend}
+                                sx={{ ml: 1, minWidth: 40, height: 40 }}
+                            >
+                                <SendIcon fontSize="small" />
+                            </Button>
+                        </Box>
                     </Box>
+
                 </Paper>
             )}
         </>

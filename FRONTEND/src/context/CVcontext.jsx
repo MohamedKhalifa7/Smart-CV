@@ -161,6 +161,27 @@ const {t}=useTranslation()
     }
 };
 
+const exportCV = async (cvId, template) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3001/api/ai/exports/${cvId}?format=pdf&template=${template}`,
+      {
+        withCredentials: true,
+        responseType: 'blob',
+      }
+    );
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `CV_${cvId}.pdf`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error exporting CV:', error);
+  }
+};
+
 
   return (
     <CVContext.Provider value={{ 
@@ -171,6 +192,7 @@ const {t}=useTranslation()
       myCvs,
       updateArraySection,
       addArrayItem,
+      exportCV,
       removeArrayItem,fetchUserCVs,personalFormValid,validatePersonalInfo
     }}>
       {children}

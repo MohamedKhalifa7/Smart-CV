@@ -5,6 +5,7 @@ import { generateContentSlice } from "./slices/generateContentSlice";
 import { cvTemplateSlice } from "./slices/cvTemplateSlice";
 import { cvScoreSlice } from "./slices/cvScoreSlice";
 import { cvAnalyzeSlice } from "./slices/cvAnalyzeSlice";
+import { paymentSlice } from "./slices/paymentSlice";
 const store = configureStore({
     reducer: {
         savedCVs: savedCVsSlice.reducer,
@@ -12,6 +13,7 @@ const store = configureStore({
         cvTemplate: cvTemplateSlice.reducer,
         cvScore: cvScoreSlice.reducer,
         cvAnalyze: cvAnalyzeSlice.reducer,
+        payment: paymentSlice.reducer,
         
     }
 })

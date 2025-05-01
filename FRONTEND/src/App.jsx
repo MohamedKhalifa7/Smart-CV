@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@mui/material";
+import { Box, CircularProgress, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 import { CVProvider } from "./context/CVcontext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -17,7 +17,7 @@ import GrammarCheck from "./componants/GrammarCheck/grammarCheck";
 import { FileProvider } from "./context/fileContext.jsx";
 import { TemplateProvider } from "./context/choosenTempContext.jsx";
 import ProtectedRoute from "./guard/ProtectedRoute.jsx";
-import AuthProvider from "./context/Auth/AuthContext.jsx";
+import AuthProvider, { useAuth } from "./context/Auth/AuthContext.jsx";
 import './i18n';
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "builder", element:<ProtectedRoute><Builder /></ProtectedRoute> },
+      { path: "builder", element: <ProtectedRoute><Builder /></ProtectedRoute> },
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
@@ -47,25 +47,33 @@ const router = createBrowserRouter([
 
 function App() {
   const { i18n } = useTranslation();
+  const { loading } = useAuth();
+
   useEffect(() => {
     document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
   }, [i18n.language]);
+
+  if (loading) {
+    return <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <CircularProgress sx={{color:"purple"}}/>
+    </Box>
+  }
   return (
-    <AuthProvider>
+
     <Provider store={store}>
       <CVProvider>
         <PreviewProvider>
-        <TemplateProvider>
-          <FileProvider>
-            <ThemeProvider theme={theme}>
-              <RouterProvider router={router} />
-            </ThemeProvider>
-          </FileProvider>
-        </TemplateProvider>
+          <TemplateProvider>
+            <FileProvider>
+              <ThemeProvider theme={theme}>
+                <RouterProvider router={router} />
+              </ThemeProvider>
+            </FileProvider>
+          </TemplateProvider>
         </PreviewProvider>
       </CVProvider>
     </Provider>
-    </AuthProvider>
+
   );
 }
 

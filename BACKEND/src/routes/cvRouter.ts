@@ -10,7 +10,7 @@ import { authenticateToken } from "../middleware/validateJWTMiddleware";
 import { requireProUser } from "../middleware/roleMiddleware";
 
 const router = Router();
-router.get("/exports/:cvId",exportCVController);
+router.get("/exports/:cvId",validateLoginInput,exportCVController);
 router.post("/upload-cv",validateLoginInput,upload.single("cv"),importCVController);
 // router.post("/upload-cv",upload.single("cv"),importCVController);
 

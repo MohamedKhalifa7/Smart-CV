@@ -13,12 +13,16 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = Cookies.get("token");
+    // const storedToken = Cookies.get("token");
 
-    if (!storedToken) {
-      setLoading(false);
-      return;
-    }
+    // if (!storedToken) {
+    //   console.log("No token found, loading finished.");
+
+    //   setLoading(true);
+    //   return;
+    // }
+    // console.log("Token found, verifying...");
+
 
     axios
       .get("http://localhost:3001/auth/verify-token", {
@@ -27,7 +31,7 @@ const AuthProvider = ({ children }) => {
       .then((res) => {
         if (res.data && res.data.user) {
           setUser(res.data.user);
-          setToken("storedToken");
+          setToken(res.data.token); 
         } else {
           throw new Error("Invalid response from server.");
         }
@@ -37,7 +41,7 @@ const AuthProvider = ({ children }) => {
         Cookies.remove("token");
         setUser(null);
         setToken(null);
-      })
+      })  
       .finally(() => {
         setLoading(false);
       });

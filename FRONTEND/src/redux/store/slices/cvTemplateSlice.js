@@ -14,9 +14,9 @@ export const cvTemplateAction= createAsyncThunk(
     // }
 
     async(userid)=>{
-        return [{title:'classic', id:1,img: classic ,pro:false, disc:'discription 1'},
-        {title:'linkedin', id:2, img:linkedin ,pro:true,disc:'discription 2'},
-        {title:'modern', id:3, img:modern ,pro:true,disc:'discription 3'},]
+        return [{title:'classic-cv', id:1,img: classic ,pro:false, disc:'discription 1'},
+        {title:'linkedin-cv', id:2, img:linkedin ,pro:true,disc:'discription 2'},
+        {title:'modern-cv', id:3, img:modern ,pro:true,disc:'discription 3'},]
     }
 
 )
