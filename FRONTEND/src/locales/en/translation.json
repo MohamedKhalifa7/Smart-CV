@@ -29,5 +29,35 @@
     "First Name is required": "First Name is required",
     "Last Name is required": "Last Name is required",
     "Email is required": "Email is required",
-    "Professional Title is required": "Professional Title is required"
-}
+    "Professional Title is required": "Professional Title is required",
+   
+    "Blogs": "Blogs",
+    "Tips": "Tips",
+    "Get Started": "Get Started",
+    "Profile": "Profile",
+    "Settings": "Settings",
+    "Logout": "Logout",
+
+    "Craft the Perfect CV with AI": "Craft the Perfect CV with AI",
+    "home1.subtitle": "Build, analyze, and optimize your resume with our AI-powered tools. Get real-time feedback and land more interviews.",
+    "AI-powered CV analysis":"AI-powered CV analysis",
+    "Professional templates":"Professional templates",
+    "Keyword optimization":"Keyword optimization",
+    "ATS compatibility check":"ATS compatibility check",
+    "Grammar & spelling review":"Grammar & spelling review",
+
+    "Powerful CV Tools":"Powerful CV Tools",
+    "home2.subtitle":"Everything you need to create, analyze, and perfect your CV in one place",
+    "CV Analysis":"CV Analysis",
+    "cv_analysis.subtitle":"Our AI analyses CV for grammar, spelling, ATS compatibility, and optimal keyword usage.",
+    "Smart Feedback":"Smart Feedback",
+    "cv_feedback.subtitle":"Get color-coded feedback highlighting your CV's strengths and areas for improvement.",
+    "cv_builder.subtitle":"Use our intuitive builder with professional templates and AI writing assistance.",
+    "Keyword Optimization":"Keyword Optimization",
+    "keyword_optimization.subtitle":"Tailor your CV to specific job with our keyword optimization tool.",
+    "Performance Tracking":"Performance Tracking",
+    "performance_tracking.subtitle":"Track your CV's improvement over time with our scoring system.",
+    "Export Options":"Export Options",
+    "export_options.subtitle":"Download CV in PDF or Word format, ready to send."
+
+}    

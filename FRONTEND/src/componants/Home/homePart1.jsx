@@ -15,10 +15,12 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CheckIcon from "@mui/icons-material/Check";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import { useTranslation } from "react-i18next";
 
 const HomePart1 = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -87,7 +89,7 @@ const HomePart1 = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Craft the Perfect CV with AI
+              {t('Craft the Perfect CV with AI')}
             </Typography>
 
             <Typography
@@ -97,17 +99,16 @@ const HomePart1 = () => {
                 fontSize: "20px",
               }}
             >
-              Build, analyze, and optimize your resume with our AI-powered
-              tools. Get real-time feedback and land more interviews.
+              {t("home1.subtitle")}
             </Typography>
 
             <List sx={{ padding: 0 }}>
               {[
-                "AI-powered CV analysis",
-                "Professional templates",
-                "Keyword optimization",
-                "ATS compatibility check",
-                "Grammar & spelling review",
+                t("AI-powered CV analysis"),
+                t("Professional templates"),
+                t("Keyword optimization"),
+                t("ATS compatibility check"),
+                t("Grammar & spelling review"),
               ].map((feature, index) => (
                 <Fade in timeout={500 + index * 200} key={feature}>
                   <ListItem
