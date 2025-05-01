@@ -3,8 +3,11 @@ import React from 'react'
 import DoneIcon from '@mui/icons-material/Done';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useNavigate } from 'react-router-dom';
-import ProPaymentForm from '../payment/payment'
+import ProPaymentForm from '../payment/payment';
+import { useTranslation } from 'react-i18next';
+
 function HomePart3() {
+  const { t } = useTranslation();
 
     const navigate = useNavigate();
         const muiTheme = useTheme();
@@ -20,20 +23,20 @@ function HomePart3() {
         navigate("/getStart")
     }
 
-    const availFree = ['CV Analysis ',
-        '2 CV Templates',
-        ' Export to PDF',
-        ' Store up to 2 CVs',
-        'ATS Compatibility Check',
+    const availFree = [t('CV Analysis'),
+        t('2 CV Templates'),
+        t('Export to PDF'),
+        t('Store up to 2 CVs'),
+        t('ATS Compatibility Check'),
         ];
 
     const notFree = [
-      'Grammar & Spelling Check',
-        'Auto-correction',
+      t('Grammar & Spelling Check'),
+        t('Auto-correction'),
       
-        'AI Content Generator',
-        'AI Open Chat Assistant',
-        'Unlimited CVs',];
+        t('AI Content Generator'),
+        t('AI Open Chat Assistant'),
+        t('Unlimited CVs'),];
 
     const availPro = ['CV Analysis',
         'All CV Templates',
@@ -59,14 +62,14 @@ function HomePart3() {
                         WebkitTextFillColor: "transparent",
                         my: 2,
                     }}>
-                    Choose Your Plan
+                    {t("Choose Your Plan")}
                 </Typography>
                 <Typography variant='body1'
                     sx={{
                         color: "text.secondary", fontSize: "20px", my: 1,
 
                     }}>
-                    Flexible options to match your CV needs
+                   {t("Flexible options to match your CV needs")}
 
                 </Typography>
             </Box>
@@ -76,15 +79,15 @@ function HomePart3() {
             <Box className='free' sx={{ border: "1px solid #ccc",mt:6, borderRadius: "10px", width:isMobile?"90%": "38%" }}>
   <Box className='planName' sx={{ px: "30px", pt: "50px", pb: "25px" }}>
     <Typography variant='h4'>
-      Free
+      {t("Free")}
     </Typography>
     <Typography variant='h3' sx={{ fontWeight: "bold" }}>
-      $0<span style={{ fontSize: "26px", fontWeight: "normal" }}>/month</span>
+      ${t("0")}<span style={{ fontSize: "26px", fontWeight: "normal" }}>/{t("month")}</span>
     </Typography>
     <Typography variant='body1' sx={{
       color: "text.secondary", fontSize: "20px", my: 1,
     }}>
-      Essential CV tools for everyone
+      {t("Essential CV tools for everyone")}
     </Typography>
   </Box>
 
@@ -110,7 +113,7 @@ function HomePart3() {
 
   <Box sx={{ display: "flex", justifyContent: "center", mb: "26px" }}>
   <Button variant="outlined" sx={{ width: "75%" }}
-  onClick={handleClickFree}>Get Started Free</Button>
+  onClick={handleClickFree}>{t("Get Started Free")}</Button>
 </Box>
 
 </Box>

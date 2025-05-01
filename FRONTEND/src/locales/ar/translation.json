@@ -59,6 +59,25 @@
     "Performance Tracking":"تتبع الأداء",
     "performance_tracking.subtitle":"تابع تطور سيرتك الذاتية مع مرور الوقت باستخدام نظام التقييم لدينا.",
     "Export Options":"خيارات التصدير",
-    "export_options.subtitle":"حمّل سيرتك الذاتية بصيغة PDF أو Word، جاهزة للإرسال."
+    "export_options.subtitle":"حمّل سيرتك الذاتية بصيغة PDF أو Word، جاهزة للإرسال.",
+
+        "Choose Your Plan":"اختر خطتك",
+    "Flexible options to match your CV needs":"خيارات مرنة تناسب احتياجات سيرتك الذاتية",
+
+    "Free": "مجاني",
+    "month":"شهر",
+    "0":"٠",
+    "Essential CV tools for everyone":"أدوات أساسية لكتابة السيرة الذاتية للجميع",
+    "2 CV Templates":"نموذجان للسيرة الذاتية",
+    "Export to PDF":"تصدير إلى PDF",
+    "Store up to 2 CVs":"تخزين حتى سيرتين ذاتيتين",
+    "ATS Compatibility Check":"فحص توافق نظام تتبع المتقدمين",
+    "Grammar & Spelling Check":"تدقيق نحوي وإملائي",
+    "Auto-correction":"تصحيح تلقائي",
+    "AI Content Generator":"مولد محتوى بالذكاء الاصطناعي",
+    "AI Open Chat Assistant":"مساعد الدردشة المفتوحة بالذكاء الاصطناعي",
+    "Unlimited CVs":"سير ذاتية غير محدودة",
+    "Get Started Free":"ابدأ مجانًا"
+    
 
 }

@@ -167,7 +167,7 @@ const HomePart1 = () => {
                 endIcon={<ArrowForwardIcon />}
                 onClick={() => navigate("/getStart")}
               >
-                Get Started
+                {t("Get Started")}
               </Button>
               <Button
                 variant="outlined"
