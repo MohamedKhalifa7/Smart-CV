@@ -13,12 +13,14 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslation } from 'react-i18next'; 
 
 const Skills = () => {
   const { formData, updateSection } = useCV();
   const [input, setInput] = useState('');
   const skills = formData.skills?.skills || [];
   
+  const { t } = useTranslation(); 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -54,7 +56,7 @@ const Skills = () => {
         fontSize: isMobile ? '1rem' : '1.1rem',
         mb: 2
       }}>
-        Skills
+        {t('skills')} 
       </Typography>
 
       {/* Add Skills Section */}
@@ -64,13 +66,13 @@ const Skills = () => {
           fontSize: '0.85rem',
           mb: 1
         }}>
-          Add Skills
+          {t('addSkills')} 
         </Typography>
         <Stack direction={isMobile ? 'column' : 'row'} spacing={2} sx={{ mb: 1 }}>
           <TextField
             fullWidth
             variant="standard"
-            placeholder="e.g. Project Management"
+            placeholder={t('placeholderSkills')} 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && addSkill()}
@@ -97,7 +99,7 @@ const Skills = () => {
               width: '80px'
             }}
           >
-            Add
+            {t('add')} 
           </Button>
         </Stack>
       </Box>
@@ -109,7 +111,7 @@ const Skills = () => {
           fontSize: '0.85rem',
           mb: 1
         }}>
-          Your Skills
+          {t('yourSkills')}
         </Typography>
         <Box sx={{
           minHeight: '40px',
@@ -135,7 +137,7 @@ const Skills = () => {
             </Box>
           ) : (
             <Typography variant="body2" sx={{ color: '#666', fontStyle: 'italic' }}>
-              No skills added yet
+              {t('noSkills')} 
             </Typography>
           )}
         </Box>
@@ -148,12 +150,12 @@ const Skills = () => {
           fontSize: '0.85rem',
           mb: 1
         }}>
-          Languages (Optional)
+          {t('languages')} 
         </Typography>
         <TextField
           fullWidth
           variant="standard"
-          placeholder="List languages you know, e.g.: English (Native), Spanish (Intermediate), French (Basic)"
+          placeholder={t('placeholderLanguages')} 
           value={formData.skills?.languages || ''}
           onChange={(e) =>
             updateSection('skills', {
@@ -180,12 +182,12 @@ const Skills = () => {
           fontSize: '0.85rem',
           mb: 1
         }}>
-          Certifications (Optional)
+          {t('certifications')}
         </Typography>
         <TextField
           fullWidth
           variant="standard"
-          placeholder="List relevant certifications, e.g.: Google Analytics Certification (2022), HubSpot Inbound Marketing (2021)"
+          placeholder={t('placeholderCertifications')}
           value={formData.skills?.certifications || ''}
           onChange={(e) =>
             updateSection('skills', {
@@ -209,4 +211,3 @@ const Skills = () => {
 };
 
 export default Skills;
-  

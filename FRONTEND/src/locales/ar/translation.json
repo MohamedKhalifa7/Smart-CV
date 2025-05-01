@@ -30,5 +30,47 @@
     "First Name is required": "الاسم الأول مطلوب",
     "Last Name is required": "الاسم الأخير مطلوب",
     "Email is required": "البريد الإلكتروني مطلوب",
-    "Professional Title is required": "المسمى الوظيفي مطلوب"
+    "Professional Title is required": "المسمى الوظيفي مطلوب" ,
+    
+  "Work Experience": "الخبرة العملية",
+  "Add Experience": "إضافة خبرة",
+  "Job Title": "المسمى الوظيفي",
+  "Company": "الشركة",
+  "Start Date": "تاريخ البدء",
+  "End Date": "تاريخ الانتهاء",
+  "Description": "الوصف",
+  "No experiences added yet": "لم يتم إضافة أي خبرات بعد",
+  "Company Name": "اسم الشركة",
+  "Jan 2020": "يناير 2020",
+  "Present": "الحالي",
+  "Describe your responsibilities and achievements...": "صف مسؤولياتك وإنجازاتك...",
+  "Add Education": "إضافة تعليم",
+  "Institution": "المؤسسة التعليمية",
+  "University Name": "اسم الجامعة",
+  "Degree": "الدرجة العلمية",
+  "Bachelor's in Computer Science": "بكالوريوس في علوم الحاسوب",
+
+  "Start Year": "سنة البدء",
+  "2018": "٢٠١٨",
+  "End Year": "سنة الانتهاء",
+  "2022": "٢٠٢٢",
+  "Description (Optional)": "الوصف (اختياري)",
+  "Describe your education experience here...": "صف تجربتك التعليمية هنا..."
+, "skills": "المهارات",
+"addSkills": "أضف المهارات",
+"yourSkills": "مهاراتك",
+"noSkills": "لم تتم إضافة مهارات بعد",
+"languages": "اللغات (اختياري)",
+"certifications": "الشهادات (اختياري)",
+"placeholderSkills": "مثلًا: إدارة المشاريع",
+"placeholderLanguages": "أذكر اللغات التي تجيدها، مثل: الإنجليزية (اللغة الأم)، الإسبانية (مستوى متوسط)، الفرنسية (أساسي)",
+"placeholderCertifications": "أذكر الشهادات ذات الصلة، مثل: شهادة تحليلات جوجل (2022)، التسويق الوارد من HubSpot (2021)"
+,"add": "إضافة"
+, "chooseTemplate": "اختيار القالب",
+  "aiWritingAssistant": "مساعد الكتابة بالذكاء الاصطناعي"
+, "myCVs": "سيرتي الذاتية",
+"cvDeletedSuccessfully": "تم حذف السيرة الذاتية بنجاح!",
+"errorFetchingCVs": "خطأ في جلب السير الذاتية",
+"errorDeletingCV": "خطأ في حذف السيرة الذاتية",
+"newCV": "+ سيرة ذاتية جديدة"
 }

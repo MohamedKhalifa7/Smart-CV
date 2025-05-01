@@ -2,12 +2,12 @@ import { useCV } from '../../../context/CVcontext';
 import { Box, Typography, TextField, Button, IconButton, Divider, Stack, useTheme, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import { t } from 'i18next';
 
 const Experience = () => {
   const { formData, updateArraySection, addArrayItem, removeArrayItem } = useCV();
   const experiences = formData.experience || [];
-  const theme = useTheme()
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleChange = (index, field, value) => {
@@ -27,18 +27,14 @@ const Experience = () => {
 
   return (
     <Box sx={{
-      width: '100%', maxWidth: isMobile ? '90%' : '800px'
-      , margin: '0 auto', padding: '12px'
+      width: '100%',
+      maxWidth: isMobile ? '90%' : '800px',
+      margin: '0 auto',
+      padding: '12px'
     }}>
-      {/* Header row with title and add button */}
-      < Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{ mb: 2 }}
-      >
-        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.1rem' }}>
-          Work Experience
+      <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
+        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#333', fontSize: '1.1rem', textAlign: 'start' }}>
+          {t('Work Experience')}
         </Typography>
 
         <Button
@@ -55,18 +51,17 @@ const Experience = () => {
             padding: '6px 12px'
           }}
         >
-          Add Experience
+          {t('Add Experience')}
         </Button>
-      </Stack >
+      </Stack>
 
-      {/* Experiences container */}
-      < Box sx={{ border: '1px solid #e0e0e0', borderRadius: '8px', p: 2 }}>
+      <Box sx={{ border: '1px solid #e0e0e0', borderRadius: '8px', p: 2 }}>
         {
           experiences.map((exp, index) => (
             <Box key={index} sx={{ mb: 3 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
-                  Experience {index + 1}
+                <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: '1rem', textAlign: 'start' }}>
+                  {t('Experience')} {index + 1}
                 </Typography>
 
                 <IconButton
@@ -77,11 +72,10 @@ const Experience = () => {
                 </IconButton>
               </Box>
 
-              {/* Experience details */}
               <Box sx={{ display: 'flex', gap: '12px', mb: 2 }}>
                 <Box sx={{ width: '50%' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                    Job Title
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                    {t('Job Title')}
                   </Typography>
                   <TextField
                     fullWidth
@@ -89,15 +83,22 @@ const Experience = () => {
                     name="jobTitle"
                     value={exp.jobTitle || ''}
                     onChange={(e) => handleChange(index, 'jobTitle', e.target.value)}
-                    placeholder="Marketing Manager"
+                    placeholder={t('Marketing Manager')}
                     InputProps={{ disableUnderline: true }}
-                    sx={{ '& .MuiInput-input': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '4px 8px' } }}
+                    sx={{
+                      '& .MuiInput-input': {
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        padding: '4px 8px'
+                      }
+                    }}
                   />
                 </Box>
 
                 <Box sx={{ width: '50%' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                    Company
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                    {t('Company')}
                   </Typography>
                   <TextField
                     fullWidth
@@ -105,17 +106,24 @@ const Experience = () => {
                     name="company"
                     value={exp.company || ''}
                     onChange={(e) => handleChange(index, 'company', e.target.value)}
-                    placeholder="Company Name"
+                    placeholder={t('Company Name')}
                     InputProps={{ disableUnderline: true }}
-                    sx={{ '& .MuiInput-input': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '4px 8px' } }}
+                    sx={{
+                      '& .MuiInput-input': {
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        padding: '4px 8px'
+                      }
+                    }}
                   />
                 </Box>
               </Box>
 
               <Box sx={{ display: 'flex', gap: '12px', mb: 2 }}>
                 <Box sx={{ width: '100%' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                    Location
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                    {t('Location')}
                   </Typography>
                   <TextField
                     fullWidth
@@ -123,34 +131,45 @@ const Experience = () => {
                     name="location"
                     value={exp.location || ''}
                     onChange={(e) => handleChange(index, 'location', e.target.value)}
-                    placeholder="New York, NY"
+                    placeholder={t('New York, NY')}
                     InputProps={{ disableUnderline: true }}
-                    sx={{ '& .MuiInput-input': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '4px 8px' } }}
+                    sx={{
+                      '& .MuiInput-input': {
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        padding: '4px 8px'
+                      }
+                    }}
                   />
                 </Box>
 
                 <Box sx={{ width: '50%' }}>
-                  <Box sx={{ width: '100%' }}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                      Start Date
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      variant="standard"
-                      name="startDate"
-                      value={exp.startDate || ''}
-                      onChange={(e) => handleChange(index, 'startDate', e.target.value)}
-                      placeholder="Jan 2020"
-                      InputProps={{ disableUnderline: true }}
-                      sx={{ '& .MuiInput-input': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '4px 8px' } }}
-                    />
-                  </Box>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                    {t('Start Date')}
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    variant="standard"
+                    name="startDate"
+                    value={exp.startDate || ''}
+                    onChange={(e) => handleChange(index, 'startDate', e.target.value)}
+                    placeholder={t('Jan 2020')}
+                    InputProps={{ disableUnderline: true }}
+                    sx={{
+                      '& .MuiInput-input': {
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        padding: '4px 8px'
+                      }
+                    }}
+                  />
                 </Box>
 
-
                 <Box sx={{ width: '50%' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                    End Date
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                    {t('End Date')}
                   </Typography>
                   <TextField
                     fullWidth
@@ -158,16 +177,23 @@ const Experience = () => {
                     name="endDate"
                     value={exp.endDate || ''}
                     onChange={(e) => handleChange(index, 'endDate', e.target.value)}
-                    placeholder="Present"
+                    placeholder={t('Present')}
                     InputProps={{ disableUnderline: true }}
-                    sx={{ '& .MuiInput-input': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '4px 8px' } }}
+                    sx={{
+                      '& .MuiInput-input': {
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        padding: '4px 8px'
+                      }
+                    }}
                   />
                 </Box>
               </Box>
 
               <Box sx={{ mb: 2 }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem' }}>
-                  Description
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
+                  {t('Description')}
                 </Typography>
                 <TextField
                   fullWidth
@@ -177,8 +203,15 @@ const Experience = () => {
                   name="description"
                   value={exp.description || ''}
                   onChange={(e) => handleChange(index, 'description', e.target.value)}
-                  placeholder="Describe your responsibilities and achievements..."
-                  sx={{ '& .MuiOutlinedInput-root': { border: '1px solid #ddd', borderRadius: '8px', fontSize: '0.85rem', padding: '6px' } }}
+                  placeholder={t('Describe your responsibilities and achievements...')}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      border: '1px solid #ddd',
+                      borderRadius: '8px',
+                      fontSize: '0.85rem',
+                      padding: '6px'
+                    }
+                  }}
                 />
               </Box>
 
@@ -189,15 +222,13 @@ const Experience = () => {
           ))
         }
 
-        {
-          experiences.length === 0 && (
-            <Typography sx={{ color: '#666', fontStyle: 'italic' }}>
-              No experiences added yet
-            </Typography>
-          )
-        }
-      </Box >
-    </Box >
+        {experiences.length === 0 && (
+          <Typography sx={{ color: '#666', fontStyle: 'italic', textAlign: 'start' }}>
+            {t('No experiences added yet')}
+          </Typography>
+        )}
+      </Box>
+    </Box>
   );
 };
 

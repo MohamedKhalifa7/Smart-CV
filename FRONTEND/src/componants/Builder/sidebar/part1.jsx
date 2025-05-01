@@ -5,12 +5,13 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import AIWritingAssistDialog from './component/AIWritingAssist';
 import ChooseTemplateDialog from './component/chooseTemplate';
 import { usePreview } from '../../../context/previewContext';
+import { useTranslation } from 'react-i18next'; 
 
 function Part1() {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [dialogKey, setDialogKey] = useState(0);  // Track the key for the dialog
-
+    const { t } = useTranslation();
     const { setGoToPreview } = usePreview();
 
     const handleClickOpen = () => {
@@ -51,8 +52,7 @@ function Part1() {
                     variant="outlined"
                     startIcon={<ViewModuleIcon />}
                     fullWidth
-                >
-                    Choose Template
+                > {t('chooseTemplate')} 
                 </Button>
 
                 <ChooseTemplateDialog
@@ -67,7 +67,7 @@ function Part1() {
                     startIcon={<AutoFixHighIcon />}
                     fullWidth
                 >
-                    AI Writing Assistant
+                     {t('aiWritingAssistant')}
                 </Button>
 
                 <AIWritingAssistDialog

@@ -5,12 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useCV } from '../../../context/CVcontext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'; 
 
 const Part2 = () => {
     const [myCvs, setMyCvs] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-
+    const { t } = useTranslation();
     const { fetchUserCVs, setFormData } = useCV(); 
     const navigate = useNavigate(); // Add this
 
@@ -20,11 +21,11 @@ const Part2 = () => {
                 const cvs = await fetchUserCVs();
                 setMyCvs(cvs);
             } catch (error) {
-                setError('Error fetching CVs');
+                setError(t('errorFetchingCVs'));  
             }
         };
         getCVs();
-    }, []);
+    }, [t]);
 
     const handleDelete = async (id) => {
         try {
@@ -43,7 +44,7 @@ const Part2 = () => {
             }, 3000);  // Hide success alert after 3 seconds
 
         } catch (error) {
-            setError(error.response ? error.response.data : 'Error deleting CV');
+            setError(error.response ? error.response.data : t('errorDeletingCV'));  
             setSuccess(false);
         }
     };
@@ -66,12 +67,12 @@ const Part2 = () => {
                 gap: 2,
             }}
         >
-            <Typography variant='body1'>My CVs</Typography>
+            <Typography variant='body1'>{t('myCVs')}</Typography> 
 
             {/* Alert messages */}
             {success && (
                 <Alert severity="success" sx={{ mb: 2 }}>
-                    CV deleted successfully!
+                    {t('cvDeletedSuccessfully')} 
                 </Alert>
             )}
             {error && (
@@ -115,17 +116,20 @@ const Part2 = () => {
             <Button variant='outlined'
              sx={{ mt: 2 }} 
              fullWidth
-             onClick={()=>{ setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                education: [],
-                experience: [],
-                skills: [], // <-- Important!
-                summary: '',
-              });
-              ;}}
-              >+ New CV</Button>
+             onClick={() => {
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    education: [],
+                    experience: [],
+                    skills: [], // <-- Important!
+                    summary: '',
+                });
+             }}
+            >
+                {t('newCV')} 
+            </Button>
         </Box>
     );
 };
