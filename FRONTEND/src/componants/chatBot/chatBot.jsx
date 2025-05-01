@@ -15,7 +15,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy'; import { useEffect, use
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth/AuthContext';
-import ProWarning from '../Builder/sidebar/component/proWarning';
+import ProWarning from '../proWarning';
 
 const ChatBot = () => {
     const theme = useTheme();

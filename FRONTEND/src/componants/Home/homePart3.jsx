@@ -20,26 +20,29 @@ function HomePart3() {
         navigate("/getStart")
     }
 
-    const availFree = ['CV Analysis (basic)',
+    const availFree = ['CV Analysis ',
         '2 CV Templates',
         ' Export to PDF',
         ' Store up to 2 CVs',
-        'Grammar & Spelling Check',];
+        'ATS Compatibility Check',
+        ];
 
-    const notFree = ['ATS Compatibility Check',
-        'Advanced Keyword Optimization',
+    const notFree = [
+      'Grammar & Spelling Check',
         'Auto-correction',
+      
+        'AI Content Generator',
         'AI Open Chat Assistant',
         'Unlimited CVs',];
 
-    const availPro = ['CV Analysis (advanced)',
+    const availPro = ['CV Analysis',
         'All CV Templates',
        'Export to PDF & Word',
         'Unlimited CV Storage',
+         'ATS Compatibility Check',
         'Grammar & Spelling Check',
-        'ATS Compatibility Check',
-        'Advanced Keyword Optimization',
         'Auto-correction',
+        'AI Content Generator',
         'AI Open Chat Assistant',
         'Unlimited CVs',]
     return (

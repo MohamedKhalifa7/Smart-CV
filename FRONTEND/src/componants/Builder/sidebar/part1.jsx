@@ -6,7 +6,7 @@ import AIWritingAssistDialog from './component/AIWritingAssist';
 import ChooseTemplateDialog from './component/chooseTemplate';
 import { usePreview } from '../../../context/previewContext';
 import { useAuth } from '../../../context/Auth/AuthContext';
-import ProWarning from './component/proWarning';
+import ProWarning from '../../proWarning';
 
 function Part1() {
     const [open, setOpen] = useState(false);

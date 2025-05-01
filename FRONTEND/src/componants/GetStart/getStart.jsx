@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import CVAnalysisResualt from "../CVAnalysis/CVAnalysisResualt";
 import { useState, useRef } from "react";
 import { useFile } from "../../context/fileContext";
+import { useAuth } from "../../context/Auth/AuthContext";
+import ProWarning from "../proWarning";
 
 const GetStarted = () => {
     const muiTheme = useTheme();
@@ -23,6 +25,19 @@ const GetStarted = () => {
 
     const { uploadedFile, setUploadedFile } = useFile();
     const fileInputRef = useRef();
+
+    const { user } = useAuth();
+        const isPro = user.role === 'pro user';
+    const [openPaymentDialog, setOpenPaymentDialog] = useState(false); // State to handle the payment dialog
+
+      const handleCheckGrammer = () => {
+        if (isPro) {
+            navigat("/grammarCheck")
+        } else {
+            setOpenPaymentDialog(true); 
+        }
+      }
+
 
     const handleButtonClick = () => {
         fileInputRef.current.click(); // open file picker
@@ -144,7 +159,7 @@ const GetStarted = () => {
                             sx={{ width: "80%", alignSelf: "end", mb: "15px" }}
                             align="center"
                             variant="contained"
-                            onClick={() => navigat("/grammarCheck")}
+                            onClick={handleCheckGrammer}
                         >
                             Check Grammar
                         </Button>
@@ -162,7 +177,12 @@ const GetStarted = () => {
                 </Box>
             )}
 
-
+<ProWarning
+                    openPaymentDialog={openPaymentDialog}
+                    setOpenPaymentDialog={setOpenPaymentDialog}
+                    onClose={() => setOpenPaymentDialog(false)}
+                
+                ></ProWarning>
         </>
     )
 }
