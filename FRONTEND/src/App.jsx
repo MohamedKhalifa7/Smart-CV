@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       { path: "getStart", element: <GetStarted /> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
-
+      {path:"payment-check",element:<ProPaymentForm/>},
       { path: "*", element: <Error /> },
     ],
   },
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
   { path: "verify-otp", element: <VerifyOTP /> },
-  {path:"payment-check",element:<ProPaymentForm/>}
+  
 ]);
 
 function App() {
