@@ -147,7 +147,42 @@
     "Advanced tools for serious job seekers":"Advanced tools for serious job seekers",
     "Unlimited CV Storage":"Unlimited CV Storage",
     "All CV Templates":"All CV Templates",
-    "Upgrade to Pro":"Upgrade to Pro"
+    "Upgrade to Pro":"Upgrade to Pro",
+
+    "footer.subtitle":"The AI-powered CV platform that helps you create, analyze, and improve your resume.",
+
+    "Features":"Features",
+"CV Analyzer":"CV Analyzer",
+"Templates":"Templates",
+"Pro Features":"Pro Features",
+"Resources":"Resources",
+"Blog":"Blog",
+"CV Tips":"CV Tips",
+"Help Center":"Help Center",
+"About Us":"About Us",
+"Privacy Policy":"Privacy Policy",
+"Terms of Service":"Terms of Service",
+"Contact":"Contact",
+  "© 2025 All rights reserved.":"© 2025 All rights reserved.",
+
+  "Let's Create Your Perfect CV!":"Let's Create Your Perfect CV!",
+  "getstarted.subtitle":"Choose how you'd like to get started with your CV",
+  "Upload Existing CV":"Upload Existing CV",
+  "upload.subtitle":" Upload your current CV in PDF or Word format for analysis and improvement",
+  "Upload CV":"Upload CV",
+
+  "Create New CV ":"Create New CV",
+  "create.subtitle":"Start from scratch with our guided CV builder and customizable templates",
+  "Start New CV":"Start New CV",
+  "Grammar Checker":"Grammar Checker",
+  "grammar_checker.subtitle":"Check your CV for grammar, spelling, and style improvements",
+  "Check Grammar":"Check Grammar"
+
+
+
+
+
+
 
 
 }    

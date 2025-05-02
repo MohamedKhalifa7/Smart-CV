@@ -16,11 +16,12 @@ import { useState, useRef } from "react";
 import { useFile } from "../../context/fileContext";
 import { useAuth } from "../../context/Auth/AuthContext";
 import ProWarning from "../proWarning";
+import { useTranslation } from 'react-i18next';
 
 const GetStarted = () => {
     const muiTheme = useTheme();
     const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
-
+    const { t } = useTranslation();
     const navigat = useNavigate()
 
     const { uploadedFile, setUploadedFile } = useFile();
@@ -57,10 +58,10 @@ const GetStarted = () => {
             <Box sx={{ bgcolor: "background.gray", width: "100%", height: "200px" }}>
                 <Typography variant="h4"
                     sx={{ textAlign: "center", paddingTop: "50px", color: muiTheme.customStyles.gradientText }}>
-                    Let's Create Your Perfect CV
+                    {t("Let's Create Your Perfect CV!")}
                 </Typography>
                 <Typography variant="body1" sx={{ textAlign: "center", paddingTop: "10px" }}>
-                    Choose how you'd like to get started with your CV
+                    {t("getstarted.subtitle")}
                 </Typography>
 
             </Box>
@@ -84,10 +85,10 @@ const GetStarted = () => {
                         <FileUploadOutlinedIcon sx={{ fontSize: "70px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div" align="center">
-                                Upload Existing CV
+                                {t("Upload Existing CV")}
                             </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
-                                Upload your current CV in PDF or Word format for analysis and improvement
+                       {t("upload.subtitle")}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
@@ -98,7 +99,7 @@ const GetStarted = () => {
                             variant="contained"
                             onClick={handleButtonClick}
                         >
-                            Upload CV
+                            {t("Upload CV")}
                         </Button>
                         <input
                             type="file"
@@ -121,9 +122,10 @@ const GetStarted = () => {
                         <DescriptionOutlinedIcon sx={{ fontSize: "60px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div" align="center">
-                                Create New CV                            </Typography>
+                                {t("Create New CV ")}                           </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
-                                Start from scratch with our guided CV builder and customizable templates                            </Typography>
+                               {t("create.subtitle")}
+                                                           </Typography>
                         </CardContent>
                     </CardActionArea>
                     <CardActions sx={{ justifyContent: "center" }}>
@@ -133,7 +135,7 @@ const GetStarted = () => {
                             align="center"
                             variant="contained"
                         >
-                            Start New CV
+                            {t("Start New CV")}
                         </Button>
                     </CardActions>
                 </Card>
@@ -148,10 +150,11 @@ const GetStarted = () => {
                         <SpellcheckOutlinedIcon sx={{ fontSize: "70px", marginLeft: "100px", marginTop: "20px", color: "primary.main" }} />
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div" align="center">
-                                Grammar Check
+                                {t("Grammar Checker")}
                             </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: "center" }}>
-                                Check your CV for grammar, spelling, and style improvements                            </Typography>
+                            {t("grammar_checker.subtitle")}                       
+                                     </Typography>
                         </CardContent>
                     </CardActionArea>
                     <CardActions sx={{ justifyContent: "center" }}>
@@ -161,7 +164,7 @@ const GetStarted = () => {
                             variant="contained"
                             onClick={handleCheckGrammer}
                         >
-                            Check Grammar
+                            {t("Check Grammar")}
                         </Button>
                     </CardActions>
                 </Card>
