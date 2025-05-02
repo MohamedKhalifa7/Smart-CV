@@ -49,6 +49,7 @@ export const paymentSlice = createSlice({
       .addCase(handlePaymentSuccess.fulfilled,(state,action)=>{
         state.success=true;
         state.proExpiresAt = action.payload.proExpiresAt;
+        console.log("Pro expires at:", action.payload.proExpiresAt);  
       })
       .addCase(handlePaymentSuccess.rejected,(state,action)=>{
         state.error= action.payload

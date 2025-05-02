@@ -34,7 +34,7 @@ function Navbar() {
   const isRTL = currentLang === 'ar';
   const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
   const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(null);
-  const proExpiresAt = useSelector((state: any) => state.payment.proExpiresAt);
+  const proExpiresAt = user?.proExpiresAt  // Default to current date if not available
 
   const handleLogout = async () => {
     try {
@@ -239,17 +239,35 @@ function Navbar() {
                   onClose={handleProClose}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                  sx={{ mt: 1 }}
                 >
-                  <Box sx={{ p: 2, minWidth: 200 }}>
-                    <Typography variant="subtitle1">{t("User")}: {user?.email}</Typography>
-                    <Typography variant="subtitle2">{t("Plan")}: {user?.role}</Typography>
-
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      {t("Expires at")}: {new Date(proExpiresAt).toLocaleDateString()}
+                  <Box
+                    sx={{
+                      p: 2,
+                      minWidth: 250,
+                      background: "#fff",
+                      borderRadius: "10px",
+                      boxShadow: 3,
+                    }}
+                  >
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ fontWeight: "bold", mb: 1, color: "#6a11cb" }}
+                    >
+                      {t("Pro Account Details")}
                     </Typography>
-
+                    <Typography variant="body2" sx={{ color: "#444" }}>
+                      <strong>{t("User")}:</strong> {user?.email}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: "#444" }}>
+                      <strong>{t("Plan")}:</strong> {user?.role}
+                    </Typography>
+                    <Typography variant="body2" sx={{  color: "#444" }}>
+                      <strong>{t("Expires at")}:</strong> {new Date(proExpiresAt).toLocaleDateString()}
+                    </Typography>
                   </Box>
                 </Popover>
+
 
               </>
             )}

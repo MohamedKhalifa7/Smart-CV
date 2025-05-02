@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
       .then((res) => {
         if (res.data && res.data.user) {
           setUser(res.data.user);
+          console.log("User data:", res.data.user);
           setToken(res.data.token); 
         } else {
           throw new Error("Invalid response from server.");
