@@ -34,7 +34,7 @@ function Navbar() {
   const isRTL = currentLang === 'ar';
   const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
   const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(null);
-  const proExpiresAt = user?.proExpiresAt  // Default to current date if not available
+  const proExpiresAt = user?.proExpiresAt; // Default to current date if not available
 
   const handleLogout = async () => {
     try {
@@ -139,6 +139,15 @@ function Navbar() {
                   {t("Get Started")}
                 </Button>
               </MenuItem>
+              {/* Language Switch Mobile */}
+              <Box sx={{ display: 'flex', alignItems: 'center', mx: 2, mt: 2 }}>
+                <Typography sx={{ fontSize: "14px", mx: 1 }}>{isRTL ? 'ع' : 'En'}</Typography>
+                <Switch
+                  checked={currentLang === 'ar'}
+                  onChange={toggleLanguage}
+                  color="primary"
+                />
+              </Box>
             </Menu>
           </Box>
 
@@ -267,11 +276,8 @@ function Navbar() {
                     </Typography>
                   </Box>
                 </Popover>
-
-
               </>
             )}
-
           </Box>
 
           {/* User Avatar */}
@@ -309,7 +315,6 @@ function Navbar() {
       <ProWarning
         openPaymentDialog={openPaymentDialog}
         setOpenPaymentDialog={setOpenPaymentDialog}
-
       />
     </AppBar>
   );
