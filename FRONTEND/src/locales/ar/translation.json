@@ -147,7 +147,39 @@
     "Advanced tools for serious job seekers":"أدوات متقدمة للباحثين عن عمل بجدية",
     "Unlimited CV Storage":"مساحة تخزين غير محدودة للسير الذاتية",
     "All CV Templates":"جميع نماذج السير الذاتية",
-    "Upgrade to Pro":"ترقية إلى احترافي"
+    "Upgrade to Pro":"ترقية إلى احترافي",
+    "already upgraded":"تمت الترقية بالفعل",
+
+
+    
+    "footer.subtitle":"منصة السيرة الذاتية المدعومة بالذكاء الاصطناعي، تساعدك على إنشاء سيرتك الذاتية وتحليلها وتحسينها.",
+
+    "Features":"الميزات",
+"CV Analyzer":"محلل السيرة الذاتية",
+"Templates":"القوالب",
+"Pro Features":"الميزات الاحترافية",
+"Resources":"الموارد",
+"Blog":"المدونة",
+"CV Tips":"نصائح السيرة الذاتية",
+"Help Center":"مركز المساعدة",
+"About Us":"نبذة عنا",
+"Privacy Policy":"سياسة الخصوصية",
+"Terms of Service":"شروط الخدمة",
+"Contact":"اتصل بنا",
+"© 2025 All rights reserved.":"© ٢٠٢٥ جميع الحقوق محفوظة.",
+
+"Let's Create Your Perfect CV!":"هيا بنا ننشئ سيرتك الذاتية المثالية!",
+  "getstarted.subtitle":"اختر كيف تبدأ سيرتك الذاتية",
+  "Upload Existing CV":"حمّل سيرة ذاتية موجودة",
+  "upload.subtitle":"حمّل سيرتك الذاتية الحالية بصيغة PDF أو Word للتحليل والتحسين",
+  "Upload CV":"حمّل سيرة ذاتية",
+
+  "Create New CV ":"أنشئ سيرة ذاتية جديدة",
+  "create.subtitle":"ابدأ من الصفر مع أداة إنشاء السير الذاتية المُوجّهة والقوالب القابلة للتخصيص",
+  "Start New CV":"ابدأ سيرة ذاتية جديدة",
+  "Grammar Checker":"مدقق نحوي",
+  "grammar_checker.subtitle":"تحقق من سيرتك الذاتية لتحسينات نحوية وإملائية وأسلوبية",
+  "Check Grammar":"تدقيق نحوي"
     
 
 }
