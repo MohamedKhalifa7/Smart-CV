@@ -11,7 +11,8 @@ import {
   Button,
   Tooltip,
   MenuItem,
-  Switch
+  Switch,
+  Popover
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -21,6 +22,7 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/Auth/AuthContext';
 import ProWarning from './proWarning';
+import { useSelector } from 'react-redux';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -31,6 +33,8 @@ function Navbar() {
   const currentLang = i18n.language;
   const isRTL = currentLang === 'ar';
   const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
+  const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(null);
+  const proExpiresAt = useSelector((state: any) => state.payment.proExpiresAt);
 
   const handleLogout = async () => {
     try {
@@ -40,6 +44,19 @@ function Navbar() {
       console.error('Logout failed', error);
     }
   };
+  const handleProClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElPro(event.currentTarget);
+  };
+
+  const handleProClose = () => {
+    setAnchorElPro(null);
+  };
+
+  React.useEffect(() => {
+    console.log("Pro Expires At:", proExpiresAt);
+  }, [proExpiresAt]);
+
+  const openProPopover = Boolean(anchorElPro);
 
   const pages = [
     { label: t('Home'), href: "/" },
@@ -179,20 +196,20 @@ function Navbar() {
               </Typography>
             ))}
 
-          {!isAuthenticated && (
+            {!isAuthenticated && (
               <Button
-              onClick={() => navigate('/login')}
-              sx={{
-                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
-                color: "white",
-                fontSize: "12px",
-                marginInlineEnd: 2
-              }}
-            >
-              {t("LogIn")}
-            </Button>
-          )}
-          {user?.role === "normal user" && (  <Button
+                onClick={() => navigate('/login')}
+                sx={{
+                  background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
+                  color: "white",
+                  fontSize: "12px",
+                  marginInlineEnd: 2
+                }}
+              >
+                {t("LogIn")}
+              </Button>
+            )}
+            {user?.role === "normal user" && (<Button
               onClick={() => setOpenPaymentDialog(true)}
               sx={{
                 background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
@@ -203,20 +220,42 @@ function Navbar() {
             >
               {t("Go Pro")}
             </Button>)}
-            {user?.role === "pro user" && (  <Button
-              
-              sx={{
-                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
-                color: "white",
-                fontSize: "12px",
-                marginInlineEnd: 2
-              }}
-            >
-              {t("Pro")}
-            </Button>)}
+            {user?.role === "pro user" && (
+              <>
+                <Button
+                  onClick={handleProClick}
+                  sx={{
+                    background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
+                    color: "white",
+                    fontSize: "12px",
+                    marginInlineEnd: 2
+                  }}
+                >
+                  {t("Pro")}
+                </Button>
+                <Popover
+                  open={openProPopover}
+                  anchorEl={anchorElPro}
+                  onClose={handleProClose}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                  transformOrigin={{ vertical: 'top', horizontal: 'left' }}
+                >
+                  <Box sx={{ p: 2, minWidth: 200 }}>
+                    <Typography variant="subtitle1">{t("User")}: {user?.email}</Typography>
+                    <Typography variant="subtitle2">{t("Plan")}: {user?.role}</Typography>
+
+                    <Typography variant="body2" sx={{ mt: 1 }}>
+                      {t("Expires at")}: {new Date(proExpiresAt).toLocaleDateString()}
+                    </Typography>
+
+                  </Box>
+                </Popover>
+
+              </>
+            )}
 
           </Box>
- 
+
           {/* User Avatar */}
           <Box sx={{ flexGrow: 0, marginLeft: "20px" }}>
             <Tooltip title="Open settings">
@@ -250,10 +289,10 @@ function Navbar() {
         </Toolbar>
       </Container>
       <ProWarning
-    openPaymentDialog={openPaymentDialog}
-    setOpenPaymentDialog={setOpenPaymentDialog}
-    
-/>
+        openPaymentDialog={openPaymentDialog}
+        setOpenPaymentDialog={setOpenPaymentDialog}
+
+      />
     </AppBar>
   );
 }
