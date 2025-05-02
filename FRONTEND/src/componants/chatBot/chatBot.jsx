@@ -32,7 +32,7 @@ const ChatBot = () => {
 
     const handleChatButtonClick = () => {
         if (!user) {
-            navigate('/login');
+            setOpen(true)
             return;
         }
         
