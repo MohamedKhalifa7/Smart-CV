@@ -60,6 +60,10 @@
     "performance_tracking.subtitle":"تابع تطور سيرتك الذاتية مع مرور الوقت باستخدام نظام التقييم لدينا.",
     "Export Options":"خيارات التصدير",
     "export_options.subtitle":"حمّل سيرتك الذاتية بصيغة PDF أو Word، جاهزة للإرسال.",
+    "Interview Questions":"أسئلة المقابلة",
+    "interview_questions.subtitle":"أنشئ أسئلة مقابلة شخصية بناءً على سيرتك الذاتية المرفوعة لمساعدتك على الاستعداد بثقة.",
+    "Chat Assistant":"مساعد الدردشة",
+    "chat_assistant.subtitle":"احصل على إجابات فورية لاستفساراتك المهنية والمتعلقة بسيرتك الذاتية مع مساعد الدردشة الذكي لدينا",
 
         "Choose Your Plan":"اختر خطتك",
     "Flexible options to match your CV needs":"خيارات مرنة تناسب احتياجات سيرتك الذاتية",
@@ -77,7 +81,14 @@
     "AI Content Generator":"مولد محتوى بالذكاء الاصطناعي",
     "AI Open Chat Assistant":"مساعد الدردشة المفتوحة بالذكاء الاصطناعي",
     "Unlimited CVs":"سير ذاتية غير محدودة",
-    "Get Started Free":"ابدأ مجانًا"
+    "Get Started Free":"ابدأ مجانًا",
+
+    "Pro":"احترافي",
+    "9.99":"٩.٩٩",
+    "Advanced tools for serious job seekers":"أدوات متقدمة للباحثين عن عمل بجدية",
+    "Unlimited CV Storage":"مساحة تخزين غير محدودة للسير الذاتية",
+    "All CV Templates":"جميع نماذج السير الذاتية",
+    "Upgrade to Pro":"ترقية إلى احترافي"
     
 
 }

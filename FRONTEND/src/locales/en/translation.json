@@ -59,6 +59,10 @@
     "performance_tracking.subtitle":"Track your CV's improvement over time with our scoring system.",
     "Export Options":"Export Options",
     "export_options.subtitle":"Download CV in PDF or Word format, ready to send.",
+    "Interview Questions":"Interview Questions",
+    "interview_questions.subtitle":"Generate personalized interview questions based on your uploaded CV to help you prepare with confidence.",
+    "Chat Assistant":"Chat Assistant",
+    "chat_assistant.subtitle":"Get instant answers to your career and CV-related queries with our smart chatbot assistant.",
 
     "Choose Your Plan":"Choose Your Plan",
     "Flexible options to match your CV needs":"Flexible options to match your CV needs",
@@ -76,7 +80,14 @@
     "AI Content Generator":"AI Content Generator",
     "AI Open Chat Assistant":"AI Open Chat Assistant",
     "Unlimited CVs":"Unlimited CVs",
-    "Get Started Free":"Get Started Free"
+    "Get Started Free":"Get Started Free",
+
+    "Pro":"Pro",
+    "9.99":"9.99",
+    "Advanced tools for serious job seekers":"Advanced tools for serious job seekers",
+    "Unlimited CV Storage":"Unlimited CV Storage",
+    "All CV Templates":"All CV Templates",
+    "Upgrade to Pro":"Upgrade to Pro"
     
 
 

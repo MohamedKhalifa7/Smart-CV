@@ -38,16 +38,16 @@ function HomePart3() {
         t('AI Open Chat Assistant'),
         t('Unlimited CVs'),];
 
-    const availPro = ['CV Analysis',
-        'All CV Templates',
-       'Export to PDF & Word',
-        'Unlimited CV Storage',
-         'ATS Compatibility Check',
-        'Grammar & Spelling Check',
-        'Auto-correction',
-        'AI Content Generator',
-        'AI Open Chat Assistant',
-        'Unlimited CVs',]
+    const availPro = [t('CV Analysis'),
+        t('All CV Templates'),
+       t('Export to PDF'),
+        t('Unlimited CV Storage'),
+         t('ATS Compatibility Check'),
+        t('Grammar & Spelling Check'),
+        t('Auto-correction'),
+        t('AI Content Generator'),
+        t('AI Open Chat Assistant'),
+        t('Unlimited CVs'),]
     return (
         <Box>
             <Box className="header" sx={{
@@ -122,14 +122,14 @@ function HomePart3() {
                 <Box className='pro' sx={{ border: `1px solid `,mt:6, borderColor:"primary.main", borderRadius: "10px" , width:isMobile?"90%": "38%" }}>
                     <Box className='planName' sx={{backgroundColor:"primary.main", color:"white" ,borderTopLeftRadius:"10px", borderTopRightRadius:"10px" ,px: "30px", pt: "50px", pb:"25px"}} >
                         <Typography variant='h4' sx={{color:"white"}}>
-                            Pro
+                            {t("Pro")}
                         </Typography>
                         <Typography variant='h3' sx={{ fontWeight: "bold" }}>
-                            $9.99<span style={{ fontSize: "26px", fontWeight: "normal" }}>/month</span>
+                            ${t("9.99")}<span style={{ fontSize: "26px", fontWeight: "normal" }}>/{t("month")}</span>
                         </Typography>
                         <Typography variant='body1' sx={{
                             color: "white", fontSize: "20px", my: 1
-                        }}>Advanced tools for serious job seekers
+                        }}>{t("Advanced tools for serious job seekers")}
                         </Typography>
                     </Box>
 
@@ -146,7 +146,7 @@ function HomePart3() {
                     
                     <Box sx={{ display: "flex", justifyContent: "center", mb: "26px" }}>
   <Button variant="contained" sx={{ width: "75%" }}
-  onClick={handleClickPro}>Upgrade to Pro</Button>
+  onClick={handleClickPro}>{t("Upgrade to Pro")}</Button>
 </Box>
                 </Box>
             </Box>
