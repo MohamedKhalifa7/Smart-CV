@@ -27,6 +27,7 @@ export const paymentSlice = createSlice({
     url: null,
     error: null,
     success: false,
+    proExpiresAt: null,
   },
   extraReducers: (builder) => {
     builder
@@ -47,6 +48,7 @@ export const paymentSlice = createSlice({
       })
       .addCase(handlePaymentSuccess.fulfilled,(state,action)=>{
         state.success=true;
+        state.proExpiresAt = action.payload.proExpiresAt;
       })
       .addCase(handlePaymentSuccess.rejected,(state,action)=>{
         state.error= action.payload
