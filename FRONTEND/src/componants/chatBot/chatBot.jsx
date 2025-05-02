@@ -24,11 +24,24 @@ const ChatBot = () => {
     const [chatId, setChatId] = useState(null);
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const navigate=useNavigate()
+    const navigate = useNavigate();
     const messagesEndRef = useRef(null);
     const { user } = useAuth();
     const isPro = user?.role === 'pro user';
     const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
+
+    const handleChatButtonClick = () => {
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+        
+        if (isPro) {
+            setOpen(true);
+        } else {
+            setOpenPaymentDialog(true);
+        }
+    };
 
     useEffect(() => {
         const createChat = async () => {
@@ -98,14 +111,7 @@ const ChatBot = () => {
                 >
                     <Fab
                         color="primary"
-                        onClick={() => {
-                            if (isPro) {
-                                setOpen(true);
-                            } else {
-                                setOpenPaymentDialog(true);
-                            }
-                        }}
-                        
+                        onClick={handleChatButtonClick}
                     >
                         <SmartToyIcon />
                     </Fab>
