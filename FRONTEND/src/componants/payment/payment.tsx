@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Typography,
@@ -20,6 +20,10 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmailIcon from '@mui/icons-material/Email';
+import { useDispatch, useSelector } from 'react-redux';
+import { handlePaymentSuccess, startPaymentSession } from '../../redux/store/slices/paymentSlice';
+import { useAuth } from "../../context/Auth/AuthContext";
+import store from '../../redux/store/store';
 
 const ProPaymentForm = () => {
   const [form, setForm] = useState({
@@ -31,10 +35,14 @@ const ProPaymentForm = () => {
     paypalEmail: '',
   });
 
+  type AppDispatch = typeof store.dispatch
+
   const [errors, setErrors] = useState<any>({});
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
-  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const {user} = useAuth()
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -63,18 +71,38 @@ const ProPaymentForm = () => {
     setErrors(temp);
     return Object.keys(temp).length === 0;
   };
+  
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     if (!validate()) return;
+  
+    if (!user.userId) {
+      console.log("User not found");
+      console.log(user.userId)
+      return;
+    }
+  
+    setLoading2(true);
+  
+    try {
+      const action = await dispatch(startPaymentSession(user.userId));
+  
+      if (startPaymentSession.fulfilled.match(action)) {
+        setDialogOpen(true);
+        await dispatch(handlePaymentSuccess(user.userId));
+      } else {
+        console.error("Payment session failed:", action.payload || action.error);
+      }
+    } catch (err) {
+      console.error("Unexpected error during payment session:", err);
+    } finally {
+      setLoading2(false);
+    }
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setDialogOpen(true);
-    }, 2000);
   };
-
+  
   return (
     <Box sx={{ background: '#f5f5fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="md">
@@ -87,7 +115,7 @@ const ProPaymentForm = () => {
             overflow: 'hidden',
           }}
         >
-          {/* Form Section */}
+
           <Box sx={{ flex: 2, p: 4, backgroundColor: '#fff' }}>
             <Typography variant="h4" gutterBottom fontWeight="bold">
               Upgrade to Pro
@@ -224,7 +252,7 @@ const ProPaymentForm = () => {
                     variant="contained"
                     color="secondary"
                     size="large"
-                    disabled={loading}
+                    disabled={loading2}
                     sx={{
                       py: 1.5,
                       fontWeight: 'bold',
@@ -235,14 +263,13 @@ const ProPaymentForm = () => {
                       },
                     }}
                   >
-                    {loading ? <CircularProgress size={26} color="inherit" /> : 'Pay $9.99 and Upgrade'}
+                    {loading2 ? <CircularProgress size={26} color="inherit" /> : 'Pay $9.99 and Upgrade'}
                   </Button>
                 </Grid>
               </Grid>
             </form>
           </Box>
 
-          {/* Summary Section */}
           <Box
             sx={{
               flex: 1,
@@ -262,10 +289,10 @@ const ProPaymentForm = () => {
             <Typography variant="h3" fontWeight="bold">
               $9.99
             </Typography>
-            <Typography variant="subtitle1" sx={{ mt: 1, mb: 3 }}>
+            <Typography variant="subtitle1" sx={{ mt: 1, mb: 3,color:"white" , fontWeight:"bold" }}>
               /month
             </Typography>
-            <Typography variant="body1">
+            <Typography variant="body1" color='white'>
               ✔️ Unlimited Access
               <br />
               ✔️ Priority Support
@@ -276,7 +303,6 @@ const ProPaymentForm = () => {
         </Paper>
       </Container>
 
-      {/* Success Dialog */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle>🎉 Payment Successful</DialogTitle>
         <DialogContent>

@@ -53,7 +53,7 @@ const ChatBot = () => {
     const handleSend = async () => {
         if (!input.trim() || !chatId) return;
 
-        setErrorMessage(''); // امسحي أي رسالة خطأ قديمة
+        setErrorMessage('');
 
         try {
             const res = await axios.post(
@@ -85,7 +85,6 @@ const ChatBot = () => {
 
     return (
         <>
-            {/* Floating Button (FAB) */}
 
             <Tooltip title="Open Chat Assistant" arrow>
                 <Box
@@ -115,7 +114,6 @@ const ChatBot = () => {
 
 
 
-            {/* Chat Box */}
             {open && (
                 <Paper
                     elevation={4}
@@ -132,7 +130,7 @@ const ChatBot = () => {
                         overflow: 'hidden',
                     }}
                 >
-                    {/* Header */}
+
                     <Box
                         sx={{
                             height: 50,
@@ -157,7 +155,6 @@ const ChatBot = () => {
                         </Button>
                     </Box>
 
-                    {/* Messages */}
                     <Box sx={{ flexGrow: 1, overflowY: 'auto', p: 1 }}>
                         {messages.map((msg, index) => (
                             <Box
@@ -203,7 +200,7 @@ const ChatBot = () => {
 
                     </Box>
 
-                    {/* Input */}
+
                     <Box
                         sx={{
                             display: 'flex',
@@ -213,14 +210,13 @@ const ChatBot = () => {
                             borderTop: '1px solid #ccc',
                         }}
                     >
-                        {/* Error Message */}
                         {errorMessage && (
                             <Typography
                                 variant="body2"
                                 color="error"
                                 sx={{ mb: 1 }}
                             >
-                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>LogIn</span>
+                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>Login</span>
                             </Typography>
                         )}
 

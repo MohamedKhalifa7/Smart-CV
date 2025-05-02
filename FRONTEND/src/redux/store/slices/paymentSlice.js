@@ -1,42 +1,56 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const PaymentSessionSlice = createAsyncThunk(
-  'payment/checkoutSession',
-  async (userId, thunkAPI) => {
-    try {
-      const response = await axios.post('http://localhost:3001/payment/create-checkout-session', {
-        userId,
-      });
-      return response.data.url;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || 'Payment failed');
-    }
+export const startPaymentSession = createAsyncThunk(
+  "payment/startSession",
+  async (userId)=>{
+      const response = await axios.post(`http://localhost:3001/payment/create-checkout-session`,
+        {userId},{ withCredentials: true,}
+      );
+      return response.data;
+      
   }
 );
 
+export const handlePaymentSuccess = createAsyncThunk(
+  "payment/success",
+  async(userId)=>{
+    const response = await axios.post(`http://localhost:3001/payment/payment-success`,{userId},{ withCredentials: true,})
+    return response.data
+  }
+)
+
 export const paymentSlice = createSlice({
-  name: 'payment',
-  initialState:{
-    savedCVs: [],
+  name: "payment",
+  initialState: {
     loading: false,
+    url: null,
     error: null,
-},
-  reducers: {},
+    success: false,
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(PaymentSessionSlice.pending, (state) => {
+      .addCase(startPaymentSession.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.success = false;
       })
-      .addCase(PaymentSessionSlice.fulfilled, (state, action) => {
+      .addCase(startPaymentSession.fulfilled, (state, action) => {
         state.loading = false;
-        state.paymentUrl = action.payload;
+        state.url = action.payload.url;
+        state.success = true;
       })
-      .addCase(PaymentSessionSlice.rejected, (state, action) => {
+      .addCase(startPaymentSession.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+        state.success = false;
+      })
+      .addCase(handlePaymentSuccess.fulfilled,(state,action)=>{
+        state.success=true;
+      })
+      .addCase(handlePaymentSuccess.rejected,(state,action)=>{
+        state.error= action.payload
+      })
   },
 });
 

@@ -11,7 +11,7 @@ import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 
 import { theme } from "../theme"
 import { useNavigate } from 'react-router-dom';
-import CVAnalysisResualt from "../CVAnalysis/CVAnalysisResualt";
+import CVAnalysisResult from "../CVAnalysis/CVAnalysisResult";
 import { useState, useRef } from "react";
 import { useFile } from "../../context/fileContext";
 import { useAuth } from "../../context/Auth/AuthContext";
@@ -172,7 +172,7 @@ const GetStarted = () => {
             </Box>
             {uploadedFile && (
                 <Box sx={{ m: 6, border: `2px solid ${theme.palette.background.gray}`, borderRadius: "10px", p: 3 }}>
-                    <CVAnalysisResualt ></CVAnalysisResualt>
+                    <CVAnalysisResult ></CVAnalysisResult>
 
                 </Box>
             )}

@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
       enum: ["normal user", "pro user"],
       default: "normal user",
     },
+    proExpiresAt: { type: Date },
     googleId: { type: String },
     otp: { type: String },
     otpExpires: { type: Date },
