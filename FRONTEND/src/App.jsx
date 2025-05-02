@@ -24,6 +24,8 @@ import { useEffect } from "react";
 import { PreviewProvider } from "./context/previewContext.jsx";
 import ChatBot from "./componants/chatBot/chatBot.jsx";
 import ProPaymentForm from "./componants/payment/payment.js";
+import Blog from "./pages/blogs.jsx";
+import BlogDetail from "./pages/blogDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
       { path: "grammarCheck", element: <GrammarCheck /> },
       { path: "payment-check", element: <ProtectedRoute><ProPaymentForm /></ProtectedRoute> },
       { path: "chatbot", element: <ProtectedRoute><ChatBot /></ProtectedRoute> },
+      {path:"Blogs", element:<Blog></Blog>},
+      {path:"Blogs/:id", element:<BlogDetail/>},
       { path: "*", element: <Error /> },
     ],
   },
