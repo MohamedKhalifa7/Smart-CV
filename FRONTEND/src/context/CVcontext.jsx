@@ -134,19 +134,52 @@ const {t}=useTranslation()
       };
     });
   };
+
   const validatePersonalInfo = (data) => {
     const errors = {};
-    const { firstName, lastName, email ,professionalTitle} = data || {};
-
-    if (!firstName) errors.firstName = t('First Name is required');
-    if (!lastName) errors.lastName = t('Last Name is required');
-    if (!email) errors.email = t('Email is required');
-    if (!professionalTitle) errors.professionalTitle = t('Professional Title is required');
+    const {
+      firstName,
+      lastName,
+      email,
+      professionalTitle,
+      phone,
+      location
+    } = data || {};
+  
+    const isEmpty = (value) => !value || value.trim() === '';
+  
+    if (isEmpty(firstName)) {
+      errors.firstName = t('First Name is required');
+    }
+  
+    if (isEmpty(lastName)) {
+      errors.lastName = t('Last Name is required');
+    }
+  
+    if (isEmpty(email)) {
+      errors.email = t('Email is required');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = t('Invalid email format');
+    }
+  
+    if (isEmpty(professionalTitle)) {
+      errors.professionalTitle = t('Professional Title is required');
+    }
+  
+    if (isEmpty(phone)) {
+      errors.phone = t('Phone number is required');
+    } else if (!/^\+?[0-9]{7,15}$/.test(phone)) {
+      errors.phone = t('Invalid phone number');
+    }
+  
+    if (isEmpty(location)) {
+      errors.location = t('Location is required');
+    }
   
     setPersonalFormValid(errors);
-    //return true if no errors
     return Object.keys(errors).length === 0;
   };
+  
   
   
   

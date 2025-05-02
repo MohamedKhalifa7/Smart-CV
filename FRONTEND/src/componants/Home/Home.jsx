@@ -11,7 +11,7 @@ return (
     <HomePart1></HomePart1>
     <Homepart2></Homepart2>
 
-    {!isPro && <HomePart3></HomePart3>}
+    {<HomePart3></HomePart3>}
     </>
 )
 }

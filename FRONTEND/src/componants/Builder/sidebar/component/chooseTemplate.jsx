@@ -12,7 +12,7 @@ function ChooseTemplateDialog(props) {
     const { onClose, open } = props;
     
 
-    const [open2, setOpen] = useState(true);
+    // const [open2, setOpen] = useState(true);
     // const handleCloseDialog = () => {
     //     setOpen(false);
     //   };
@@ -28,11 +28,11 @@ function ChooseTemplateDialog(props) {
     }, [])   
 
     const handleClose = () => {
-        setOpen(false);
+        // setOpen(false);
         onClose();
     }
     return (
-        <Dialog onClose={handleClose} open={open && open2}>
+        <Dialog onClose={handleClose} open={open }>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <DialogTitle>Choose Template</DialogTitle>
                 <CloseIcon

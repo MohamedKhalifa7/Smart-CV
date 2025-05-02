@@ -5,6 +5,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { useNavigate } from 'react-router-dom';
 import ProPaymentForm from '../payment/payment';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from "../../context/Auth/AuthContext";
 
 function HomePart3() {
   const { t } = useTranslation();
@@ -12,6 +13,8 @@ function HomePart3() {
     const navigate = useNavigate();
         const muiTheme = useTheme();
     
+            const {user}=useAuth()
+            const isPro = user?.role === 'pro user';
     const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 
 
@@ -112,7 +115,7 @@ function HomePart3() {
   </Box>
 
   <Box sx={{ display: "flex", justifyContent: "center", mb: "26px" }}>
-  <Button variant="outlined" sx={{ width: "75%" }}
+  <Button variant="outlined" disabled={isPro} sx={{ width: "75%" }}
   onClick={handleClickFree}>{t("Get Started Free")}</Button>
 </Box>
 
@@ -146,7 +149,9 @@ function HomePart3() {
                     
                     <Box sx={{ display: "flex", justifyContent: "center", mb: "26px" }}>
   <Button variant="contained" sx={{ width: "75%" }}
-  onClick={handleClickPro}>{t("Upgrade to Pro")}</Button>
+  onClick={handleClickPro} disabled={isPro}>
+    {!isPro?t("Upgrade to Pro"):t("already upgraded")}
+    </Button>
 </Box>
                 </Box>
             </Box>
