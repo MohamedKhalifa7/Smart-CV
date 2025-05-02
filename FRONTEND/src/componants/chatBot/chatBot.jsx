@@ -27,7 +27,7 @@ const ChatBot = () => {
     const navigate=useNavigate()
     const messagesEndRef = useRef(null);
     const { user } = useAuth();
-    const isPro = user.role === 'pro user';
+    const isPro = user?.role === 'pro user';
     const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
 
     useEffect(() => {

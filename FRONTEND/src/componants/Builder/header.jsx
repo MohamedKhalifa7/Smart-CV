@@ -164,16 +164,20 @@ const Header = () => {
     flexWrap: 'wrap' // optional: wrap on smaller screens
   }}
 >
-  {success && (
-    <Alert severity="success" sx={{ width: '100%' }}>
-      {t("CV saved successfully!")}
-    </Alert>
-  )}
-  {error && (
-    <Alert severity="error" sx={{ width: '100%' }}>
-      {error}
-    </Alert>
-  )}
+{(success || error) && (
+  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    {success && (
+      <Alert severity="success" sx={{ whiteSpace: 'nowrap', mr: 2 }}>
+        {t("CV saved successfully!")}
+      </Alert>
+    )}
+    {error && (
+      <Alert severity="error" sx={{ whiteSpace: 'nowrap', mr: 2 }}>
+        {error}
+      </Alert>
+    )}
+  </Box>
+)}
 
 {formData && formData._id && (
   <Button

@@ -142,7 +142,7 @@ const HomePart1 = () => {
                     <ListItemText
                       primary={feature}
                       primaryTypographyProps={{
-                        sx: { color: "black", fontWeight: 500 },
+                        sx: { color: "black", fontWeight: 500,textAlign:"start" },
                       }}
                     />
                   </ListItem>
