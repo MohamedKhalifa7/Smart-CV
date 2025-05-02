@@ -19,15 +19,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../context/Auth/AuthContext';
+import ProWarning from './proWarning';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
-
+  const { user, isAuthenticated } = useAuth()
   const currentLang = i18n.language;
   const isRTL = currentLang === 'ar';
+  const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
 
   const handleLogout = async () => {
     try {
@@ -116,7 +119,7 @@ function Navbar() {
               ))}
               <MenuItem onClick={() => { handleCloseNavMenu(); navigate('/getStart'); }}>
                 <Button fullWidth sx={{ mt: 1, background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)', color: 'white' }}>
-                 { t("Get Started")}
+                  {t("Get Started")}
                 </Button>
               </MenuItem>
             </Menu>
@@ -176,8 +179,9 @@ function Navbar() {
               </Typography>
             ))}
 
-            <Button
-              onClick={() => navigate('/getStart')}
+          {!isAuthenticated && (
+              <Button
+              onClick={() => navigate('/login')}
               sx={{
                 background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
                 color: "white",
@@ -185,10 +189,34 @@ function Navbar() {
                 marginInlineEnd: 2
               }}
             >
-              {t("Get Started")}
+              {t("LogIn")}
             </Button>
-          </Box>
+          )}
+          {user?.role === "normal user" && (  <Button
+              onClick={() => setOpenPaymentDialog(true)}
+              sx={{
+                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
+                color: "white",
+                fontSize: "12px",
+                marginInlineEnd: 2
+              }}
+            >
+              {t("Go Pro")}
+            </Button>)}
+            {user?.role === "pro user" && (  <Button
+              
+              sx={{
+                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
+                color: "white",
+                fontSize: "12px",
+                marginInlineEnd: 2
+              }}
+            >
+              {t("Pro")}
+            </Button>)}
 
+          </Box>
+ 
           {/* User Avatar */}
           <Box sx={{ flexGrow: 0, marginLeft: "20px" }}>
             <Tooltip title="Open settings">
@@ -221,6 +249,11 @@ function Navbar() {
 
         </Toolbar>
       </Container>
+      <ProWarning
+    openPaymentDialog={openPaymentDialog}
+    setOpenPaymentDialog={setOpenPaymentDialog}
+    
+/>
     </AppBar>
   );
 }
