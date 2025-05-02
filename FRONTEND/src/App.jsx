@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "builder", element: <ProtectedRoute><Builder /></ProtectedRoute> },
-      { path: "getStart", element: <GetStarted /> },
+      { path: "getStart", element: <ProtectedRoute><GetStarted /></ProtectedRoute> },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
       {path:"payment-check",element:<ProPaymentForm/>},

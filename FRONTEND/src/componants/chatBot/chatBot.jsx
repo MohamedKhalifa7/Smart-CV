@@ -24,14 +24,20 @@ const ChatBot = () => {
     const [chatId, setChatId] = useState(null);
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const navigate=useNavigate()
+    const navigate = useNavigate();
     const messagesEndRef = useRef(null);
     const { user } = useAuth();
-    const isPro = user.role === 'pro user';
+    // Add null check for user
+    const isPro = user?.role === 'pro user';
     const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
 
+    // Add user check before creating chat
     useEffect(() => {
         const createChat = async () => {
+            if (!user) {
+                setErrorMessage('🔒 Please login to use the chat feature');
+                return;
+            }
             try {
                 const res = await axios.post(
                     'http://localhost:3001/api/chatbot/create',
@@ -42,13 +48,14 @@ const ChatBot = () => {
             } catch (err) {
                 if (err.response?.status === 401) {
                     setErrorMessage('🔒 You need to log in to start the chatbot.');
+                    navigate('/login');
                 } else {
                     console.error('Error creating chat:', err);
                 }
             }
         };
         createChat();
-    }, []);
+    }, [user]);
 
     const handleSend = async () => {
         if (!input.trim() || !chatId) return;
