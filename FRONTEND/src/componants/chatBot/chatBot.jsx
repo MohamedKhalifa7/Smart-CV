@@ -14,6 +14,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import SmartToyIcon from '@mui/icons-material/SmartToy'; import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/Auth/AuthContext';
+import ProWarning from '../proWarning';
 
 const ChatBot = () => {
     const theme = useTheme();
@@ -24,6 +26,9 @@ const ChatBot = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const navigate=useNavigate()
     const messagesEndRef = useRef(null);
+    const { user } = useAuth();
+    const isPro = user.role === 'pro user';
+    const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
 
     useEffect(() => {
         const createChat = async () => {
@@ -48,7 +53,7 @@ const ChatBot = () => {
     const handleSend = async () => {
         if (!input.trim() || !chatId) return;
 
-        setErrorMessage(''); // امسحي أي رسالة خطأ قديمة
+        setErrorMessage('');
 
         try {
             const res = await axios.post(
@@ -80,7 +85,6 @@ const ChatBot = () => {
 
     return (
         <>
-            {/* Floating Button (FAB) */}
 
             <Tooltip title="Open Chat Assistant" arrow>
                 <Box
@@ -94,7 +98,14 @@ const ChatBot = () => {
                 >
                     <Fab
                         color="primary"
-                        onClick={() => setOpen(true)}
+                        onClick={() => {
+                            if (isPro) {
+                                setOpen(true);
+                            } else {
+                                setOpenPaymentDialog(true);
+                            }
+                        }}
+                        
                     >
                         <SmartToyIcon />
                     </Fab>
@@ -103,7 +114,6 @@ const ChatBot = () => {
 
 
 
-            {/* Chat Box */}
             {open && (
                 <Paper
                     elevation={4}
@@ -120,7 +130,7 @@ const ChatBot = () => {
                         overflow: 'hidden',
                     }}
                 >
-                    {/* Header */}
+
                     <Box
                         sx={{
                             height: 50,
@@ -145,7 +155,6 @@ const ChatBot = () => {
                         </Button>
                     </Box>
 
-                    {/* Messages */}
                     <Box sx={{ flexGrow: 1, overflowY: 'auto', p: 1 }}>
                         {messages.map((msg, index) => (
                             <Box
@@ -191,7 +200,7 @@ const ChatBot = () => {
 
                     </Box>
 
-                    {/* Input */}
+
                     <Box
                         sx={{
                             display: 'flex',
@@ -201,14 +210,13 @@ const ChatBot = () => {
                             borderTop: '1px solid #ccc',
                         }}
                     >
-                        {/* Error Message */}
                         {errorMessage && (
                             <Typography
                                 variant="body2"
                                 color="error"
                                 sx={{ mb: 1 }}
                             >
-                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>LogIn</span>
+                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>Login</span>
                             </Typography>
                         )}
 
@@ -234,6 +242,12 @@ const ChatBot = () => {
 
                 </Paper>
             )}
+            <ProWarning
+    openPaymentDialog={openPaymentDialog}
+    setOpenPaymentDialog={setOpenPaymentDialog}
+    onClose={() => setOpenPaymentDialog(false)}
+/>
+
         </>
     );
 };

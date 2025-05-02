@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Typography,
@@ -9,135 +9,312 @@ import {
   Tabs,
   Tab,
   Box,
+  InputAdornment,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import EmailIcon from '@mui/icons-material/Email';
+import { useDispatch, useSelector } from 'react-redux';
+import { handlePaymentSuccess, startPaymentSession } from '../../redux/store/slices/paymentSlice';
+import { useAuth } from "../../context/Auth/AuthContext";
+import store from '../../redux/store/store';
 
 const ProPaymentForm = () => {
-  const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: '',
     cardNumber: '',
     expiry: '',
     cvv: '',
     address: '',
+    paypalEmail: '',
   });
 
+  type AppDispatch = typeof store.dispatch
+
+  const [errors, setErrors] = useState<any>({});
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
+  const [loading2, setLoading2] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const {user} = useAuth()
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validate = () => {
+    let temp: any = {};
+
+    if (paymentMethod === 'card') {
+      if (!form.name) temp.name = 'Name is required';
+      if (!form.cardNumber || form.cardNumber.length !== 16)
+        temp.cardNumber = 'Card number must be 16 digits';
+      if (!/^\d{2}\/\d{2}$/.test(form.expiry))
+        temp.expiry = 'Expiry must be in MM/YY format';
+      if (!form.cvv || form.cvv.length < 3 || form.cvv.length > 4)
+        temp.cvv = 'CVV must be 3 or 4 digits';
+      if (!form.address) temp.address = 'Billing address is required';
+    }
+
+    if (paymentMethod === 'paypal') {
+      if (!form.paypalEmail || !/\S+@\S+\.\S+/.test(form.paypalEmail))
+        temp.paypalEmail = 'Enter a valid PayPal email';
+    }
+
+    setErrors(temp);
+    return Object.keys(temp).length === 0;
+  };
+  
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
-      navigate('/payment-success');
-    }, 1500);
+  
+    if (!validate()) return;
+  
+    if (!user.userId) {
+      console.log("User not found");
+      console.log(user.userId)
+      return;
+    }
+  
+    setLoading2(true);
+  
+    try {
+      const action = await dispatch(startPaymentSession(user.userId));
+  
+      if (startPaymentSession.fulfilled.match(action)) {
+        setDialogOpen(true);
+        await dispatch(handlePaymentSuccess(user.userId));
+      } else {
+        console.error("Payment session failed:", action.payload || action.error);
+      }
+    } catch (err) {
+      console.error("Unexpected error during payment session:", err);
+    } finally {
+      setLoading2(false);
+    }
+
   };
-
+  
   return (
-    <Container maxWidth="sm" sx={{ mt: 5 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h5" gutterBottom>
-          Upgrade to Pro
-        </Typography>
-        <Typography sx={{ mb: 3 }} variant="body1" gutterBottom>
-          Select your preferred payment method to complete your Pro upgrade.
-        </Typography>
-
-        <Tabs
-          value={paymentMethod}
-          onChange={(_, newValue) => setPaymentMethod(newValue)}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          sx={{ mb: 3 }}
+    <Box sx={{ background: '#f5f5fa', minHeight: '100vh', py: 6 }}>
+      <Container maxWidth="md">
+        <Paper
+          elevation={4}
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            borderRadius: 4,
+            overflow: 'hidden',
+          }}
         >
-          <Tab value="card" label="Credit / Debit Card" />
-          <Tab value="paypal" label="PayPal" />
-        </Tabs>
 
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            {paymentMethod === 'card' && (
-              <>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    label="Cardholder Name"
-                    name="name"
-                    fullWidth
-                    value={form.name}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    label="Card Number"
-                    name="cardNumber"
-                    fullWidth
-                    inputProps={{ maxLength: 16 }}
-                    value={form.cardNumber}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    label="Expiry Date (MM/YY)"
-                    name="expiry"
-                    fullWidth
-                    placeholder="08/29"
-                    value={form.expiry}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    required
-                    label="CVV"
-                    name="cvv"
-                    fullWidth
-                    inputProps={{ maxLength: 4 }}
-                    value={form.cvv}
-                    onChange={handleChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Billing Address"
-                    name="address"
-                    fullWidth
-                    value={form.address}
-                    onChange={handleChange}
-                  />
-                </Grid>
-              </>
-            )}
+          <Box sx={{ flex: 2, p: 4, backgroundColor: '#fff' }}>
+            <Typography variant="h4" gutterBottom fontWeight="bold">
+              Upgrade to Pro
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 3 }} color="text.secondary">
+              Complete your payment below to unlock all premium features.
+            </Typography>
 
-            {paymentMethod === 'paypal' && (
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  label="PayPal Email"
-                  name="paypalEmail"
-                  fullWidth
-                  onChange={handleChange}
-                />
+            <Tabs
+              value={paymentMethod}
+              onChange={(_, newValue) => setPaymentMethod(newValue)}
+              indicatorColor="secondary"
+              textColor="secondary"
+              variant="fullWidth"
+              sx={{ mb: 3 }}
+            >
+              <Tab
+                value="card"
+                label="Credit / Debit Card"
+                icon={<CreditCardIcon />}
+                iconPosition="start"
+              />
+              <Tab
+                value="paypal"
+                label="PayPal"
+                icon={<AccountBalanceWalletIcon />}
+                iconPosition="start"
+              />
+            </Tabs>
+
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                {paymentMethod === 'card' && (
+                  <>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        label="Cardholder Name"
+                        name="name"
+                        fullWidth
+                        value={form.name}
+                        onChange={handleChange}
+                        error={!!errors.name}
+                        helperText={errors.name}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        label="Card Number"
+                        name="cardNumber"
+                        fullWidth
+                        inputProps={{ maxLength: 16 }}
+                        value={form.cardNumber}
+                        onChange={handleChange}
+                        error={!!errors.cardNumber}
+                        helperText={errors.cardNumber}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        required
+                        label="Expiry Date (MM/YY)"
+                        name="expiry"
+                        fullWidth
+                        placeholder="08/29"
+                        value={form.expiry}
+                        onChange={handleChange}
+                        error={!!errors.expiry}
+                        helperText={errors.expiry}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        required
+                        label="CVV"
+                        name="cvv"
+                        fullWidth
+                        inputProps={{ maxLength: 4 }}
+                        value={form.cvv}
+                        onChange={handleChange}
+                        error={!!errors.cvv}
+                        helperText={errors.cvv}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Billing Address"
+                        name="address"
+                        fullWidth
+                        value={form.address}
+                        onChange={handleChange}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <LocationOnIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        error={!!errors.address}
+                        helperText={errors.address}
+                      />
+                    </Grid>
+                  </>
+                )}
+
+                {paymentMethod === 'paypal' && (
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      label="PayPal Email"
+                      name="paypalEmail"
+                      type="email"
+                      fullWidth
+                      value={form.paypalEmail}
+                      onChange={handleChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.paypalEmail}
+                      helperText={errors.paypalEmail}
+                    />
+                  </Grid>
+                )}
+
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    disabled={loading2}
+                    sx={{
+                      py: 1.5,
+                      fontWeight: 'bold',
+                      borderRadius: 2,
+                      transition: '0.3s',
+                      ':hover': {
+                        backgroundColor: 'secondary.dark',
+                      },
+                    }}
+                  >
+                    {loading2 ? <CircularProgress size={26} color="inherit" /> : 'Pay $9.99 and Upgrade'}
+                  </Button>
+                </Grid>
               </Grid>
-            )}
+            </form>
+          </Box>
 
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary" fullWidth type="submit">
-                Pay $9.99 and Upgrade
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Paper>
-    </Container>
+          <Box
+            sx={{
+              flex: 1,
+              p: 4,
+              background: 'linear-gradient(135deg, #a64bf4 0%, #c972f5 100%)',
+              color: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <Typography variant="h5" fontWeight="bold" gutterBottom>
+              Pro Plan
+            </Typography>
+            <Typography variant="h3" fontWeight="bold">
+              $9.99
+            </Typography>
+            <Typography variant="subtitle1" sx={{ mt: 1, mb: 3,color:"white" , fontWeight:"bold" }}>
+              /month
+            </Typography>
+            <Typography variant="body1" color='white'>
+              ✔️ Unlimited Access
+              <br />
+              ✔️ Priority Support
+              <br />
+              ✔️ AI Features Unlocked
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
+
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>🎉 Payment Successful</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">Thank you for upgrading to Pro!</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="secondary" variant="contained">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

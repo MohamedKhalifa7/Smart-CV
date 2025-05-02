@@ -1,44 +1,34 @@
-import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import React, { useState } from 'react'
+import { Box, Button } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import AIWritingAssistDialog from './component/AIWritingAssist';
 import ChooseTemplateDialog from './component/chooseTemplate';
 import { usePreview } from '../../../context/previewContext';
-import { useTranslation } from 'react-i18next'; 
 
 function Part1() {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [dialogKey, setDialogKey] = useState(0);  // Track the key for the dialog
-    const { t } = useTranslation();
+
     const { setGoToPreview } = usePreview();
 
     const handleClickOpen = () => {
         setOpen(true);
-    };
+    }
 
     const handleClose = () => {
         setOpen(false);
-    };
+    }
 
     const handleClickOpen2 = () => {
-        setGoToPreview(false);
-        setOpen2(false);
-        
-        // Increment the dialog key to force a remount
-        setDialogKey(prevKey => prevKey + 1);
-
-        // Use a small delay if needed to ensure the state is reset first
-        setTimeout(() => {
-            setOpen2(true);
-        }, 0);
-    };
+        setOpen2(true);
+    }
 
     const handleClose2 = () => {
         setOpen2(false);
-    };
-
+    }
     return (
         <>
             <Box sx={{
@@ -52,7 +42,8 @@ function Part1() {
                     variant="outlined"
                     startIcon={<ViewModuleIcon />}
                     fullWidth
-                > {t('chooseTemplate')} 
+                >
+                    Choose Template
                 </Button>
 
                 <ChooseTemplateDialog
@@ -67,7 +58,7 @@ function Part1() {
                     startIcon={<AutoFixHighIcon />}
                     fullWidth
                 >
-                     {t('aiWritingAssistant')}
+                    AI Writing Assistant
                 </Button>
 
                 <AIWritingAssistDialog
@@ -80,4 +71,4 @@ function Part1() {
     );
 }
 
-export default Part1;
+export default Part1

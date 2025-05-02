@@ -6,41 +6,48 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { useTranslation } from 'react-i18next';
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 function Homepart2() {
+  const { t } = useTranslation();
 
-  const CVTools=[
+  const CVTools = [
     {
-      title: "CV Analysis",
-      description: "Our AI analyses CV for grammar, spelling, ATS compatibility, and optimal keyword usage.",
+      title: t("CV Analysis"),
+      description: t("cv_analysis.subtitle"),
       icon: <PlagiarismIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-   },
-   {
-    title: "Smart Feedback",
-    description: "Get color-coded feedback highlighting your CV's strengths and areas for improvement.",
-    icon: <TaskIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
- },
- {
-  title: "CV Builder",
-  description: "Use our intuitive builder with professional templates and AI writing assistance.",
-  icon: <BorderColorOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
- },
- {
-  title: "Keyword Optimization",
-  description: "Tailor your CV to specific job with our keyword optimization tool.",
-  icon: <ElectricBoltIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
- },
- {
-  title: "Performance Tracking",
-  description: "Track your CV's improvement over time with our scoring system.",
-  icon: <TrendingUpOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
- },
- {
-  title: "Export Options",
-  description: "Download CV in PDF or Word format, ready to send.",
-  icon: <FileDownloadOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
- }
-  ]
+    },
+    {
+      title: t("Smart Feedback"),
+      description: t("cv_feedback.subtitle"),
+      icon: <TaskIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
+    },
+    {
+      title: t("CV Builder"),
+      description: t("cv_builder.subtitle"),
+      icon: <BorderColorOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
+    },
+    
+    {
+      title: t("Performance Tracking"),
+      description: t("performance_tracking.subtitle"),
+      icon: <TrendingUpOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
+    },
+   
+    {
+      title: t("Interview Questions"),
+      description: t("interview_questions.subtitle"), // Add this key to your translation files
+      icon: <QuestionAnswerOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
+    },
+    {
+      title: t("Chat Assistant"),
+      description: t("chat_assistant.subtitle"), // Add this key to your translation files
+      icon: <ChatBubbleOutlineIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
+    }
+  ];
+  
     return (
 <Box>
     <Box className="header" sx={{display: "flex",
@@ -52,14 +59,13 @@ function Homepart2() {
             WebkitTextFillColor: "transparent",
             my:2,
         }}>
-        Powerful CV Tools
+        {t('Powerful CV Tools')}
         </Typography>
         <Typography variant='body1' 
         sx={{color: "text.secondary", fontSize: "20px",my:1,
     
         }}>
-Everything you need to create, analyze, and perfect your CV in one place
-
+        {t('home2.subtitle')}
 </Typography>
     </Box>
 

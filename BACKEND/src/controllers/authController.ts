@@ -98,16 +98,24 @@ export const getCurrentUser = (req: Request, res: Response) => {
 export const upgradeToPro = async (req: Request, res: Response) => {
   const { userId } = req.body;
 
+  const now = new Date()
+  const oneMonthPeriod = now.setMonth(now.getMonth()+1)
+ 
+
   const user = await User.findByIdAndUpdate(
     userId,
-    { role: "pro user" },
-    { new: true }
+    { role: "pro user",proExpiresAt:oneMonthPeriod },
+    { new: true },
+
   );
 
   if (!user) {
     res.status(404).json({ message: "User not found" });
     return;
   }
+
+
+
 
   res.json({
     message: "User upgraded to Pro successfully",
@@ -116,5 +124,6 @@ export const upgradeToPro = async (req: Request, res: Response) => {
       email: user.email,
       role: user.role,
     },
+    proExpiresAt:oneMonthPeriod
   });
 };

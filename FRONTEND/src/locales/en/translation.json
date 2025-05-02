@@ -88,4 +88,66 @@
   "proRequired": "You must go pro to access this feature.",
   "networkError": "Network error Please try again later."
   
-}
+
+,
+   
+    "Blogs": "Blogs",
+    "Tips": "Tips",
+    "Get Started": "Get Started",
+    "Profile": "Profile",
+    "Settings": "Settings",
+    "Logout": "Logout",
+
+    "Craft the Perfect CV with AI": "Craft the Perfect CV with AI",
+    "home1.subtitle": "Build, analyze, and optimize your resume with our AI-powered tools. Get real-time feedback and land more interviews.",
+    "AI-powered CV analysis":"AI-powered CV analysis",
+    "Professional templates":"Professional templates",
+    "Keyword optimization":"Keyword optimization",
+    "ATS compatibility check":"ATS compatibility check",
+    "Grammar & spelling review":"Grammar & spelling review",
+
+    "Powerful CV Tools":"Powerful CV Tools",
+    "home2.subtitle":"Everything you need to create, analyze, and perfect your CV in one place",
+    "CV Analysis":"CV Analysis",
+    "cv_analysis.subtitle":"Our AI analyses CV for grammar, spelling, ATS compatibility, and optimal keyword usage.",
+    "Smart Feedback":"Smart Feedback",
+    "cv_feedback.subtitle":"Get color-coded feedback highlighting your CV's strengths and areas for improvement.",
+    "cv_builder.subtitle":"Use our intuitive builder with professional templates and AI writing assistance.",
+    "Keyword Optimization":"Keyword Optimization",
+    "keyword_optimization.subtitle":"Tailor your CV to specific job with our keyword optimization tool.",
+    "Performance Tracking":"Performance Tracking",
+    "performance_tracking.subtitle":"Track your CV's improvement over time with our scoring system.",
+    "Export Options":"Export Options",
+    "export_options.subtitle":"Download CV in PDF or Word format, ready to send.",
+    "Interview Questions":"Interview Questions",
+    "interview_questions.subtitle":"Generate personalized interview questions based on your uploaded CV to help you prepare with confidence.",
+    "Chat Assistant":"Chat Assistant",
+    "chat_assistant.subtitle":"Get instant answers to your career and CV-related queries with our smart chatbot assistant.",
+
+    "Choose Your Plan":"Choose Your Plan",
+    "Flexible options to match your CV needs":"Flexible options to match your CV needs",
+
+    "Free": "Free",
+    "month":"month",
+    "0":"0",
+    "Essential CV tools for everyone":"Essential CV tools for everyone",
+    "2 CV Templates":"2 CV Templates",
+    "Export to PDF":"Export to PDF",
+    "Store up to 2 CVs":"Store up to 2 CVs",
+    "ATS Compatibility Check":"ATS Compatibility Check",
+    "Grammar & Spelling Check":"Grammar & Spelling Check",
+    "Auto-correction":"Auto-correction",
+    "AI Content Generator":"AI Content Generator",
+    "AI Open Chat Assistant":"AI Open Chat Assistant",
+    "Unlimited CVs":"Unlimited CVs",
+    "Get Started Free":"Get Started Free",
+
+    "Pro":"Pro",
+    "9.99":"9.99",
+    "Advanced tools for serious job seekers":"Advanced tools for serious job seekers",
+    "Unlimited CV Storage":"Unlimited CV Storage",
+    "All CV Templates":"All CV Templates",
+    "Upgrade to Pro":"Upgrade to Pro"
+
+
+}    

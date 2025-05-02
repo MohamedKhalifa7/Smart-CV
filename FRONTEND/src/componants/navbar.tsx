@@ -40,14 +40,14 @@ function Navbar() {
 
   const pages = [
     { label: t('Home'), href: "/" },
-    { label: "Blogs", href: "/Blogs" },
-    { label: "Tips", href: "/Tips" }
+    { label: t("Blogs"), href: "/Blogs" },
+    { label: t("Tips"), href: "/Tips" }
   ];
 
   const userMenuItems = [
-    { label: "Profile", href: "profile" },
-    { label: "Settings", href: "settings" },
-    { label: "Logout", action: () => handleLogout() },
+    { label: t("Profile"), href: "profile" },
+    { label: t("Settings"), href: "settings" },
+    { label: t("Logout"), action: () => handleLogout() },
   ];
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -116,7 +116,7 @@ function Navbar() {
               ))}
               <MenuItem onClick={() => { handleCloseNavMenu(); navigate('/getStart'); }}>
                 <Button fullWidth sx={{ mt: 1, background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)', color: 'white' }}>
-                  Get Started
+                 { t("Get Started")}
                 </Button>
               </MenuItem>
             </Menu>
@@ -185,7 +185,7 @@ function Navbar() {
                 marginInlineEnd: 2
               }}
             >
-              Get Started
+              {t("Get Started")}
             </Button>
           </Box>
 
