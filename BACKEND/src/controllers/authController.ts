@@ -27,6 +27,7 @@ export const login = async (req: Request, res: Response) => {
         userId: result.userId,
         email: result.email,
         role: result.role,
+        proExpiresAt: result.proExpiresAt,
       },
     });
   } else {

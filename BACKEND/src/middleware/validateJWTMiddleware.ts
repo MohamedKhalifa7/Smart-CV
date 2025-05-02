@@ -6,6 +6,7 @@ export interface CustomRequest extends Request {
     userId: string;
     email: string;
     role?: string;
+    proExpiresAt?: Date;
   };
 }
 
@@ -28,12 +29,15 @@ export const authenticateToken = (
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET_Key || "jwt_secret"
-    ) as { userId: string; email: string; role:string };
+    ) as {
+      userId: string; email: string; role: string  ,proExpiresAt: Date ;
+};
 
     customReq.user = {
       userId: decoded.userId,
       email: decoded.email,
       role: decoded.role,
+      proExpiresAt: decoded.proExpiresAt,
     };
     console.log("user info", customReq.user);
 
