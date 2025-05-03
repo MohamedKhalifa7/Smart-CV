@@ -177,13 +177,49 @@
   "Start New CV":"Start New CV",
   "Grammar Checker":"Grammar Checker",
   "grammar_checker.subtitle":"Check your CV for grammar, spelling, and style improvements",
-  "Check Grammar":"Check Grammar"
+  "Check Grammar":"Check Grammar",
 
 
+  
+    "noArticles": "No articles found",
+    "adjustSearch": "Try adjusting your search term",
+    "by": "By",
+    "blog1": {
+      "title": "10 Essential Elements Every CV Should Include",
+      "excerpt": "Discover the must-have components that make a CV stand out to recruiters and hiring managers.",
+      "category": "CV Tips"
+    },
+    "blog2": {
+      "title": "How to Optimize Your CV for Applicant Tracking Systems",
+      "excerpt": "Learn the secrets to getting past ATS software and into the hands of real recruiters.",
+      "category": "ATS Optimization"
+    },
+    "blog3": {
+      "title": "The Psychology Behind a Great CV Design",
+      "excerpt": "Understand how visual elements affect how recruiters perceive your CV and how to use this to your advantage.",
+      "category": "Design"
+    },
+    "blog4": {
+      "title": "Skills vs. Experience: What Employers Value Most",
+      "excerpt": "Discover the right balance between showcasing your skills and highlighting your relevant experience.",
+      "category": "Job Search"
+    },
+    "blog5": {
+      "title": "Common CV Mistakes, Cost You the Interview",
+      "excerpt": "Avoid these critical errors that many job seekers make when crafting their resumes.",
+      "category": "CV Tips"
+    },
+    "blog6": {
+      "title": "Industry-Specific CV Advice.",
+      "excerpt": "Customize your CV for your specific industry with these tailored tips and examples.",
+      "category": "Industry Insights"
+    },
+  
+  
 
+    "searchPlaceholder": "Search articles..."
 
-
-
+ 
 
 
 }    
