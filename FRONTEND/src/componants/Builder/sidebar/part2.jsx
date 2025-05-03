@@ -8,18 +8,17 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'; 
 
 const Part2 = () => {
-    const [myCvs, setMyCvs] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const { t } = useTranslation();
-    const { fetchUserCVs, setFormData } = useCV(); 
+    const { fetchUserCVs, setFormData,myCvs } = useCV(); 
     const navigate = useNavigate(); // Add this
 
     useEffect(() => {
         const getCVs = async () => {
             try {
-                const cvs = await fetchUserCVs();
-                setMyCvs(cvs);
+                 await fetchUserCVs();
+
             } catch (error) {
                 setError(t('errorFetchingCVs'));  
             }
@@ -33,9 +32,8 @@ const Part2 = () => {
             console.log('CV deleted successfully:', response.data);
             
             // Fetch updated CVs after deletion
-            const updatedCvs = await fetchUserCVs();
-            setMyCvs(updatedCvs);  // Update the state with the new list of CVs
-            
+            await fetchUserCVs();
+          
             setSuccess(true); // Show success message after delete
             setError('');
 

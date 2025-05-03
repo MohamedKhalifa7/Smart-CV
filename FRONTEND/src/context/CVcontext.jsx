@@ -187,6 +187,7 @@ const {t}=useTranslation()
     try {
         const response = await axios.get('http://localhost:3001/cvbuilder/user', { withCredentials: true });
         console.log('Fetched data:', response.data); 
+        setMyCvs(response.data||[])
         return response.data|| []; // Return the CVs or an empty array if none found
     } catch (error) {
         console.error('Error fetching CVs:', error);
