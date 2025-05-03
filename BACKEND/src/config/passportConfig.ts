@@ -15,12 +15,14 @@ passport.use(
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
+          const now = new Date();
           user = await User.create({
             googleId: profile.id,
             firstName: profile.name?.givenName || "Unknown",
             lastName: profile.name?.familyName || "Unknown",
             email: profile.emails?.[0].value || "No email",
             role: "normal user",
+            proExpiresAt: null
           });
         }
         return done(null, user);

@@ -116,7 +116,7 @@ export const login = async ({ email, password }: LoginParams) => {
     userId: user._id,
     email: user.email,
     role: user.role,
-    proExpiresAt: user.proExpiresAt,
+    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null 
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET_Key || "jwt_secret", {
@@ -130,7 +130,7 @@ export const login = async ({ email, password }: LoginParams) => {
     userId: user._id,
     email: user.email,
     role: user.role,
-    proExpiresAt: user.proExpiresAt,
+    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null 
   };
 };
 

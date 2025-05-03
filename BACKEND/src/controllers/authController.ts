@@ -5,7 +5,6 @@ import { StatusCodes } from "http-status-codes";
 import { CustomRequest } from "../middleware/validateJWTMiddleware";
 import jwt from "jsonwebtoken";
 
-
 export const register = async (req: Request, res: Response) => {
   const result = await userService.register(req.body);
   res.status(result.status).json(result);
@@ -97,46 +96,52 @@ export const getCurrentUser = (req: Request, res: Response) => {
     token: req.cookies.token,
   });
 };
-  const now = new Date()
-  const oneMonthPeriod = now.setMonth(now.getMonth()+1)
-console.log(oneMonthPeriod)
 
 export const upgradeToPro = async (req: Request, res: Response) => {
   const { userId } = req.body;
 
-  const oneMonthPeriod = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
-
-  const user = await User.findByIdAndUpdate(
-    userId,
-    { role: "pro user",proExpiresAt:oneMonthPeriod },
-    { new: true },
-  );
   
-  if (!user) {
-    res.status(404).json({ message: "User not found" });
-    return;
-  }
+  const now = new Date();
+  const oneMonthFromNow = new Date(
+    now.getFullYear(),
+    now.getMonth() + 1,
+    now.getDate()
+  );
 
-  const token = jwt.sign(
-    {
-      userId:user._id,
-      email:user.email,
-      role:user.role,
-      proExpiresAt:oneMonthPeriod
-    },
-    process.env.JWT_SECRET_Key || "jwt_secret",
-    { expiresIn: "1d" }
-  )
+  
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        role: "pro user",
+        proExpiresAt: oneMonthFromNow,
+      },
+      { new: true }
+    );
 
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
 
-  res.json({
-    message: "User upgraded to Pro successfully",
-    user: {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-      proExpiresAt:oneMonthPeriod
-    },
-    token
-  });
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        role: user.role,
+        proExpiresAt: oneMonthFromNow.getTime(), 
+      },
+      process.env.JWT_SECRET_Key || "jwt_secret",
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      message: "User upgraded to Pro successfully",
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+        proExpiresAt: oneMonthFromNow.getTime(), 
+      },
+      token,
+    });
 };

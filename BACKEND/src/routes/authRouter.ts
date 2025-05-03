@@ -59,10 +59,16 @@ router.get(
         firstName: dbUser.firstName,
         lastName: dbUser.lastName,
         role: dbUser.role,
+        proExpiresAt: dbUser.proExpiresAt ? dbUser.proExpiresAt.getTime() : null
       };
 
       const token = jwt.sign(
-        { userId: dbUser._id, email: dbUser.email, role: dbUser.role },
+        { 
+          userId: dbUser._id, 
+          email: dbUser.email, 
+          role: dbUser.role,
+          proExpiresAt: dbUser.proExpiresAt ? dbUser.proExpiresAt.getTime() : null
+        },
         process.env.JWT_SECRET_Key || "jwt_secret",
         { expiresIn: "1d" }
       );
