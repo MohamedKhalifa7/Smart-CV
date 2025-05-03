@@ -147,8 +147,8 @@ function HomePart3() {
                     ))}
                     </Box>
                     
-                    <Box sx={{ display: "flex", justifyContent: "center", mb: "26px" }}>
-  <Button variant="contained" sx={{ width: "75%" }}
+                    <Box sx={{ display: "flex", justifyContent: "center", mb: "26px"}}>
+  <Button variant="contained" sx={{ width: "75%" ,color:"white !important" }}
   onClick={handleClickPro} disabled={isPro}>
     {!isPro?t("Upgrade to Pro"):t("already upgraded")}
     </Button>

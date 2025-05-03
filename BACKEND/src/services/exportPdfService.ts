@@ -51,7 +51,7 @@ export const exportPdfCV = async (CV: ICV, templateName: string) => {
     const Page = await browser.newPage();
 
     await Page.setContent(rendered, { waitUntil: "networkidle0" });
-    await Page.pdf({ path: filePath, format: "A4" });
+    await Page.pdf({ path: filePath, format: "A4",printBackground:true });
 
     await browser.close();
     return filePath;
