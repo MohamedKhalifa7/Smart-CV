@@ -101,6 +101,7 @@ const Blog = () => {
           key={post.id}
           display="flex"
         >
+          <Link to={`/Blogs/${post.id}`}>
           <Card
             sx={{
               display: "flex",
@@ -112,7 +113,6 @@ const Blog = () => {
               borderRadius: 2,
             }}
           >
-            <Link to={`/Blogs/${post.id}`}>
               <CardMedia
                 component="img"
                 sx={{
@@ -122,14 +122,13 @@ const Blog = () => {
                 image={post.image}
                 alt={post.title}
               />
-            </Link>
             <CardContent sx={{ flexGrow: 1 }}>
               <Chip
                 label={post.category}
                 variant="outlined"
                 size="small"
                 sx={{ mb: 1 }}
-              />
+                />
               <Link to={`/Blogs/${post.id}`} style={{ textDecoration: 'none' }}>
                 <Typography variant="h6" color="primary">
                   {post.title}
@@ -143,16 +142,10 @@ const Blog = () => {
                 <Typography variant="caption">{post.date}</Typography>
               </Stack>
               <Box mt={2}>
-                <Button
-                  component={Link}
-                  to={`/Blogs/${post.id}`}
-                  size="small"
-                >
-                  Read More
-                </Button>
               </Box>
             </CardContent>
           </Card>
+                  </Link>
         </Grid>
       ))
     ) : (
