@@ -11,6 +11,18 @@ type PredefinedResponses = {
 const predefinedResponses: PredefinedResponses = {
   hello: "Hello! I'm your CV assistant. How can I help you today?",
   hi: "Hi! I'm your CV assistant. How can I help you today?",
+  "السلام عليكم":
+    "وعليكم السلام! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  مرحبا: "مرحباً! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  اهلا: "أهلاً وسهلاً! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  هاي: "هاي! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  ازيك: "مرحبا بك! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  "عامل ايه":
+    " الحمدلله انت اخبارك ايه! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  "عامل ايه؟":
+    " الحمدلله انت اخبارك ايه! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
+  "عامل اي":
+    " الحمدلله انت اخبارك ايه! أنا مساعدك لكتابة السيرة الذاتية. كيف يمكنني مساعدتك اليوم؟",
 
   "how to write a cv":
     "Here are the key steps to write a CV: 1. Start with contact information 2. Write a compelling professional summary 3. List your work experience 4. Include your education 5. Add relevant skills 6. Keep it concise and professional",
