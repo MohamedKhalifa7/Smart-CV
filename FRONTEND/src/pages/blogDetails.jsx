@@ -6,12 +6,13 @@
   import ArrowBackIcon from "@mui/icons-material/ArrowBack";
   import { BLOG_POSTS } from "../data/blogData";
   // import { BLOG_POSTS } from "./path-to-blogData"; // Update path as needed
-  
+  import { useTranslation } from "react-i18next";
   const BlogDetail = () => {
     const { id } = useParams();
     const blogPost = BLOG_POSTS.find((post) => post.id === parseInt(id));
     const navigate = useNavigate();
-  
+    const { t } = useTranslation();
+
     if (!blogPost) {
       return <Typography variant="h6">Blog post not found.</Typography>;
     }
