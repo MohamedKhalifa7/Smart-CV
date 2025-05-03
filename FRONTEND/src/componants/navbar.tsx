@@ -7,9 +7,7 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
   Button,
-  Tooltip,
   MenuItem,
   Switch,
   Popover
@@ -22,7 +20,7 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/Auth/AuthContext';
 import ProWarning from './proWarning';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 
@@ -38,20 +36,13 @@ function Navbar() {
   const currentLang = i18n.language;
   const isRTL = currentLang === 'ar';
   const paymentState = useSelector((state: any) => state.payment);
-  const dispatch = useDispatch();
 
-  // Watch for payment success and update user data
   useEffect(() => {
     if (paymentState.success && paymentState.user) {
       updateUserFromPayment(paymentState.user, Cookies.get("token") || '');
       console.log("User updated after payment:", paymentState.user);
     }
   }, [paymentState.success, paymentState.user, updateUserFromPayment]);
-
-  // Debugging - log user changes
-  useEffect(() => {
-    console.log("Current user data in navbar:", user);
-  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -70,7 +61,16 @@ function Navbar() {
     setAnchorElPro(null);
   };
 
+  const handleUserMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorElUser(null);
+  };
+
   const openProPopover = Boolean(anchorElPro);
+  const openUserMenu = Boolean(anchorElUser);
 
   const pages = [
     { label: t('Home'), href: "/" },
@@ -78,22 +78,11 @@ function Navbar() {
     { label: t("Tips"), href: "/Tips" }
   ];
 
-  const userMenuItems = [
-    { label: t("Profile"), href: "profile" },
-    { label: t("Settings"), href: "settings" },
-    { label: t("Logout"), action: () => handleLogout() },
-  ];
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
   const handleCloseNavMenu = () => setAnchorElNav(null);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const toggleLanguage = () => {
     i18n.changeLanguage(currentLang === 'en' ? 'ar' : 'en');
@@ -111,7 +100,6 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
-          {/* Logo Desktop */}
           <Typography
             variant="h6"
             noWrap
@@ -130,7 +118,6 @@ function Navbar() {
             Smart-CV
           </Typography>
 
-          {/* Mobile Menu */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton size="large" onClick={handleOpenNavMenu} sx={{ color: "black" }}>
               <MenuIcon />
@@ -153,7 +140,7 @@ function Navbar() {
                   {t("Get Started")}
                 </Button>
               </MenuItem>
-              {/* Language Switch Mobile */}
+
               <Box sx={{ display: 'flex', alignItems: 'center', mx: 2, mt: 2 }}>
                 <Typography sx={{ fontSize: "14px", mx: 1 }}>{isRTL ? 'ع' : 'En'}</Typography>
                 <Switch
@@ -165,7 +152,6 @@ function Navbar() {
             </Menu>
           </Box>
 
-          {/* Mobile Logo */}
           <Typography
             variant="h5"
             noWrap
@@ -183,7 +169,6 @@ function Navbar() {
             Smart-CV
           </Typography>
 
-          {/* Desktop Navbar */}
           <Box
             sx={{
               flexGrow: 1,
@@ -194,7 +179,7 @@ function Navbar() {
               alignItems: "center"
             }}
           >
-            {/* Language Switch */}
+
             <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
               <Typography sx={{ fontSize: "14px", mx: 1 }}>{isRTL ? 'ع' : 'En'}</Typography>
               <Switch
@@ -298,36 +283,35 @@ function Navbar() {
             )}
           </Box>
 
-          {/* User Avatar */}
-          <Box sx={{ flexGrow: 0, marginLeft: "20px" }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              anchorEl={anchorElUser}
-              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {userMenuItems.map((item) => (
-                <MenuItem
-                  key={item.label}
-                  onClick={() => {
-                    handleCloseUserMenu();
-                    if (item.href) navigate(`/${item.href}`);
-                    if (item.action) item.action();
-                  }}
-                >
-                  {item.label}
+          {isAuthenticated && (
+            <Box sx={{ flexGrow: 0, marginLeft: "20px" }}>
+              <Button
+                onClick={handleUserMenuClick}
+                sx={{
+                  color: 'black',
+                  textTransform: 'none',
+                  fontWeight: 'medium'
+                }}
+              >
+                {user?.firstName||user?.email.split("@")[0]}
+              </Button>
+              <Menu
+                sx={{ mt: '45px' }}
+                anchorEl={anchorElUser}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={openUserMenu}
+                onClose={handleUserMenuClose}
+              >
+                <MenuItem onClick={() => {
+                  handleUserMenuClose();
+                  handleLogout();
+                }}>
+                  {t("Logout")}
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
       <ProWarning

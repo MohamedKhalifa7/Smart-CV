@@ -97,20 +97,21 @@ export const getCurrentUser = (req: Request, res: Response) => {
     token: req.cookies.token,
   });
 };
+  const now = new Date()
+  const oneMonthPeriod = now.setMonth(now.getMonth()+1)
+console.log(oneMonthPeriod)
 
 export const upgradeToPro = async (req: Request, res: Response) => {
   const { userId } = req.body;
 
   const oneMonthPeriod = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
- 
 
   const user = await User.findByIdAndUpdate(
     userId,
     { role: "pro user",proExpiresAt:oneMonthPeriod },
     { new: true },
-
   );
-
+  
   if (!user) {
     res.status(404).json({ message: "User not found" });
     return;

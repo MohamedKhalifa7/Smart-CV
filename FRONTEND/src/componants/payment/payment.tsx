@@ -114,6 +114,7 @@ const ProPaymentForm = () => {
         }
       } else {
         throw new Error(paymentSessionAction.error?.message || 'Payment session failed');
+      
       }
     } catch (err) {
       console.error("Payment error:", err);
