@@ -54,7 +54,7 @@ const BLOG_POSTS = [
   },
   {
     id: 5,
-    title: "Common CV Mistakes That Could Cost You the Interview",
+    title: "Common CV Mistakes, Cost You the Interview",
     excerpt: "Avoid these critical errors that many job seekers make when crafting their resumes.",
     category: "CV Tips",
     author: "Emily Parker",
@@ -63,7 +63,7 @@ const BLOG_POSTS = [
   },
   {
     id: 6,
-    title: "Industry-Specific CV Advice: What Works in Tech, Healthcare, and Finance",
+    title: "Industry-Specific CV Advice.",
     excerpt: "Customize your CV for your specific industry with these tailored tips and examples.",
     category: "Industry Insights",
     author: "Michael Johnson",
@@ -107,7 +107,7 @@ const Blog = () => {
               flexDirection: "column",
               justifyContent: "space-between",
               width: 480,
-              height: 380, // Fixed card height for all screen sizes
+              height: 400, // Fixed card height for all screen sizes
               boxShadow: 3,
               borderRadius: 2,
             }}
