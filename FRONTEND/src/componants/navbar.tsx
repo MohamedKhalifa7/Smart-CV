@@ -22,19 +22,36 @@ import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/Auth/AuthContext';
 import ProWarning from './proWarning';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(null);
+  const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
+  
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { user, isAuthenticated } = useAuth()
+  const { user, isAuthenticated, updateUserFromPayment } = useAuth();
   const currentLang = i18n.language;
   const isRTL = currentLang === 'ar';
-  const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
-  const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(null);
-  const proExpiresAt = user?.proExpiresAt; // Default to current date if not available
+  const paymentState = useSelector((state: any) => state.payment);
+  const dispatch = useDispatch();
+
+  // Watch for payment success and update user data
+  useEffect(() => {
+    if (paymentState.success && paymentState.user) {
+      updateUserFromPayment(paymentState.user, Cookies.get("token") || '');
+      console.log("User updated after payment:", paymentState.user);
+    }
+  }, [paymentState.success, paymentState.user, updateUserFromPayment]);
+
+  // Debugging - log user changes
+  useEffect(() => {
+    console.log("Current user data in navbar:", user);
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -44,6 +61,7 @@ function Navbar() {
       console.error('Logout failed', error);
     }
   };
+
   const handleProClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElPro(event.currentTarget);
   };
@@ -51,10 +69,6 @@ function Navbar() {
   const handleProClose = () => {
     setAnchorElPro(null);
   };
-
-  React.useEffect(() => {
-    console.log("Pro Expires At:", proExpiresAt);
-  }, [proExpiresAt]);
 
   const openProPopover = Boolean(anchorElPro);
 
@@ -218,17 +232,21 @@ function Navbar() {
                 {t("LogIn")}
               </Button>
             )}
-            {user?.role === "normal user" && (<Button
-              onClick={() => setOpenPaymentDialog(true)}
-              sx={{
-                background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
-                color: "white",
-                fontSize: "12px",
-                marginInlineEnd: 2
-              }}
-            >
-              {t("Go Pro")}
-            </Button>)}
+            
+            {user?.role === "normal user" && (
+              <Button
+                onClick={() => setOpenPaymentDialog(true)}
+                sx={{
+                  background: 'linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)',
+                  color: "white",
+                  fontSize: "12px",
+                  marginInlineEnd: 2
+                }}
+              >
+                {t("Go Pro")}
+              </Button>
+            )}
+            
             {user?.role === "pro user" && (
               <>
                 <Button
@@ -271,8 +289,8 @@ function Navbar() {
                     <Typography variant="body2" sx={{ color: "#444" }}>
                       <strong>{t("Plan")}:</strong> {user?.role}
                     </Typography>
-                    <Typography variant="body2" sx={{  color: "#444" }}>
-                      <strong>{t("Expires at")}:</strong> {new Date(proExpiresAt).toLocaleDateString()}
+                    <Typography variant="body2" sx={{ color: "#444" }}>
+                      <strong>{t("Expires at")}:</strong> {user?.proExpiresAt ? new Date(user.proExpiresAt).toLocaleDateString() : 'N/A'}
                     </Typography>
                   </Box>
                 </Popover>

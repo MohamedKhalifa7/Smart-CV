@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 
 export const startPaymentSession = createAsyncThunk(
   "payment/startSession",
@@ -16,6 +18,14 @@ export const handlePaymentSuccess = createAsyncThunk(
   "payment/success",
   async(userId)=>{
     const response = await axios.post(`http://localhost:3001/payment/payment-success`,{userId},{ withCredentials: true,})
+
+    if(response.data.token){
+      Cookies.set("token",response.data.token,{
+        expires:1,
+        secure:true,
+        sameSite:"strict"
+      })
+    }
     return response.data
   }
 )
@@ -28,6 +38,7 @@ export const paymentSlice = createSlice({
     error: null,
     success: false,
     proExpiresAt: null,
+    user:null
   },
   extraReducers: (builder) => {
     builder

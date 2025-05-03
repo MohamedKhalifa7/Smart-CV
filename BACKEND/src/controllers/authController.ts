@@ -3,6 +3,8 @@ import * as userService from "../services/userService";
 import User from "../models/userModel";
 import { StatusCodes } from "http-status-codes";
 import { CustomRequest } from "../middleware/validateJWTMiddleware";
+import jwt from "jsonwebtoken";
+
 
 export const register = async (req: Request, res: Response) => {
   const result = await userService.register(req.body);
@@ -99,8 +101,7 @@ export const getCurrentUser = (req: Request, res: Response) => {
 export const upgradeToPro = async (req: Request, res: Response) => {
   const { userId } = req.body;
 
-  const now = new Date()
-  const oneMonthPeriod = now.setMonth(now.getMonth()+1)
+  const oneMonthPeriod = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
  
 
   const user = await User.findByIdAndUpdate(
@@ -115,7 +116,16 @@ export const upgradeToPro = async (req: Request, res: Response) => {
     return;
   }
 
-
+  const token = jwt.sign(
+    {
+      userId:user._id,
+      email:user.email,
+      role:user.role,
+      proExpiresAt:oneMonthPeriod
+    },
+    process.env.JWT_SECRET_Key || "jwt_secret",
+    { expiresIn: "1d" }
+  )
 
 
   res.json({
@@ -124,7 +134,8 @@ export const upgradeToPro = async (req: Request, res: Response) => {
       id: user._id,
       email: user.email,
       role: user.role,
+      proExpiresAt:oneMonthPeriod
     },
-    proExpiresAt:oneMonthPeriod
+    token
   });
 };

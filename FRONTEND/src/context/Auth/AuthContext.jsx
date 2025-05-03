@@ -10,43 +10,36 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  
+  
+  
+  const fetchingAndFrefreshUser = async () => {
+    try {
+      const res = await axios.get("http://localhost:3001/auth/verify-token", {
+        withCredentials: true,
+      });
+
+      if (res.data && res.data.user) {
+        setUser(res.data.user);
+        setToken(res.data.token); 
+        console.log("User data:", res.data.user);
+      } else {
+        throw new Error("Invalid response from server.");
+      }
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      Cookies.remove("token");
+      setUser(null);
+      setToken(null);
+    }
+  };
 
   useEffect(() => {
-    // const storedToken = Cookies.get("token");
+  fetchingAndFrefreshUser().finally(() => {
+      setLoading(false);
+    });
+}, []);
 
-    // if (!storedToken) {
-    //   console.log("No token found, loading finished.");
-
-    //   setLoading(true);
-    //   return;
-    // }
-    // console.log("Token found, verifying...");
-
-
-    axios
-      .get("http://localhost:3001/auth/verify-token", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        if (res.data && res.data.user) {
-          setUser(res.data.user);
-          console.log("User data:", res.data.user);
-          setToken(res.data.token); 
-        } else {
-          throw new Error("Invalid response from server.");
-        }
-      })
-      .catch((error) => {
-        console.error("Token verification failed:", error);
-        Cookies.remove("token");
-        setUser(null);
-        setToken(null);
-      })  
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
 
   const isAuthenticated = !!token;
 
@@ -68,7 +61,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isAuthenticated, login, logout, loading }}
+      value={{ user, token, isAuthenticated, login, logout, loading,fetchingAndFrefreshUser }}
     >
       {children}
     </AuthContext.Provider>

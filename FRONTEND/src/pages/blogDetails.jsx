@@ -91,7 +91,7 @@ const BlogDetail = () => {
       <Button
         variant="text"
         startIcon={<ArrowBackIcon />}
-        onClick={() => navigate("/blog")}
+        onClick={() => navigate("/blogs")}
         sx={{ mb: 3 }}
       >
         Back to Blog

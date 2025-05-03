@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Typography,
@@ -15,6 +15,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -23,7 +25,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useDispatch, useSelector } from 'react-redux';
 import { handlePaymentSuccess, startPaymentSession } from '../../redux/store/slices/paymentSlice';
 import { useAuth } from "../../context/Auth/AuthContext";
+import { useNavigate } from 'react-router-dom';
 import store from '../../redux/store/store';
+
+
 
 const ProPaymentForm = () => {
   const [form, setForm] = useState({
@@ -34,33 +39,37 @@ const ProPaymentForm = () => {
     address: '',
     paypalEmail: '',
   });
-
+  
   type AppDispatch = typeof store.dispatch
-
-  const [errors, setErrors] = useState<any>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
-  const [loading2, setLoading2] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const {user} = useAuth()
-  const dispatch = useDispatch<AppDispatch>()
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  const { user, login } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
-  const validate = () => {
-    let temp: any = {};
+  const validate = (): boolean => {
+    const temp: Record<string, string> = {};
 
     if (paymentMethod === 'card') {
-      if (!form.name) temp.name = 'Name is required';
+      if (!form.name.trim()) temp.name = 'Name is required';
       if (!form.cardNumber || form.cardNumber.length !== 16)
         temp.cardNumber = 'Card number must be 16 digits';
       if (!/^\d{2}\/\d{2}$/.test(form.expiry))
         temp.expiry = 'Expiry must be in MM/YY format';
       if (!form.cvv || form.cvv.length < 3 || form.cvv.length > 4)
         temp.cvv = 'CVV must be 3 or 4 digits';
-      if (!form.address) temp.address = 'Billing address is required';
+      if (!form.address.trim()) temp.address = 'Billing address is required';
     }
 
     if (paymentMethod === 'paypal') {
@@ -71,38 +80,59 @@ const ProPaymentForm = () => {
     setErrors(temp);
     return Object.keys(temp).length === 0;
   };
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
     if (!validate()) return;
-  
-    if (!user.userId) {
-      console.log("User not found");
-      console.log(user.userId)
+    if (!user?.userId) {
+      setErrorMessage('User not found. Please login again.');
+      setErrorSnackbarOpen(true);
       return;
     }
   
-    setLoading2(true);
+    setLoading(true);
   
     try {
-      const action = await dispatch(startPaymentSession(user.userId));
-  
-      if (startPaymentSession.fulfilled.match(action)) {
-        setDialogOpen(true);
-        await dispatch(handlePaymentSuccess(user.userId));
+
+      const paymentSessionAction = await dispatch(startPaymentSession(user.userId));
+      
+      if (startPaymentSession.fulfilled.match(paymentSessionAction)) {
+
+        const paymentSuccessAction = await dispatch(handlePaymentSuccess(user.userId));
+        
+        if (handlePaymentSuccess.fulfilled.match(paymentSuccessAction)) {
+
+          const { user: updatedUser, token: newToken } = paymentSuccessAction.payload;
+
+          login(updatedUser, newToken);
+          setDialogOpen(true);
+          
+        } 
+        else {
+          throw new Error(paymentSuccessAction.error?.message || 'Payment processing failed');
+        }
       } else {
-        console.error("Payment session failed:", action.payload || action.error);
+        throw new Error(paymentSessionAction.error?.message || 'Payment session failed');
       }
     } catch (err) {
-      console.error("Unexpected error during payment session:", err);
+      console.error("Payment error:", err);
+      setErrorMessage(err instanceof Error ? err.message : 'Payment failed. Please try again.');
+      setErrorSnackbarOpen(true);
     } finally {
-      setLoading2(false);
+      setLoading(false);
     }
-
   };
-  
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    navigate('/');
+  };
+
+  const handleErrorSnackbarClose = () => {
+    setErrorSnackbarOpen(false);
+  };
+
   return (
     <Box sx={{ background: '#f5f5fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="md">
@@ -115,7 +145,7 @@ const ProPaymentForm = () => {
             overflow: 'hidden',
           }}
         >
-
+          {/* Payment Form Section */}
           <Box sx={{ flex: 2, p: 4, backgroundColor: '#fff' }}>
             <Typography variant="h4" gutterBottom fontWeight="bold">
               Upgrade to Pro
@@ -148,7 +178,7 @@ const ProPaymentForm = () => {
 
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {paymentMethod === 'card' && (
+                {paymentMethod === 'card' ? (
                   <>
                     <Grid item xs={12}>
                       <TextField
@@ -203,6 +233,7 @@ const ProPaymentForm = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        required
                         label="Billing Address"
                         name="address"
                         fullWidth
@@ -220,9 +251,7 @@ const ProPaymentForm = () => {
                       />
                     </Grid>
                   </>
-                )}
-
-                {paymentMethod === 'paypal' && (
+                ) : (
                   <Grid item xs={12}>
                     <TextField
                       required
@@ -252,7 +281,7 @@ const ProPaymentForm = () => {
                     variant="contained"
                     color="secondary"
                     size="large"
-                    disabled={loading2}
+                    disabled={loading}
                     sx={{
                       py: 1.5,
                       fontWeight: 'bold',
@@ -263,12 +292,17 @@ const ProPaymentForm = () => {
                       },
                     }}
                   >
-                    {loading2 ? <CircularProgress size={26} color="inherit" /> : 'Pay $9.99 and Upgrade'}
+                    {loading ? (
+                      <CircularProgress size={26} color="inherit" />
+                    ) : (
+                      'Pay $9.99 and Upgrade'
+                    )}
                   </Button>
                 </Grid>
               </Grid>
             </form>
           </Box>
+
 
           <Box
             sx={{
@@ -289,7 +323,7 @@ const ProPaymentForm = () => {
             <Typography variant="h3" fontWeight="bold">
               $9.99
             </Typography>
-            <Typography variant="subtitle1" sx={{ mt: 1, mb: 3,color:"white" , fontWeight:"bold" }}>
+            <Typography variant="subtitle1" sx={{ mt: 1, mb: 3, color: "white", fontWeight: "bold" }}>
               /month
             </Typography>
             <Typography variant="body1" color='white'>
@@ -303,17 +337,37 @@ const ProPaymentForm = () => {
         </Paper>
       </Container>
 
-      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      {/* Success Dialog */}
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>🎉 Payment Successful</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">Thank you for upgrading to Pro!</Typography>
+          <Typography variant="body1">
+            Thank you for upgrading to Pro! Your account has been upgraded and all premium features are now available.
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)} color="secondary" variant="contained">
-            Close
+          <Button 
+            onClick={handleDialogClose} 
+            color="secondary" 
+            variant="contained"
+            fullWidth
+          >
+            Continue to Home
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Error Snackbar */}
+      <Snackbar
+        open={errorSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleErrorSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleErrorSnackbarClose} severity="error" sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
