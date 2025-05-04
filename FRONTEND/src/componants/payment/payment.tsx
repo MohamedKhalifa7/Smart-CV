@@ -127,7 +127,7 @@ const ProPaymentForm = () => {
 
   const handleDialogClose = () => {
     setDialogOpen(false);
-    navigate('/');
+    window.location.href = '/';
   };
 
   const handleErrorSnackbarClose = () => {

@@ -14,7 +14,7 @@ export const authenticateToken = (
   req: Request,
   res: Response,
   next: NextFunction
-): void => {
+) => {
   const customReq = req as CustomRequest;
 
   const token =
