@@ -28,6 +28,7 @@ import Blog from "./pages/blogs.jsx";
 import BlogDetail from "./pages/blogDetails.jsx";
 import HomePart3 from "./componants/Home/homePart3.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import CVTipsSection from "./pages/tips.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
       { path: "payment-check", element: <ProtectedRoute><ProPaymentForm /></ProtectedRoute> },
       { path: "chatbot", element: <ProtectedRoute><ChatBot /></ProtectedRoute> },
       {path:"Blogs", element:<Blog></Blog>},
+      {path:"tips", element:<CVTipsSection></CVTipsSection>},
+
       {path:"Blogs/:id", element:<BlogDetail/>},
       { path: "*", element: <Error /> },
       {path:"Pro-Features",element:<HomePart3/>}
