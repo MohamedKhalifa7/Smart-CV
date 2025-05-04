@@ -26,6 +26,8 @@ import ChatBot from "./componants/chatBot/chatBot.jsx";
 import ProPaymentForm from "./componants/payment/payment.js";
 import Blog from "./pages/blogs.jsx";
 import BlogDetail from "./pages/blogDetails.jsx";
+import HomePart3 from "./componants/Home/homePart3.jsx";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,7 @@ const router = createBrowserRouter([
       {path:"Blogs", element:<Blog></Blog>},
       {path:"Blogs/:id", element:<BlogDetail/>},
       { path: "*", element: <Error /> },
+      {path:"Pro-Features",element:<HomePart3/>}
     ],
   },
   { path: "register", element: <RegisterPage /> },
@@ -66,6 +69,8 @@ function App() {
   return (
 
     <Provider store={store}>
+      <PayPalScriptProvider>
+
       <CVProvider>
         <PreviewProvider>
           <TemplateProvider>
@@ -77,6 +82,7 @@ function App() {
           </TemplateProvider>
         </PreviewProvider>
       </CVProvider>
+      </PayPalScriptProvider>
     </Provider>
 
   );

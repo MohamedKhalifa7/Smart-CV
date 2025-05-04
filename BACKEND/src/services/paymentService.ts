@@ -4,3 +4,6 @@ export const proPayment = async (userId: string) => {
     };
   };
   
+  export const proPaypalPayment = async ()=>{
+    
+  }

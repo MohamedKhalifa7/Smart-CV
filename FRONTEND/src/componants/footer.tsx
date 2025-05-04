@@ -36,9 +36,9 @@ const Footer = () => {
             </Typography>
             <Box sx={{display:"flex", flexDirection:"column", gap:"8px"}}>
             <Link href="/getStart" color="text.secondary" underline="none" display="block">{t("CV Builder")}</Link>
-            <Link href="#" color="text.secondary" underline="none" display="block">{t("CV Analyzer")}</Link>
+            <Link href="/getStart" color="text.secondary" underline="none" display="block">{t("CV Analyzer")}</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">{t("Templates")}</Link>
-            <Link href="/payment-check" color="text.secondary" underline="none" display="block">{t("Pro Features")}</Link>
+            <Link href="/Pro-Features" color="text.secondary" underline="none" display="block">{t("Pro Features")}</Link>
             </Box>
           </Grid>
 
@@ -48,14 +48,14 @@ const Footer = () => {
               {t("Resources")}
             </Typography>
             <Box sx={{display:"flex", flexDirection:"column", gap:"8px"}}>
-            <Link href="#" color="text.secondary" underline="none" display="block">{t("Blog")}</Link>
+            <Link href="/blogs" color="text.secondary" underline="none" display="block">{t("Blog")}</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">{t("CV Tips")}</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">{t("Help Center")}</Link>
             </Box>
           </Grid>
 
          
-          <Grid>
+          {/* <Grid>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               {t("Company")}
             </Typography>
@@ -65,7 +65,7 @@ const Footer = () => {
             <Link href="#" color="text.secondary" underline="none" display="block">{t("Terms of Service")}</Link>
             <Link href="#" color="text.secondary" underline="none" display="block">{t("Contact")}</Link>
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         

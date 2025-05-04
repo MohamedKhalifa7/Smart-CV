@@ -27,6 +27,7 @@ import { handlePaymentSuccess, startPaymentSession } from '../../redux/store/sli
 import { useAuth } from "../../context/Auth/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import store from '../../redux/store/store';
+import {PayPalButtons} from "@paypal/react-paypal-js"
 
 
 
@@ -251,31 +252,7 @@ const ProPaymentForm = () => {
                         helperText={errors.address}
                       />
                     </Grid>
-                  </>
-                ) : (
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      label="PayPal Email"
-                      name="paypalEmail"
-                      type="email"
-                      fullWidth
-                      value={form.paypalEmail}
-                      onChange={handleChange}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <EmailIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      error={!!errors.paypalEmail}
-                      helperText={errors.paypalEmail}
-                    />
-                  </Grid>
-                )}
-
-                <Grid item xs={12}>
+                    <Grid item xs={12}>
                   <Button
                     type="submit"
                     fullWidth
@@ -300,6 +277,30 @@ const ProPaymentForm = () => {
                     )}
                   </Button>
                 </Grid>
+                  </>
+                ) : (
+                  <Grid item xs={12} width={500}>
+                    {/* <TextField
+                      required
+                      label="PayPal Email"
+                      name="paypalEmail"
+                      type="email"
+                      fullWidth
+                      value={form.paypalEmail}
+                      onChange={handleChange}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EmailIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.paypalEmail}
+                      helperText={errors.paypalEmail}
+                      /> */}
+                      <PayPalButtons/>
+                  </Grid>
+                )}
               </Grid>
             </form>
           </Box>
