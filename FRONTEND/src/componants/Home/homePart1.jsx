@@ -12,15 +12,21 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+  import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import CheckIcon from "@mui/icons-material/Check";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 import { useTranslation } from "react-i18next";
+  import i18n from '../../i18n';
+
 
 const HomePart1 = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const { t } = useTranslation();
+  const currentLang = i18n.language;
+
 
   return (
     <Box
@@ -164,7 +170,7 @@ const HomePart1 = () => {
                     boxShadow: 6,
                   },
                 }}
-                endIcon={<ArrowForwardIcon />}
+                endIcon={currentLang==='en'?<ArrowForwardIcon />:<ArrowBackIcon sx={{px:2}}/>}
                 onClick={() => navigate("/getStart")}
               >
                 {t("Get Started")}
@@ -186,7 +192,7 @@ const HomePart1 = () => {
                 }}
                 onClick={() => navigate("/getStart")}
               >
-                Upload Your CV
+                {t("Upload Your CV")}
               </Button>
             </Box>
           </Box>
