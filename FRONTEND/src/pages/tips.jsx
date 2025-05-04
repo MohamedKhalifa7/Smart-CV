@@ -148,7 +148,7 @@ const CVTipsSection = () => {
                                         <ListItemIcon sx={{ minWidth: 32 }}>
                                             <CheckIcon sx={{ color: 'green' }} />
                                         </ListItemIcon>
-                                        <ListItemText primary={item} />
+                                        <ListItemText primary={item}sx={{ textAlign: 'start' }} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -176,7 +176,7 @@ const CVTipsSection = () => {
                                         <ListItemIcon sx={{ minWidth: 32 }}>
                                             <CloseIcon sx={{ color: 'red' }} />
                                         </ListItemIcon>
-                                        <ListItemText primary={item} />
+                                        <ListItemText primary={item}sx={{ textAlign: 'start' }} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -203,11 +203,11 @@ const CVTipsSection = () => {
                                     t('Use clear section headings'),
                                     t('Ensure hyperlinks work correctly'),
                                 ].map((item) => (
-                                    <ListItem key={item} disablePadding sx={{ mb: 1 }}>
+                                    <ListItem key={item} disablePadding sx={{ mb: 1,}}>
                                         <ListItemIcon sx={{ minWidth: 32 }}>
                                             <CheckIcon  />
                                         </ListItemIcon>
-                                        <ListItemText primary={item} />
+                                        <ListItemText primary={item}sx={{ textAlign: 'start' }} />
                                     </ListItem>
                                 ))}
                             </List>
@@ -235,7 +235,7 @@ const CVTipsSection = () => {
                                         <ListItemIcon sx={{ minWidth: 32 }}>
                                             <CheckIcon  />
                                         </ListItemIcon>
-                                        <ListItemText primary={item} />
+                                        <ListItemText primary={item}sx={{ textAlign: 'start' }} />
                                     </ListItem>
                                 ))}
                             </List>
