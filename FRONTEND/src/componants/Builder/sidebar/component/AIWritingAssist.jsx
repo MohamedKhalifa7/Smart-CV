@@ -250,9 +250,9 @@ function AIWritingAssistDialog(props) {
               ),
             }}
           />
-          <Button variant='contained' sx={{   alignSelf: 'right', mb: 3 }} onClick={()=>{}}>
+          {/* <Button variant='contained' sx={{   alignSelf: 'right', mb: 3 }} onClick={()=>{}}>
               Insert into CV
-        </Button>
+        </Button> */}
           </Box>
         )}
 
