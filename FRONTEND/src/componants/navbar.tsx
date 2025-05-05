@@ -50,7 +50,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await axios.post('http://localhost:3001/auth/logout', {}, { withCredentials: true });
-      navigate('/login');
+      window.location.href = '/login';
     } catch (error) {
       console.error('Logout failed', error);
     }
