@@ -320,5 +320,14 @@
   "Login": "Login",
   "Login with Google": "Login with Google",
   "Don't have an account?": "Don't have an account?",
-  "Register": "Register"
+  "Register": "Register",
+  "First name is required": "First name is required",
+  "Last name is required": "Last name is required",
+  "Invalid email format": "Invalid email format",
+  "Password is required": "Password is required",
+  "Password must be at least 8 characters long": "Password must be at least 8 characters long",
+  "Registration failed": "Registration failed",
+  "Register New Account": "Register New Account",
+  "Registration successful! Redirecting...": "Registration successful! Redirecting...",
+  "Already a member?": "Already a member?"
 }

@@ -15,6 +15,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/Auth/AuthContext";
 import HomeIcon from '@mui/icons-material/Home';
 import { useTranslation } from "react-i18next";
+import i18n from '../../i18n';
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { t } = useTranslation();
+
+  const currentLang = i18n.language;
 
 
   const handleSubmit = async () => {
@@ -179,7 +182,8 @@ const LoginPage = () => {
                 variant="outlined"
                 color="secondary"
                 onClick={handleGoogleLogin}
-                startIcon={<GoogleIcon />}
+                startIcon={currentLang==='en'?<GoogleIcon />:<></> }
+                endIcon={currentLang==='ar'?<GoogleIcon sx={{mx:1}}/>:<></>}
                 sx={{
                   mt: 2,
                   padding: { xs: 1, sm: 1.5 },

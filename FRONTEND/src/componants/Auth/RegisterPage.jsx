@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import { useTranslation } from "react-i18next";
+import i18n from '../../i18n';
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -23,27 +25,30 @@ const RegisterPage = () => {
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
 
+    const { t } = useTranslation();
+    const currentLang = i18n.language;
+
   const validateFields = () => {
     const errors = {};
 
     if (!firstName) {
-      errors.firstName = "First name is required";
+      errors.firstName = t("First name is required");
     }
 
     if (!lastName) {
-      errors.lastName = "Last name is required";
+      errors.lastName = t("Last name is required");
     }
 
     if (!email) {
-      errors.email = "Email is required";
+      errors.email = t("Email is required");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.email = "Invalid email format";
     }
 
     if (!password) {
-      errors.password = "Password is required";
+      errors.password = t("Password is required");
     } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
+      errors.password = t("Password must be at least 8 characters long");
     }
 
     setFieldErrors(errors);
@@ -67,7 +72,7 @@ const RegisterPage = () => {
         setTimeout(() => navigate("/verify-otp", { state: { email } }), 1000);
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      setError(err.response?.data?.message || t("Registration failed"));
       setSuccess(false);
     }
   };
@@ -131,12 +136,12 @@ const RegisterPage = () => {
                 fontSize: { xs: "1.5rem", sm: "2rem" },
               }}
             >
-              Register New Account
+              {t("Register New Account")}
             </Typography>
 
             {success && (
               <Alert severity="success" sx={{ mb: 2 }}>
-                Registration successful! Redirecting...
+                {t("Registration successful! Redirecting...")}
               </Alert>
             )}
 
@@ -155,7 +160,7 @@ const RegisterPage = () => {
               }}
             >
               <TextField
-                label="First Name"
+                label={t("First Name")}
                 variant="outlined"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -165,7 +170,7 @@ const RegisterPage = () => {
                 fullWidth
               />
               <TextField
-                label="Last Name"
+                label={t("Last Name")}
                 variant="outlined"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -174,7 +179,7 @@ const RegisterPage = () => {
                 fullWidth
               />
               <TextField
-                label="Email"
+                label={t("Email")}
                 type="email"
                 variant="outlined"
                 value={email}
@@ -185,7 +190,7 @@ const RegisterPage = () => {
                 fullWidth
               />
               <TextField
-                label="Password"
+                label={t("Password")}
                 type="password"
                 variant="outlined"
                 value={password}
@@ -206,7 +211,7 @@ const RegisterPage = () => {
                   fontSize: { xs: "0.9rem", sm: "1rem" },
                 }}
               >
-                Register
+                {t("Register")}
               </Button>
 
               <Typography
@@ -216,7 +221,7 @@ const RegisterPage = () => {
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
                 }}
               >
-                Already a member?{" "}
+                {t("Already a member?")}{" "}
                 <Link
                   to="/login"
                   style={{
@@ -225,7 +230,7 @@ const RegisterPage = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Login
+                  {t("Login")}
                 </Link>
               </Typography>
             </FormControl>

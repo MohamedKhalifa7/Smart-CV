@@ -316,5 +316,14 @@
   "Login": "تسجيل الدخول",
   "Login with Google": "تسجيل الدخول باستخدام جوجل",
   "Don't have an account?": "ليس لديك حساب؟",
-  "Register": "تسجيل"
+  "Register": "تسجيل",
+  "First name is required": "الاسم الأول مطلوب",
+  "Last name is required": "اسم العائلة مطلوب",
+  "Invalid email format": "تنسيق البريد الإلكتروني غير صالح",
+  "Password is required": "كلمة المرور مطلوبة",
+  "Password must be at least 8 characters long": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+  "Registration failed": "فشل التسجيل",
+  "Register New Account": "تسجيل حساب جديد",
+  "Registration successful! Redirecting...": "تم التسجيل بنجاح! جارٍ إعادة التوجيه...",
+  "Already a member?": "هل أنت بالفعل عضو؟"
 }
