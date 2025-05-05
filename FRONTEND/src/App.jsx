@@ -29,6 +29,7 @@ import BlogDetail from "./pages/blogDetails.jsx";
 import HomePart3 from "./componants/Home/homePart3.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import CVTipsSection from "./pages/tips.jsx";
+import Settings from "./componants/Settings";
 
 const router = createBrowserRouter([
   {
@@ -36,24 +37,59 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "builder", element: <ProtectedRoute><Builder /></ProtectedRoute> },
-      { path: "getStart", element: <ProtectedRoute><GetStarted /></ProtectedRoute> },
+      {
+        path: "builder",
+        element: (
+          <ProtectedRoute>
+            <Builder />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "getStart",
+        element: (
+          <ProtectedRoute>
+            <GetStarted />
+          </ProtectedRoute>
+        ),
+      },
       { path: "auth/success", element: <GoogleAuthSuccess /> },
       { path: "grammarCheck", element: <GrammarCheck /> },
-      { path: "payment-check", element: <ProtectedRoute><ProPaymentForm /></ProtectedRoute> },
-      { path: "chatbot", element: <ProtectedRoute><ChatBot /></ProtectedRoute> },
-      {path:"Blogs", element:<Blog></Blog>},
-      {path:"tips", element:<CVTipsSection></CVTipsSection>},
+      {
+        path: "payment-check",
+        element: (
+          <ProtectedRoute>
+            <ProPaymentForm />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "chatbot",
+        element: (
+          <ProtectedRoute>
+            <ChatBot />
+          </ProtectedRoute>
+        ),
+      },
+      { path: "Blogs", element: <Blog></Blog> },
+      { path: "tips", element: <CVTipsSection></CVTipsSection> },
 
-      {path:"Blogs/:id", element:<BlogDetail/>},
+      { path: "Blogs/:id", element: <BlogDetail /> },
       { path: "*", element: <Error /> },
-      {path:"Pro-Features",element:<HomePart3/>}
+      { path: "Pro-Features", element: <HomePart3 /> },
+      {
+        path: "settings",
+        element: (
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
   { path: "verify-otp", element: <VerifyOTP /> },
-  
 ]);
 
 function App() {
@@ -65,29 +101,35 @@ function App() {
   }, [i18n.language]);
 
   if (loading) {
-    return <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <CircularProgress sx={{color:"purple"}}/>
-    </Box>
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress sx={{ color: "purple" }} />
+      </Box>
+    );
   }
   return (
-
     <Provider store={store}>
       <PayPalScriptProvider>
-
-      <CVProvider>
-        <PreviewProvider>
-          <TemplateProvider>
-            <FileProvider>
-              <ThemeProvider theme={theme}>
-                <RouterProvider router={router} />
-              </ThemeProvider>
-            </FileProvider>
-          </TemplateProvider>
-        </PreviewProvider>
-      </CVProvider>
+        <CVProvider>
+          <PreviewProvider>
+            <TemplateProvider>
+              <FileProvider>
+                <ThemeProvider theme={theme}>
+                  <RouterProvider router={router} />
+                </ThemeProvider>
+              </FileProvider>
+            </TemplateProvider>
+          </PreviewProvider>
+        </CVProvider>
       </PayPalScriptProvider>
     </Provider>
-
   );
 }
 

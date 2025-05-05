@@ -12,6 +12,7 @@ import {
   resendOTP,
   getCurrentUser,
   upgradeToPro,
+  updatePassword,
 } from "../controllers/authController";
 import {
   validateRegisterInput,
@@ -27,6 +28,7 @@ router.post("/verify-otp", verifyOTP);
 router.post("/resend-otp", resendOTP);
 router.get("/verify-token", authenticateToken, getCurrentUser);
 router.post("/upgrade", upgradeToPro);
+router.post("/update-password", authenticateToken, updatePassword);
 
 // Google OAuth routes
 
@@ -59,15 +61,19 @@ router.get(
         firstName: dbUser.firstName,
         lastName: dbUser.lastName,
         role: dbUser.role,
-        proExpiresAt: dbUser.proExpiresAt ? dbUser.proExpiresAt.getTime() : null
+        proExpiresAt: dbUser.proExpiresAt
+          ? dbUser.proExpiresAt.getTime()
+          : null,
       };
 
       const token = jwt.sign(
-        { 
-          userId: dbUser._id, 
-          email: dbUser.email, 
+        {
+          userId: dbUser._id,
+          email: dbUser.email,
           role: dbUser.role,
-          proExpiresAt: dbUser.proExpiresAt ? dbUser.proExpiresAt.getTime() : null
+          proExpiresAt: dbUser.proExpiresAt
+            ? dbUser.proExpiresAt.getTime()
+            : null,
         },
         process.env.JWT_SECRET_Key || "jwt_secret",
         { expiresIn: "1d" }

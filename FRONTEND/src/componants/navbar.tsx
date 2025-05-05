@@ -25,6 +25,7 @@ import ProWarning from './proWarning';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -317,7 +318,13 @@ function Navbar() {
         sx={{ mt: 1.5 }}
       >
         <Box sx={{ p: 2, minWidth: 100 }}>
-         
+          <MenuItem onClick={() => { 
+            handleUserClose(); 
+            navigate('/settings');
+          }}>
+            <SettingsIcon sx={{ mr: 1 }} />
+            {t("Settings")}
+          </MenuItem>
           <MenuItem onClick={() => { handleLogout(); handleUserClose(); }}>
             <LogoutOutlinedIcon sx={{ mr: 1 }} />
             {t("Logout")}

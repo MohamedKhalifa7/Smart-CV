@@ -100,7 +100,6 @@ export const getCurrentUser = (req: Request, res: Response) => {
 export const upgradeToPro = async (req: Request, res: Response) => {
   const { userId } = req.body;
 
-  
   const now = new Date();
   const oneMonthFromNow = new Date(
     now.getFullYear(),
@@ -108,47 +107,64 @@ export const upgradeToPro = async (req: Request, res: Response) => {
     now.getDate()
   );
 
-  
-    const user = await User.findByIdAndUpdate(
-      userId,
-      {
-        role: "pro user",
-        proExpiresAt: oneMonthFromNow,
-      },
-      { new: true }
-    );
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      role: "pro user",
+      proExpiresAt: oneMonthFromNow,
+    },
+    { new: true }
+  );
 
-    if (!user) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
 
-    const token = jwt.sign(
-      {
-        userId: user._id,
-        email: user.email,
-        role: user.role,
-        proExpiresAt: oneMonthFromNow.getTime(), 
-      },
-      process.env.JWT_SECRET_Key || "jwt_secret",
-      { expiresIn: "1d" }
-    );
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      email: user.email,
+      role: user.role,
+      proExpiresAt: oneMonthFromNow.getTime(),
+    },
+    process.env.JWT_SECRET_Key || "jwt_secret",
+    { expiresIn: "1d" }
+  );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "strict",
-    });
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "strict",
+  });
 
-    res.json({
-      message: "User upgraded to Pro successfully",
-      user: {
-        id: user._id,
-        email: user.email,
-        role: user.role,
-        proExpiresAt: oneMonthFromNow.getTime(), 
-      },
-      token,
-    });
+  res.json({
+    message: "User upgraded to Pro successfully",
+    user: {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+      proExpiresAt: oneMonthFromNow.getTime(),
+    },
+    token,
+  });
+};
+
+export const updatePassword = async (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+  const { oldPassword, newPassword } = req.body;
+
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const result = await userService.updatePassword(
+    customReq.user.userId,
+    oldPassword,
+    newPassword
+  );
+
+  res.status(result.status).json(result);
 };

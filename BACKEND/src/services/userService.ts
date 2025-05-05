@@ -116,7 +116,7 @@ export const login = async ({ email, password }: LoginParams) => {
     userId: user._id,
     email: user.email,
     role: user.role,
-    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null 
+    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null,
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET_Key || "jwt_secret", {
@@ -130,7 +130,7 @@ export const login = async ({ email, password }: LoginParams) => {
     userId: user._id,
     email: user.email,
     role: user.role,
-    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null 
+    proExpiresAt: user.proExpiresAt ? user.proExpiresAt.getTime() : null,
   };
 };
 
@@ -181,4 +181,37 @@ export const resendOTP = async (email: string) => {
       error: { message: "Failed to resend OTP" },
     };
   }
+};
+
+export const updatePassword = async (
+  userId: string,
+  oldPassword: string,
+  newPassword: string
+) => {
+  const user = await User.findById(userId);
+  if (!user || !user.password) {
+    return {
+      status: StatusCodes.NOT_FOUND,
+      error: { message: "User not found" },
+    };
+  }
+
+  const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+  if (!isPasswordValid) {
+    return {
+      status: StatusCodes.UNAUTHORIZED,
+      error: { message: "old password is incorrect" },
+    };
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+  user.password = hashedPassword;
+  await user.save();
+
+  return {
+    status: StatusCodes.OK,
+    message: "Password updated successfully",
+  };
 };
