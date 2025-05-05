@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -231,6 +232,11 @@ const RegisterPage = () => {
           </Box>
         </Grid>
       </Grid>
+      <Box>
+        <Link to="/" style={{ textDecoration: "none", color: "primary.main" }}>
+          <HomeIcon sx={{ fontSize: 40, position: "absolute", top: 20, left: 20 }} />
+        </Link>
+      </Box>
     </Container>
   );
 };

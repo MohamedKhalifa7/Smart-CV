@@ -28,6 +28,7 @@ import { useAuth } from "../../context/Auth/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import store from '../../redux/store/store';
 import {PayPalButtons} from "@paypal/react-paypal-js"
+import { useTranslation } from "react-i18next";
 
 
 
@@ -135,6 +136,8 @@ const ProPaymentForm = () => {
     setErrorSnackbarOpen(false);
   };
 
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ background: '#f5f5fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="md">
@@ -150,10 +153,10 @@ const ProPaymentForm = () => {
           {/* Payment Form Section */}
           <Box sx={{ flex: 2, p: 4, backgroundColor: '#fff' }}>
             <Typography variant="h4" gutterBottom fontWeight="bold">
-              Upgrade to Pro
+              {t("Upgrade to Pro")}
             </Typography>
             <Typography variant="body1" sx={{ mb: 3 }} color="text.secondary">
-              Complete your payment below to unlock all premium features.
+            {t("payment text")}
             </Typography>
 
             <Tabs
@@ -166,13 +169,13 @@ const ProPaymentForm = () => {
             >
               <Tab
                 value="card"
-                label="Credit / Debit Card"
+                label={t("Credit / Debit Card")}
                 icon={<CreditCardIcon />}
                 iconPosition="start"
               />
               <Tab
                 value="paypal"
-                label="PayPal"
+                label={t("PayPal")}
                 icon={<AccountBalanceWalletIcon />}
                 iconPosition="start"
               />
@@ -185,7 +188,7 @@ const ProPaymentForm = () => {
                     <Grid item xs={12}>
                       <TextField
                         required
-                        label="Cardholder Name"
+                        label={t("Cardholder Name")}
                         name="name"
                         fullWidth
                         value={form.name}
@@ -197,7 +200,7 @@ const ProPaymentForm = () => {
                     <Grid item xs={12}>
                       <TextField
                         required
-                        label="Card Number"
+                        label={t("Card Number")}
                         name="cardNumber"
                         fullWidth
                         inputProps={{ maxLength: 16 }}
@@ -210,7 +213,7 @@ const ProPaymentForm = () => {
                     <Grid item xs={6}>
                       <TextField
                         required
-                        label="Expiry Date (MM/YY)"
+                        label={t("Expiry Date (MM/YY)")}
                         name="expiry"
                         fullWidth
                         placeholder="08/29"
@@ -236,7 +239,7 @@ const ProPaymentForm = () => {
                     <Grid item xs={12}>
                       <TextField
                         required
-                        label="Billing Address"
+                        label={t("Billing Address")}
                         name="address"
                         fullWidth
                         value={form.address}
@@ -273,7 +276,7 @@ const ProPaymentForm = () => {
                     {loading ? (
                       <CircularProgress size={26} color="inherit" />
                     ) : (
-                      'Pay $9.99 and Upgrade'
+                      t('Pay $9.99 and Upgrade')
                     )}
                   </Button>
                 </Grid>
@@ -320,20 +323,20 @@ const ProPaymentForm = () => {
             }}
           >
             <Typography variant="h5" fontWeight="bold" gutterBottom>
-              Pro Plan
+              {t("Pro Plan")}
             </Typography>
             <Typography variant="h3" fontWeight="bold">
-              $9.99
+              ${t("9.99")}
             </Typography>
             <Typography variant="subtitle1" sx={{ mt: 1, mb: 3, color: "white", fontWeight: "bold" }}>
-              /month
+              /{t("month")}
             </Typography>
             <Typography variant="body1" color='white'>
-              ✔️ Unlimited Access
+              ✔️ {t("Unlimited Access")}
               <br />
-              ✔️ Priority Support
+              ✔️ {t("Priority Support")}
               <br />
-              ✔️ AI Features Unlocked
+              ✔️ {t("AI Features Unlocked")}
             </Typography>
           </Box>
         </Paper>
@@ -341,10 +344,10 @@ const ProPaymentForm = () => {
 
       {/* Success Dialog */}
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
-        <DialogTitle>🎉 Payment Successful</DialogTitle>
+        <DialogTitle>🎉 {t("Payment Successful")}</DialogTitle>
         <DialogContent>
           <Typography variant="body1">
-            Thank you for upgrading to Pro! Your account has been upgraded and all premium features are now available.
+           {t("payment success message")}
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -354,7 +357,7 @@ const ProPaymentForm = () => {
             variant="contained"
             fullWidth
           >
-            Continue to Home
+            {t("Continue to Home")}
           </Button>
         </DialogActions>
       </Dialog>

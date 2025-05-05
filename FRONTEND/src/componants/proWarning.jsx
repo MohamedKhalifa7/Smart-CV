@@ -12,6 +12,8 @@ import {
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
+  import { useTranslation } from "react-i18next";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,6 +21,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const handleNavigateToPayment = () => {
     setOpenPaymentDialog(false);
@@ -64,7 +68,7 @@ function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
           mt: 1,
         }}
       >
-        Unlock Pro Features
+       { t("Unlock Pro Features")}
       </DialogTitle>
 
       <DialogContent sx={{ textAlign: 'center' }}>
@@ -77,7 +81,7 @@ function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
             mt: 1,
           }}
         >
-          Elevate your experience and access powerful tools with our exclusive Pro plan.
+          {t("pro warning text")}
         </Typography>
       </DialogContent>
 
@@ -101,7 +105,7 @@ function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
             },
           }}
         >
-          Maybe Later
+          {t("Maybe Later")}
         </Button>
         <Button
           onClick={handleNavigateToPayment}
@@ -123,7 +127,7 @@ function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
             },
           }}
         >
-          Upgrade Now
+          {t("Upgrade Now")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -13,6 +13,8 @@ import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/Auth/AuthContext";
+import HomeIcon from '@mui/icons-material/Home';
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,10 +23,12 @@ const LoginPage = () => {
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useTranslation();
+
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      setError("Both email and password are required");
+      setError(t("Both email and password are required"));
       return;
     }
 
@@ -48,7 +52,7 @@ const LoginPage = () => {
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response?.data?.message || t("Login failed"));
       setSuccess(false);
     }
   };
@@ -116,12 +120,12 @@ const LoginPage = () => {
                 fontSize: { xs: "1.5rem", sm: "2rem" },
               }}
             >
-              Login to Your Account
+              {t("Login to Your Account")}
             </Typography>
 
             {success && (
               <Alert severity="success" sx={{ mb: 2 }}>
-                Login successful! Redirecting...
+               {t("Login successful! Redirecting...")}
               </Alert>
             )}
 
@@ -140,7 +144,7 @@ const LoginPage = () => {
               }}
             >
               <TextField
-                label="Email"
+                label={t("Email")}
                 type="email"
                 variant="outlined"
                 value={email}
@@ -149,7 +153,7 @@ const LoginPage = () => {
                 fullWidth
               />
               <TextField
-                label="Password"
+                label={t("Password")}
                 type="password"
                 variant="outlined"
                 value={password}
@@ -168,7 +172,7 @@ const LoginPage = () => {
                   fontSize: { xs: "0.9rem", sm: "1rem" },
                 }}
               >
-                Login
+                {t("Login")}
               </Button>
 
               <Button
@@ -183,7 +187,7 @@ const LoginPage = () => {
                   fontSize: { xs: "0.9rem", sm: "1rem" },
                 }}
               >
-                Login with Google
+                {t("Login with Google")}
               </Button>
 
               <Typography
@@ -193,7 +197,7 @@ const LoginPage = () => {
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
                 }}
               >
-                Don't have an account?{" "}
+               {t("Don't have an account?")}{" "}
                 <Link
                   to="/register"
                   style={{
@@ -202,13 +206,19 @@ const LoginPage = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  Register
+                  {t("Register")}
                 </Link>
               </Typography>
             </FormControl>
           </Box>
         </Grid>
       </Grid>
+
+      <Box>
+        <Link to="/" style={{ textDecoration: "none", color: "primary.main" }}>
+          <HomeIcon sx={{ fontSize: 40, position: "absolute", top: 20, left: 20 }} />
+        </Link>
+      </Box>
     </Container>
   );
 };
