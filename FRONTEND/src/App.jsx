@@ -116,7 +116,6 @@ function App() {
   }
   return (
     <Provider store={store}>
-      <PayPalScriptProvider>
         <CVProvider>
           <PreviewProvider>
             <TemplateProvider>
@@ -128,7 +127,6 @@ function App() {
             </TemplateProvider>
           </PreviewProvider>
         </CVProvider>
-      </PayPalScriptProvider>
     </Provider>
   );
 }

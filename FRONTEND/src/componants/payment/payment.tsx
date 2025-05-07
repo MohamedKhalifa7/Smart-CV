@@ -27,7 +27,7 @@ import { handlePaymentSuccess, startPaymentSession } from '../../redux/store/sli
 import { useAuth } from "../../context/Auth/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import store from '../../redux/store/store';
-import {PayPalButtons} from "@paypal/react-paypal-js"
+import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js"
 import { useTranslation } from "react-i18next";
 
 
@@ -300,8 +300,65 @@ const ProPaymentForm = () => {
                       }}
                       error={!!errors.paypalEmail}
                       helperText={errors.paypalEmail}
-                      /> */}
+                      /> 
                       <PayPalButtons/>
+                      */}
+<PayPalScriptProvider options={{ clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || '' }}>
+<PayPalButtons
+    style={{ layout: "vertical", color: "gold", shape: "rect", label: "paypal" }}
+    createOrder={async (data, actions) => {
+      if (!user?.userId) {
+        setErrorMessage("User not found. Please login again.");
+        setErrorSnackbarOpen(true);
+        return '';
+      }
+
+      try {
+        const paymentSessionAction = await dispatch(startPaymentSession(user.userId));
+        if (startPaymentSession.fulfilled.match(paymentSessionAction)) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                currency_code: "USD",
+                value: "9.99",
+              },
+            }],
+            intent: 'CAPTURE'
+          });
+        } else {
+          throw new Error(paymentSessionAction.error?.message || 'Payment session failed');
+        }
+      } catch (err) {
+        console.error("Create order error:", err);
+        setErrorMessage("Failed to create PayPal order.");
+        setErrorSnackbarOpen(true);
+        return '';
+      }
+    }}
+    onApprove={async (data, actions) => {
+      try {
+        const paymentSuccessAction = await dispatch(handlePaymentSuccess(user!.userId));
+        if (handlePaymentSuccess.fulfilled.match(paymentSuccessAction)) {
+          const { user: updatedUser, token: newToken } = paymentSuccessAction.payload;
+          login(updatedUser, newToken);
+          setDialogOpen(true);
+        } else {
+          throw new Error(paymentSuccessAction.error?.message || 'Payment failed');
+        }
+      } catch (err) {
+        console.error("PayPal payment error:", err);
+        setErrorMessage("PayPal payment failed.");
+        setErrorSnackbarOpen(true);
+      }
+    }}
+    onError={(err) => {
+      console.error("PayPal error:", err);
+      setErrorMessage("An error occurred with PayPal.");
+      setErrorSnackbarOpen(true);
+    }}
+  />
+</PayPalScriptProvider>
+
                   </Grid>
                 )}
               </Grid>

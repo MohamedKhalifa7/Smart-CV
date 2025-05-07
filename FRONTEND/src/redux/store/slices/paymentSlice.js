@@ -30,6 +30,23 @@ export const handlePaymentSuccess = createAsyncThunk(
   }
 )
 
+export const createPaypalOrder = createAsyncThunk(
+  "payment/createOrder",
+  async()=>{
+    const {data}=await axios.post("payment/create-order")
+    return data;
+  }
+)
+
+export const capturePaypalOrder = createAsyncThunk(
+  "payment/captureOrder",
+  async () =>{
+    const {data} = await axios.post("payment/capture-order",{orderId,userId})
+    return data;
+
+  }
+)
+
 export const paymentSlice = createSlice({
   name: "payment",
   initialState: {
@@ -65,6 +82,15 @@ export const paymentSlice = createSlice({
       .addCase(handlePaymentSuccess.rejected,(state,action)=>{
         state.error= action.payload
       })
+      .addCase(createPaypalOrder.pending, (state) => { state.loading = true; })
+      .addCase(createPaypalOrder.fulfilled, (state) => { state.loading = false; })
+      .addCase(createPaypalOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed";
+      })
+      .addCase(capturePaypalOrder.fulfilled, (state) => {
+        state.success = true;
+      });
   },
 });
 
