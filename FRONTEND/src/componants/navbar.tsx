@@ -253,7 +253,7 @@ function Navbar() {
       {t("Go Pro")}
     </Button>
   )}
- <MenuItem>
+{!isAuthenticated && ( <MenuItem>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <Typography sx={{ fontSize: "14px", mx: 1 }}>
                 {currentLang === 'ar' ? 'ع' : 'En'}
@@ -264,7 +264,7 @@ function Navbar() {
                 color="primary"
               />
             </Box>
-          </MenuItem>
+          </MenuItem>)}
   {user?.role === "pro user" && (
     <>
       <Button
@@ -318,6 +318,18 @@ function Navbar() {
         sx={{ mt: 1.5 }}
       >
         <Box sx={{ p: 2, minWidth: 100 }}>
+        <MenuItem>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+              <Typography sx={{ fontSize: "14px", mx: 1 }}>
+                {currentLang === 'ar' ? 'ع' : 'En'}
+              </Typography>
+              <Switch
+                checked={currentLang === 'ar'}
+                onChange={() => { toggleLanguage(); handleUserClose(); }}
+                color="primary"
+              />
+            </Box>
+          </MenuItem>
           <MenuItem onClick={() => { 
             handleUserClose(); 
             navigate('/settings');
