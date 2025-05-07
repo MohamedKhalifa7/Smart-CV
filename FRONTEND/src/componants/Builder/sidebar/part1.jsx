@@ -1,23 +1,29 @@
 import React, { useState } from 'react'
-import { Box, Button } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import AIWritingAssistDialog from './component/AIWritingAssist';
 import ChooseTemplateDialog from './component/chooseTemplate';
 import { usePreview } from '../../../context/previewContext';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { useAuth } from '../../../context/Auth/AuthContext';
+import ProWarning from '../../../componants/proWarning';
 
 function Part1() {
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [dialogKey, setDialogKey] = useState(0);  // Track the key for the dialog
-
+    const [openPaymentDialog, setOpenPaymentDialog] = useState(false); // State to handle the payment dialog
     const { setGoToPreview } = usePreview();
-
+    const { user } = useAuth();
+    const isPro = user.role === 'pro user';
     const handleClickOpen = () => {
-        setOpen(true);
-    }
-
+        if (isPro) {
+            setOpen(true);
+        } else {
+            setOpenPaymentDialog(true); // Open the payment dialog for non-pro users
+        }
+    };
     const handleClose = () => {
         setOpen(false);
     }
@@ -66,6 +72,14 @@ function Part1() {
                     onClose={handleClose}
                     selectedValue={''}
                 />
+
+
+<ProWarning
+                    openPaymentDialog={openPaymentDialog}
+                    setOpenPaymentDialog={setOpenPaymentDialog}
+                    onClose={() => setOpenPaymentDialog(false)}
+                
+                ></ProWarning>
             </Box>
         </>
     );

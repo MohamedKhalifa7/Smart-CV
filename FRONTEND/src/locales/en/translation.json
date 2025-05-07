@@ -329,5 +329,6 @@
   "Registration failed": "Registration failed",
   "Register New Account": "Register New Account",
   "Registration successful! Redirecting...": "Registration successful! Redirecting...",
-  "Already a member?": "Already a member?"
+  "Already a member?": "Already a member?",
+  "LogIn": "LogIn"
 }

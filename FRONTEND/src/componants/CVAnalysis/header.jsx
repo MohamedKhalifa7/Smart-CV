@@ -54,9 +54,7 @@ function Header() {
     
                     <BorderLinearProgress variant="determinate" value={cvScore} />
     
-                    <Typography variant='body1' sx={{ my: 1, mb: 4 }}>
-                        feedback according to the CV score
-                    </Typography>
+                    
                 </>
             )}
         </Box>

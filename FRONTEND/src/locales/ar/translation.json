@@ -325,5 +325,6 @@
   "Registration failed": "فشل التسجيل",
   "Register New Account": "تسجيل حساب جديد",
   "Registration successful! Redirecting...": "تم التسجيل بنجاح! جارٍ إعادة التوجيه...",
-  "Already a member?": "هل أنت بالفعل عضو؟"
+  "Already a member?": "هل أنت بالفعل عضو؟",
+  "LogIn": "تسجيل الدخول"
 }
