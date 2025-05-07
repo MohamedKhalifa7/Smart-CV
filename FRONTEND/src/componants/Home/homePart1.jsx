@@ -204,7 +204,7 @@ const HomePart1 = () => {
             sx={{
               flex: "1 1 48%",
               minWidth: { xs: "100%", md: "45%" },
-              mt: { xs: 4, md: 10 },
+              mt: { xs: 4, md: 6 },
               zIndex: 1,
             }}
           >
