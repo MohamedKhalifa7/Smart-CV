@@ -61,8 +61,8 @@ function Homepart2() {
         }}>
         {t('Powerful CV Tools')}
         </Typography>
-        <Typography variant='body1' 
-        sx={{color: "text.secondary", fontSize: "20px",my:1,
+        <Typography variant='body2' 
+        sx={{color: "text.secondary", fontSize: "16px",my:1,
     
         }}>
         {t('home2.subtitle')}
@@ -74,15 +74,15 @@ function Homepart2() {
   return (
     
     <Grid  key={index}>
-    <Card sx={{ maxWidth: 345 }} key={index} className="card">
-    <CardActionArea sx={{p:2}}>
+    <Card sx={{ maxWidth: 345,textAlign:"center" }} key={index} className="card">
+    <CardActionArea sx={{p:1}}>
    
   { tool.icon}
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent sx={{ height:"100px",width:"300px" }}>
+        <Typography gutterBottom variant="h6" component="div">
           {tool.title}
         </Typography>
-        <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: "18px" }}>
+        <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: "15px" }}>
           {tool.description}
         </Typography>
       </CardContent>

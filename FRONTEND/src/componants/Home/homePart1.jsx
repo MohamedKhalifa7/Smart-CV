@@ -41,7 +41,7 @@ const HomePart1 = () => {
           // maxWidth: "1440px", 
           // margin: "0 auto",
           px: { xs: 2, md: 4 },
-          py: 6,
+          py: 3,
           position: "relative",
           display: "flex",
           flexWrap: "wrap",

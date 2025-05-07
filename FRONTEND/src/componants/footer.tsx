@@ -39,7 +39,7 @@ const Footer = () => {
               <Link component={RouterLink} to="/getStart" color="text.secondary" underline="none">{t("CV Builder")}</Link>
               <Link component={RouterLink} to="/getStart" color="text.secondary" underline="none">{t("CV Analyzer")}</Link>
               <Link component={RouterLink} to="/templates" color="text.secondary" underline="none">{t("Templates")}</Link>
-              <Link component={RouterLink} to="/Pro-Features" color="text.secondary" underline="none">{t("Pro Features")}</Link>
+              <Link   component={RouterLink} to="/Pro-Features" color="text.secondary" underline="none">{t("Pro Features")}</Link>
             </Box>
           </Grid>
 
