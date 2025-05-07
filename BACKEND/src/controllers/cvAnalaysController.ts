@@ -11,7 +11,7 @@ export const analyzeCVController = async (req: Request, res: Response) => {
   }
 
     const extractedText = await extractText(file.path, file.mimetype);
-    const { score, sectionsToImprove,positiveFeedback,neutralFeedback,negativeFeedback } = await aiResponse(extractedText);
+    const { score, sectionsToImprove,positiveFeedback,neutralFeedback,negativeFeedback,interviewQuestions } = await aiResponse(extractedText);
 
     res.status(200).json({
       message: "CV analyzed successfully",
@@ -26,7 +26,8 @@ export const analyzeCVController = async (req: Request, res: Response) => {
       sectionsToImprove: sectionsToImprove,
       positiveFeedback,
       neutralFeedback,
-      negativeFeedback
+      negativeFeedback,
+      interviewQuestions
     })
 
 };
