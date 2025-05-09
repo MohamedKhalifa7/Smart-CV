@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "build": "tsc",
+    "start": "set NODE_OPTIONS=--max-old-space-size=512 && node dist/server.js",
     "dev": "nodemon src/server.ts"
-
   },
   "keywords": [],
   "author": "",
