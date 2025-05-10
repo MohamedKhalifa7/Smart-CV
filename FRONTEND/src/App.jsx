@@ -2,7 +2,7 @@ import { Box, CircularProgress, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 import { CVProvider } from "./context/CVcontext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Error from "./pages/Error";
+import Error from "./pages/error";
 import store from "./redux/store/store";
 import Layout from "./pages/layout";
 import GetStarted from "./componants/GetStart/getStart";
