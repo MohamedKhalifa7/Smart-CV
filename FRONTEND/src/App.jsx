@@ -2,7 +2,7 @@ import { Box, CircularProgress, ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 import { CVProvider } from "./context/CVcontext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Error from "./pages/Error";
+import Error from "./pages/error";
 import store from "./redux/store/store";
 import Layout from "./pages/layout";
 import GetStarted from "./componants/GetStart/getStart";
@@ -18,7 +18,7 @@ import { FileProvider } from "./context/fileContext.jsx";
 import { TemplateProvider } from "./context/choosenTempContext.jsx";
 import ProtectedRoute from "./guard/ProtectedRoute.jsx";
 import AuthProvider, { useAuth } from "./context/Auth/AuthContext.jsx";
-import './i18n';
+import "./i18n";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { PreviewProvider } from "./context/previewContext.jsx";
@@ -97,7 +97,7 @@ function App() {
   const { loading } = useAuth();
 
   useEffect(() => {
-    document.body.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    document.body.dir = i18n.language === "ar" ? "rtl" : "ltr";
   }, [i18n.language]);
 
   if (loading) {
@@ -116,17 +116,17 @@ function App() {
   }
   return (
     <Provider store={store}>
-        <CVProvider>
-          <PreviewProvider>
-            <TemplateProvider>
-              <FileProvider>
-                <ThemeProvider theme={theme}>
-                  <RouterProvider router={router} />
-                </ThemeProvider>
-              </FileProvider>
-            </TemplateProvider>
-          </PreviewProvider>
-        </CVProvider>
+      <CVProvider>
+        <PreviewProvider>
+          <TemplateProvider>
+            <FileProvider>
+              <ThemeProvider theme={theme}>
+                <RouterProvider router={router} />
+              </ThemeProvider>
+            </FileProvider>
+          </TemplateProvider>
+        </PreviewProvider>
+      </CVProvider>
     </Provider>
   );
 }
