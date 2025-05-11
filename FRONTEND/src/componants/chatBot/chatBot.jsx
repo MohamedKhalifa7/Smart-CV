@@ -45,11 +45,15 @@ const ChatBot = () => {
         }
     };
 
+    const API_URL = import.meta.env.MODE === "development" 
+    ? import.meta.env.VITE_API_URL_LOCAL 
+    : import.meta.env.VITE_API_URL_PRODUCTION;
+
     useEffect(() => {
         const createChat = async () => {
             try {
                 const res = await axios.post(
-                    'http://localhost:3001/api/chatbot/create',
+                    `${API_URL}/api/chatbot/create`,
                     { messages },
                     { withCredentials: true }
                 );
@@ -59,7 +63,7 @@ const ChatBot = () => {
                     setErrorMessage('🔒 You need to log in to start the chatbot.');
                 } else {
                     console.error('Error creating chat:', err);
-                }
+                }       
             }
         };
         createChat();
@@ -76,7 +80,7 @@ const ChatBot = () => {
 
         try {
             const res = await axios.post(
-                'http://localhost:3001/api/chatbot',
+                `${API_URL}/api/chatbot`,
                 { message: input, chatId },
                 { withCredentials: true }
             );

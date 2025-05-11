@@ -44,7 +44,11 @@ const Header = () => {
     }
    try {
 
-      const response = await axios.post('http://localhost:3001/cvbuilder/save', formData, {
+      const API_URL = import.meta.env.MODE === "development" 
+        ? import.meta.env.VITE_API_URL_LOCAL 
+        : import.meta.env.VITE_API_URL_PRODUCTION;
+
+      const response = await axios.post(`${API_URL}/cvbuilder/save`, formData, {
         withCredentials: true,
       });
 
@@ -87,7 +91,7 @@ const Header = () => {
     }
   
     try {
-      const response = await axios.put(`http://localhost:3001/cvbuilder/${formData._id}`, formData, {
+      const response = await axios.put(`${API_URL}/cvbuilder/${formData._id}`, formData, {
         withCredentials: true,
       });
   

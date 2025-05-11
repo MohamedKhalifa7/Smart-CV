@@ -2,6 +2,10 @@ import axios from 'axios';
 import { createContext, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 const CVContext = createContext();
 
 export const useCV = () => useContext(CVContext);
@@ -185,10 +189,10 @@ const {t}=useTranslation()
   
   const fetchUserCVs = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/cvbuilder/user', { withCredentials: true });
+        const response = await axios.get(`${API_URL}/cvbuilder/user`, { withCredentials: true });
         console.log('Fetched data:', response.data); 
         setMyCvs(response.data||[])
-        return response.data|| []; // Return the CVs or an empty array if none found
+        return response.data|| []; 
     } catch (error) {
         console.error('Error fetching CVs:', error);
         return []; 

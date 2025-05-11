@@ -17,10 +17,15 @@ export const authenticateToken = (
 ) => {
   const customReq = req as CustomRequest;
 
+  // Log cookies and headers for debugging
+  console.log("Cookies:", customReq.cookies);
+  console.log("Authorization Header:", customReq.headers.authorization);
+
   const token =
     customReq.cookies?.token || customReq.headers.authorization?.split(" ")[1];
 
   if (!token) {
+    console.error("No token provided");
     res.status(401).json({ message: "Access denied. No token provided." });
     return;
   }
@@ -30,8 +35,11 @@ export const authenticateToken = (
       token,
       process.env.JWT_SECRET_Key || "jwt_secret"
     ) as {
-      userId: string; email: string; role: string  ,proExpiresAt: Date ;
-};
+      userId: string;
+      email: string;
+      role: string;
+      proExpiresAt: Date;
+    };
 
     customReq.user = {
       userId: decoded.userId,
@@ -43,6 +51,7 @@ export const authenticateToken = (
 
     next();
   } catch (err) {
+    console.error("Invalid or expired token:", err);
     res.status(403).json({ message: "Invalid or expired token." });
     return;
   }

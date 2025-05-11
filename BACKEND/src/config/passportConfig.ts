@@ -9,20 +9,22 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      callbackURL: process.env.GOOGLE_CALLBACK_URL || "",
+      callbackURL:
+        process.env.NODE_ENV === "production"
+          ? process.env.GOOGLE_CALLBACK_URL_PRODUCTION
+          : process.env.GOOGLE_CALLBACK_URL_LOCAL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
-          const now = new Date();
           user = await User.create({
             googleId: profile.id,
             firstName: profile.name?.givenName || "Unknown",
             lastName: profile.name?.familyName || "Unknown",
-            email: profile.emails?.[0].value || "No email",
+            email: profile.emails?.[0]?.value || "No email",
             role: "normal user",
-            proExpiresAt: null
+            proExpiresAt: null,
           });
         }
         return done(null, user);

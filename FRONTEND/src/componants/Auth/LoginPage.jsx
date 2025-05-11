@@ -13,9 +13,9 @@ import GoogleIcon from "@mui/icons-material/Google";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/Auth/AuthContext";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import { useTranslation } from "react-i18next";
-import i18n from '../../i18n';
+import i18n from "../../i18n";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -28,20 +28,21 @@ const LoginPage = () => {
 
   const currentLang = i18n.language;
 
-
   const handleSubmit = async () => {
     if (!email || !password) {
       setError(t("Both email and password are required"));
       return;
     }
 
+    const API_URL =
+      import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_API_URL_LOCAL
+        : import.meta.env.VITE_API_URL_PRODUCTION;
+
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/login",
-        {
-          email,
-          password,
-        },
+        `${API_URL}/auth/login`,
+        { email, password },
         {
           withCredentials: true,
         }
@@ -61,7 +62,12 @@ const LoginPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+    const API_URL =
+      import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_API_URL_LOCAL
+        : import.meta.env.VITE_API_URL_PRODUCTION;
+
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   return (
@@ -128,7 +134,7 @@ const LoginPage = () => {
 
             {success && (
               <Alert severity="success" sx={{ mb: 2 }}>
-               {t("Login successful! Redirecting...")}
+                {t("Login successful! Redirecting...")}
               </Alert>
             )}
 
@@ -182,8 +188,10 @@ const LoginPage = () => {
                 variant="outlined"
                 color="secondary"
                 onClick={handleGoogleLogin}
-                startIcon={currentLang==='en'?<GoogleIcon />:<></> }
-                endIcon={currentLang==='ar'?<GoogleIcon sx={{mx:1}}/>:<></>}
+                startIcon={currentLang === "en" ? <GoogleIcon /> : <></>}
+                endIcon={
+                  currentLang === "ar" ? <GoogleIcon sx={{ mx: 1 }} /> : <></>
+                }
                 sx={{
                   mt: 2,
                   padding: { xs: 1, sm: 1.5 },
@@ -201,7 +209,7 @@ const LoginPage = () => {
                   fontSize: { xs: "0.8rem", sm: "0.9rem" },
                 }}
               >
-               {t("Don't have an account?")}{" "}
+                {t("Don't have an account?")}{" "}
                 <Link
                   to="/register"
                   style={{
@@ -220,7 +228,9 @@ const LoginPage = () => {
 
       <Box>
         <Link to="/" style={{ textDecoration: "none", color: "primary.main" }}>
-          <HomeIcon sx={{ fontSize: 40, position: "absolute", top: 20, left: 20 }} />
+          <HomeIcon
+            sx={{ fontSize: 40, position: "absolute", top: 20, left: 20 }}
+          />
         </Link>
       </Box>
     </Container>

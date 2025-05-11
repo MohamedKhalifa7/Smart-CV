@@ -47,9 +47,13 @@ function Navbar() {
     }
   }, [paymentState.success, paymentState.user, updateUserFromPayment]);
 
+  const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:3001/auth/logout', {}, { withCredentials: true });
+      await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
       window.location.href = '/login';
     } catch (error) {
       console.error('Logout failed', error);
@@ -191,6 +195,15 @@ function Navbar() {
                 <Button fullWidth sx={{ background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)', color: 'white' }}>
                   {t("Pro")}
                 </Button>
+              </MenuItem>
+            )}
+            {isAuthenticated && (
+              <MenuItem onClick={() => { 
+                handleCloseNavMenu(); 
+                navigate('/settings');
+              }}>
+                <SettingsIcon sx={{ mr: 1 }} />
+                {t("Settings")}
               </MenuItem>
             )}
             {isAuthenticated && (

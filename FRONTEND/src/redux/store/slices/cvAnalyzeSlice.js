@@ -1,15 +1,19 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 export const cvAnalyzeAction = createAsyncThunk(
     "cvAnalyze",
     async function featchAnalysisCV(file) {
       try {
         const formData = new FormData();
-        formData.append("cv", file); // must match backend's multer field name
+        formData.append("cv", file);
         console.log("Uploading file in thunk:", file);
         const response = await axios.post(
-          "http://localhost:3001/api/ai/analyze",
+          `${API_URL}/api/ai/analyze`,
           formData,
           {
             headers: {

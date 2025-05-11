@@ -2,22 +2,32 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
 
 export const startPaymentSession = createAsyncThunk(
   "payment/startSession",
-  async (userId)=>{
-      const response = await axios.post(`http://localhost:3001/payment/create-checkout-session`,
-        {userId},{ withCredentials: true,}
-      );
-      return response.data;
-      
+  async (userId) => {
+    const token = Cookies.get('token');
+    const response = await axios.post(
+      `${API_URL}/payment/create-checkout-session`,
+      { userId },
+      { 
+        withCredentials: true,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    );
+    return response.data;
   }
 );
 
 export const handlePaymentSuccess = createAsyncThunk(
   "payment/success",
   async(userId)=>{
-    const response = await axios.post(`http://localhost:3001/payment/payment-success`,{userId},{ withCredentials: true,})
+    const response = await axios.post(`${API_URL}/payment/payment-success`,{userId},{ withCredentials: true,})
 
     if(response.data.token){
       Cookies.set("token",response.data.token,{
