@@ -11,9 +11,10 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
-import SmartToyIcon from '@mui/icons-material/SmartToy'; import { useEffect, useState, useRef } from 'react';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth/AuthContext';
 import ProWarning from '../proWarning';
 
@@ -24,6 +25,7 @@ const ChatBot = () => {
     const [chatId, setChatId] = useState(null);
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isTyping, setIsTyping] = useState(false); // <-- Typing state
     const navigate = useNavigate();
     const messagesEndRef = useRef(null);
     const { user } = useAuth();
@@ -32,10 +34,10 @@ const ChatBot = () => {
 
     const handleChatButtonClick = () => {
         if (!user) {
-            setOpen(true)
+            setOpen(true);
             return;
         }
-        
+
         if (isPro) {
             setOpen(true);
         } else {
@@ -67,6 +69,10 @@ const ChatBot = () => {
         if (!input.trim() || !chatId) return;
 
         setErrorMessage('');
+        const userMsg = { type: 'user', text: input };
+        setMessages((prev) => [...prev, userMsg]);
+        setInput('');
+        setIsTyping(true); // <-- Show "Typing..."
 
         try {
             const res = await axios.post(
@@ -75,10 +81,8 @@ const ChatBot = () => {
                 { withCredentials: true }
             );
 
-            const userMsg = { type: 'user', text: input };
             const botMsg = { type: 'bot', text: res.data.response };
-            setMessages((prev) => [...prev, userMsg, botMsg]);
-            setInput('');
+            setMessages((prev) => [...prev, botMsg]);
         } catch (err) {
             console.error('Error sending message:', err);
             if (err.response && err.response.status === 401) {
@@ -88,17 +92,17 @@ const ChatBot = () => {
             } else {
                 setErrorMessage('⚠️ Something went wrong. Please try again later.');
             }
+        } finally {
+            setIsTyping(false); // <-- Hide "Typing..."
         }
     };
 
-
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages]);
+    }, [messages, isTyping]);
 
     return (
         <>
-
             <Tooltip title="Open Chat Assistant" arrow>
                 <Box
                     sx={{
@@ -109,16 +113,11 @@ const ChatBot = () => {
                         zIndex: 999,
                     }}
                 >
-                    <Fab
-                        color="primary"
-                        onClick={handleChatButtonClick}
-                    >
+                    <Fab color="primary" onClick={handleChatButtonClick}>
                         <SmartToyIcon />
                     </Fab>
                 </Box>
             </Tooltip>
-
-
 
             {open && (
                 <Paper
@@ -136,7 +135,6 @@ const ChatBot = () => {
                         overflow: 'hidden',
                     }}
                 >
-
                     <Box
                         sx={{
                             height: 50,
@@ -152,7 +150,7 @@ const ChatBot = () => {
                             src="/Images/bot.jpg"
                             sx={{ width: 30, height: 30, mr: 1 }}
                         />
-                        <Typography fontWeight="bold" sx={{ color: "white" }}>ChatBot</Typography>
+                        <Typography fontWeight="bold" sx={{ color: 'white' }}>ChatBot</Typography>
                         <Button
                             onClick={() => setOpen(false)}
                             sx={{ minWidth: 'auto', color: 'white' }}
@@ -196,16 +194,37 @@ const ChatBot = () => {
                                 >
                                     <Typography variant="body2">{msg.text}</Typography>
                                 </Paper>
-
-
                                 <div ref={messagesEndRef} />
                             </Box>
                         ))}
 
-
-
+                        {/* Typing Indicator */}
+                        {isTyping && (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-start',
+                                    mb: 1,
+                                }}
+                            >
+                                <Avatar
+                                    src="/Images/bot.jpg"
+                                    sx={{ width: 30, height: 30, mr: 1, alignSelf: 'flex-end' }}
+                                />
+                                <Paper
+                                    sx={{
+                                        p: 1,
+                                        maxWidth: '70%',
+                                        borderRadius: 3,
+                                        background: theme.palette.background.default,
+                                        color: theme.palette.text.primary,
+                                    }}
+                                >
+                                    <Typography variant="body2" fontStyle="italic">Typing...</Typography>
+                                </Paper>
+                            </Box>
+                        )}
                     </Box>
-
 
                     <Box
                         sx={{
@@ -222,7 +241,13 @@ const ChatBot = () => {
                                 color="error"
                                 sx={{ mb: 1 }}
                             >
-                                {errorMessage} <span onClick={() => navigate("/login")}style={{color:"purple",cursor: "pointer" }}>Login</span>
+                                {errorMessage}{' '}
+                                <span
+                                    onClick={() => navigate('/login')}
+                                    style={{ color: 'purple', cursor: 'pointer' }}
+                                >
+                                    Login
+                                </span>
                             </Typography>
                         )}
 
@@ -236,7 +261,7 @@ const ChatBot = () => {
                                 size="small"
                             />
                             <Button
-                            disabled={errorMessage?true:false}
+                                disabled={!!errorMessage}
                                 variant="contained"
                                 onClick={handleSend}
                                 sx={{ ml: 1, minWidth: 40, height: 40 }}
@@ -245,15 +270,14 @@ const ChatBot = () => {
                             </Button>
                         </Box>
                     </Box>
-
                 </Paper>
             )}
-            <ProWarning
-    openPaymentDialog={openPaymentDialog}
-    setOpenPaymentDialog={setOpenPaymentDialog}
-    onClose={() => setOpenPaymentDialog(false)}
-/>
 
+            <ProWarning
+                openPaymentDialog={openPaymentDialog}
+                setOpenPaymentDialog={setOpenPaymentDialog}
+                onClose={() => setOpenPaymentDialog(false)}
+            />
         </>
     );
 };
