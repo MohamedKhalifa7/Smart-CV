@@ -88,7 +88,6 @@ router.get(
         maxAge: 24 * 60 * 60 * 1000,
         // sameSite: process.env.NODE_ENV === "production"?"none":"strict",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        domain: process.env.NODE_ENV === "production" ? "smart-cv-mu.vercel.app" : "localhost"
       });
 
       res.redirect(

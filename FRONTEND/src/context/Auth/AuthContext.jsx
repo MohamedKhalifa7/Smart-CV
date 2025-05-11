@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
     Cookies.set("token", authToken, {
       expires: 1,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
   };
 
