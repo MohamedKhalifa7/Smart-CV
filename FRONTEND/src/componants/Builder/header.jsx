@@ -91,6 +91,10 @@ const Header = () => {
     }
   
     try {
+      const API_URL =
+      import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_API_URL_LOCAL
+        : import.meta.env.VITE_API_URL_PRODUCTION;
       const response = await axios.put(`${API_URL}/cvbuilder/${formData._id}`, formData, {
         withCredentials: true,
       });
