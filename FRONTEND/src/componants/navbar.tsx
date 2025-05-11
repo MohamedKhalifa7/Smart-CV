@@ -11,7 +11,8 @@ import {
   MenuItem,
   Switch,
   Popover,
-  Avatar
+  Avatar,
+  Icon
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -104,23 +105,34 @@ function Navbar() {
       <Container maxWidth="xl" disableGutters>
         <Toolbar disableGutters>
           {/* Logo for desktop */}
-          <Typography
-            variant="h6"
-            noWrap
-            onClick={() => navigate('/')}
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              color: 'black',
-              textDecoration: 'none',
-              fontWeight: "bold",
-              fontSize: "20px",
-              cursor: 'pointer'
-            }}
-          >
-            <DescriptionIcon sx={{ color: "#7d25d2", mr: 1, fontSize: "30px" }} />
-            Smart-CV
-          </Typography>
+      <Box
+  onClick={() => navigate('/')}
+  sx={{
+    mr: 2,
+    display: { xs: 'none', md: 'flex' },
+    alignItems: 'center',
+    cursor: 'pointer',
+  }}
+>
+  <img 
+    src="Images/logo.png" 
+    alt="Logo" 
+    style={{ width: 60, height: 60, marginRight: 8 }} 
+  />
+  <Typography
+    variant="h6"
+    noWrap
+    sx={{
+      color: '',
+      textDecoration: 'none',
+      fontWeight: "bold",
+      fontSize: "22px"
+    }}
+  >
+    SMART CV
+  </Typography>
+</Box>
+
 
           {/* Mobile menu button and logo */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
