@@ -18,6 +18,7 @@ export const login = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
+      domain: process.env.NODE_ENV === "production" ? "smart-cv-mu.vercel.app" : "localhost",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
     });
 
@@ -39,6 +40,9 @@ export const login = async (req: Request, res: Response) => {
 export const logout = (req: Request, res: Response) => {
   res.clearCookie("token", {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    domain: process.env.NODE_ENV === "production" ? "smart-cv-mu.vercel.app" : "localhost",
   });
   res.status(200).json({ message: "Logged out successfully" });
 };
