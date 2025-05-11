@@ -198,6 +198,15 @@ function Navbar() {
               </MenuItem>
             )}
             {isAuthenticated && (
+              <MenuItem onClick={() => { 
+                handleCloseNavMenu(); 
+                navigate('/settings');
+              }}>
+                <SettingsIcon sx={{ mr: 1 }} />
+                {t("Settings")}
+              </MenuItem>
+            )}
+            {isAuthenticated && (
               <MenuItem onClick={() => { handleCloseNavMenu(); handleLogout(); }}>
                 <LogoutOutlinedIcon sx={{ mr: 1 }} />
                 {t("Logout")}
