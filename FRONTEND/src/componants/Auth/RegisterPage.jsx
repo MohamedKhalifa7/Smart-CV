@@ -60,10 +60,14 @@ const RegisterPage = () => {
       return;
     }
 
+    const API_URL = import.meta.env.MODE === "development" 
+      ? import.meta.env.VITE_API_URL_LOCAL 
+      : import.meta.env.VITE_API_URL_PRODUCTION;
+
     const formData = { firstName, lastName, email, password };
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/register",
+        `${API_URL}/auth/register`,
         formData
       );
       if (response.status === 201) {

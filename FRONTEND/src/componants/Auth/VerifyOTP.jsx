@@ -12,6 +12,10 @@ import {
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 const VerifyOTP = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ const VerifyOTP = () => {
     setIsResending(true);
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/resend-otp",
+        `${API_URL}/auth/resend-otp`,
         { email }
       );
 
@@ -49,7 +53,7 @@ const VerifyOTP = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/verify-otp",
+        `${API_URL}/auth/verify-otp`,
         {
           email,
           otp,

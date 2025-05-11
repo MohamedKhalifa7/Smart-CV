@@ -33,11 +33,15 @@ const GrammarCheck = () => {
         setError("");
     };
 
+    const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
     const handleCheckGrammar = async () => {
         setIsLoading(true);
         try {
             const response = await axios.post(
-                "http://localhost:3001/api/ai/grammarcheck",
+                `${API_URL}/api/ai/grammarcheck`,
                 { grammarText: grammarText },
                 { withCredentials: true }
             );

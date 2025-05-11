@@ -1,8 +1,13 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 export const cvScoreAction= createAsyncThunk(
     'cvScore/get',
     // async (userId)=>{
-    //     const response = await fetch(`http://localhost:3001/api/users/${userId}/svScore`)
+    //     const response = await fetch(`${API_URL}/api/users/${userId}/svScore`)
     //     const data = await response.json()
     //     return data;
     // }

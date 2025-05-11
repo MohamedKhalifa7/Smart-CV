@@ -40,7 +40,10 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/login",
+    failureRedirect:
+      process.env.NODE_ENV === "production"
+        ? "https://smart-cv-mu.vercel.app/login"
+        : "http://localhost:5173/login",
   }),
   async (req: any, res) => {
     console.log("User info from Google OAuth:", req.user);
@@ -83,13 +86,19 @@ router.get(
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 24 * 60 * 60 * 1000,
-        sameSite: "strict",
+        // sameSite: process.env.NODE_ENV === "production"?"none":"strict",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        domain: process.env.NODE_ENV === "production" ? "smart-cv-mu.vercel.app" : "localhost"
       });
 
       res.redirect(
-        `http://localhost:5173/auth/success?token=${token}&user=${encodeURIComponent(
-          JSON.stringify(userData)
-        )}`
+        process.env.NODE_ENV === "production"
+          ? `https://smart-cv-mu.vercel.app/auth/success?token=${token}&user=${encodeURIComponent(
+              JSON.stringify(userData)
+            )}`
+          : `http://localhost:5173/auth/success?token=${token}&user=${encodeURIComponent(
+              JSON.stringify(userData)
+            )}`
       );
     } catch (error) {
       console.error("Error in Google OAuth callback:", error);

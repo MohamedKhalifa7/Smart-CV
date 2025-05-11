@@ -24,6 +24,10 @@ const Settings = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.MODE === "development" 
+    ? import.meta.env.VITE_API_URL_LOCAL 
+    : import.meta.env.VITE_API_URL_PRODUCTION;
+
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -36,15 +40,13 @@ const Settings = () => {
 
     try {
       const response = await axios.post(  
-        'http://localhost:3001/auth/update-password',
+        `${API_URL}/auth/update-password`,
         {
           userId: user?._id, 
           oldPassword,
           newPassword,
         },
-        { 
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       if (response.data) {
@@ -53,9 +55,8 @@ const Settings = () => {
         setNewPassword('');
         setConfirmPassword('');
         
-        
         setTimeout(async () => {
-            await axios.post('http://localhost:3001/auth/logout', {}, { withCredentials: true });
+            await axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true });
             Cookies.remove('token');
             logout();
             navigate('/login');

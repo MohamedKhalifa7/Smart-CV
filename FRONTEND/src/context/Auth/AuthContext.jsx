@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 export const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
@@ -15,7 +19,7 @@ const AuthProvider = ({ children }) => {
   
   const fetchingAndFrefreshUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/auth/verify-token", {
+      const res = await axios.get(`${API_URL}/auth/verify-token`, {
         withCredentials: true,
       });
 
@@ -51,7 +55,7 @@ const AuthProvider = ({ children }) => {
       secure: true,
       sameSite: "strict",
     });
-  };
+};
 
   const logout = () => {
     Cookies.remove("token");

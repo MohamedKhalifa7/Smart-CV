@@ -1,5 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
 export const savedCVsAction= createAsyncThunk(
    'saveCVs/getAll',
 

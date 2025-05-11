@@ -36,12 +36,15 @@ import axios from 'axios';
 
 
 // )
-
+const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+  
 export const generateContentAction = createAsyncThunk(
     "generateContent",
     async function fetchAIContent(data) {
         try {
-          const response = await axios.post('http://localhost:3001/api/ai/ai-writing-assist', data,{withCredentials: true});  
+          const response = await axios.post(`${API_URL}/api/ai/ai-writing-assist`, data,{withCredentials: true});  
           console.log('Response from server:', response.data); 
       
           if (response.status === 200) {

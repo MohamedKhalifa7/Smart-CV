@@ -26,9 +26,13 @@ const Part2 = () => {
         getCVs();
     }, [t]);
 
+    const API_URL = import.meta.env.MODE === "development" 
+      ? import.meta.env.VITE_API_URL_LOCAL 
+      : import.meta.env.VITE_API_URL_PRODUCTION;
+
     const handleDelete = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:3001/cvbuilder/${id}`, { withCredentials: true });
+            const response = await axios.delete(`${API_URL}/cvbuilder/${id}`, { withCredentials: true });
             console.log('CV deleted successfully:', response.data);
             
             // Fetch updated CVs after deletion
