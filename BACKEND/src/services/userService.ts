@@ -93,7 +93,7 @@ export const login = async ({ email, password }: LoginParams) => {
   if (!user || !user.password) {
     return {
       status: StatusCodes.UNAUTHORIZED,
-      error: { message: "Invalid email"  },
+      error: { message: "Invalid credentials" },
     };
   }
 
@@ -108,7 +108,7 @@ export const login = async ({ email, password }: LoginParams) => {
   if (!isPasswordValid) {
     return {
       status: StatusCodes.UNAUTHORIZED,
-      error: { message: "Incorrect password" },
+      error: { message: "Invalid credentials" },
     };
   }
 
