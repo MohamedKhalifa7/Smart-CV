@@ -19,6 +19,7 @@ export const cvAnalyzeAction = createAsyncThunk(
             headers: {
               "Content-Type": "multipart/form-data",
             },
+            withCredentials: true,
           }
         );
   

@@ -21,7 +21,7 @@ const GoogleAuthSuccess = () => {
           const user = JSON.parse(decodeURIComponent(userParam));
           console.log("Decoded User:", user);
           await login(user, token);
-          navigate("/", { replace: true });
+          window.location.href = "/";
         } else {
           throw new Error("Invalid authentication data");
         }

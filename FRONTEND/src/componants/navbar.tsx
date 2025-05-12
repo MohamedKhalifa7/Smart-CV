@@ -41,6 +41,10 @@ function Navbar() {
   const isRTL = currentLang === 'ar';
   const paymentState = useSelector((state: any) => state.payment);
 
+  const API_URL = import.meta.env.MODE === "development" 
+  ? import.meta.env.VITE_API_URL_LOCAL 
+  : import.meta.env.VITE_API_URL_PRODUCTION;
+
   useEffect(() => {
     if (paymentState.success && paymentState.user) {
       updateUserFromPayment(paymentState.user, Cookies.get("token") || '');
@@ -48,9 +52,7 @@ function Navbar() {
     }
   }, [paymentState.success, paymentState.user, updateUserFromPayment]);
 
-  const API_URL = import.meta.env.MODE === "development" 
-  ? import.meta.env.VITE_API_URL_LOCAL 
-  : import.meta.env.VITE_API_URL_PRODUCTION;
+  
 
   const handleLogout = async () => {
     try {
