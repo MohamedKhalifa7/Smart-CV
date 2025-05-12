@@ -74,7 +74,7 @@ const GetStarted = () => {
             }}>
 
                 <Card sx={{
-                    maxWidth: 270, height: "85%", mt: "40px", display: "flex", my: "10px",
+                    maxWidth: 270, height: isMobile?"92%":"85%", mt: "40px", display: "flex", my: "10px",
                     flexDirection: "column",
                     justifyContent: "space-between",
                     border: `2px solid ${theme.palette.background.gray}`,
