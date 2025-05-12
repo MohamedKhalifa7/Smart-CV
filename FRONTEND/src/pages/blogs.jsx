@@ -104,7 +104,7 @@ const Blog = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    width: 450,
+                    width: { xs: "100%", md: 450 },
                     height: 400,
                     boxShadow: 3,
                     borderRadius: 2,
