@@ -48,7 +48,6 @@ function ChooseTemplateDialog(props) {
                         sx={{minWidth:isMobile?'100%':'30%'}}
                         title={template.title}
                         img={template.img}
-                        disc={template.disc}
                         pro={template.pro}
                         onCloseDialog={handleClose}
                     ></TemplateCard>
