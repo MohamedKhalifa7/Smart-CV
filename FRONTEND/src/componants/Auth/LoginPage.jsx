@@ -79,7 +79,7 @@ const LoginPage = () => {
         alignItems: "center",
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
-        padding: { xs: 2, md: 4 },
+        padding: { xs: 2, md: 2 },
       }}
     >
       <Grid
@@ -112,7 +112,7 @@ const LoginPage = () => {
         <Grid xs={12} sm={10} md={6}>
           <Box
             sx={{
-              width: "100%",
+              width: "90%",
               backgroundColor: "white",
               borderRadius: 2,
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
