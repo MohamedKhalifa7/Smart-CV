@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/server.js",
-    "start:win": "npm run build && set NODE_OPTIONS=--max-old-space-size=512 && node dist/server.js",
+    "start:win": "npm run build && set NODE_OPTIONS=--max-old-space-size=2048 && node dist/server.js",
     "dev": "nodemon src/server.ts",
     "vercel-build": "npm run build"
   },
