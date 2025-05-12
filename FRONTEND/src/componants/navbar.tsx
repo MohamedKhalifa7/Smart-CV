@@ -343,6 +343,7 @@ function Navbar() {
         sx={{ mt: 1.5 }}
       >
         <Box sx={{ p: 2, minWidth: 100 }}>
+           {user?.firstName || user?.email?.split("@")[0]}
         <MenuItem>
             <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
               <Typography sx={{ fontSize: "14px", mx: 1 }}>

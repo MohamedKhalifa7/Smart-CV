@@ -56,7 +56,7 @@ const LoginPage = () => {
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.error?.message || t("Login failed"));
+      setError(err.response?.data?.erorr.message || t("Login failed"));
       setSuccess(false);
     }
   };
