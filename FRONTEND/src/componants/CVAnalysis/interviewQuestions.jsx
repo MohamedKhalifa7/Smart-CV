@@ -18,11 +18,11 @@ function InterviewQuestions() {
         
     
     
-        useEffect(()=>{
-            if(uploadedFile){
-                dispatch(cvAnalyzeAction(uploadedFile));
-            }
-        },[dispatch, uploadedFile]);
+        // useEffect(()=>{
+        //     if(uploadedFile){
+        //         dispatch(cvAnalyzeAction(uploadedFile));
+        //     }
+        // },[dispatch, uploadedFile]);
     
         useEffect(()=>{
             if(analyzeData?.cvAnalyze){

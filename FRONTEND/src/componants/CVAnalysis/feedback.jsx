@@ -21,11 +21,11 @@ const [warning, setWarning] = useState([]);
 
 const loading = useSelector((state) => state.cvAnalyze.loading);
 
-useEffect(()=>{
- if(uploadedFile){
-    dispatch(cvAnalyzeAction(uploadedFile));
- }
-},[dispatch, uploadedFile]);
+// useEffect(()=>{
+//  if(uploadedFile){
+//     dispatch(cvAnalyzeAction(uploadedFile));
+//  }
+// },[dispatch, uploadedFile]);
 
 useEffect(()=>{
     if(analyzeData?.cvAnalyze){
