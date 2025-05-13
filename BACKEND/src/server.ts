@@ -19,6 +19,8 @@ app.use(
   cors({
     origin: ["http://localhost:5173", "https://smart-cv-mu.vercel.app"],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   })
 );
 //to get cookies from the frontend
@@ -31,6 +33,11 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", 
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
+    },
   })
 );
 
