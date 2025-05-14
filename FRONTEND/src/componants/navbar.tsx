@@ -329,7 +329,7 @@ function Navbar() {
                       <strong>{t("Plan")}:</strong> {user?.role}
                     </Typography>
                     <Typography variant="body2" sx={{ color: "#444" }}>
-                      <strong>{t("Expires at")}:</strong> {user?.proExpiresAt ? new Date(user.proExpiresAt).toLocaleDateString() : 'N/A'}
+                      <strong>{t("Expires at")}:</strong> {user?.proExpiresAt ? new Date(user.proExpiresAt).toLocaleDateString('en-GB') : 'N/A'}
                     </Typography>
                   </Box>
                 </Popover>
