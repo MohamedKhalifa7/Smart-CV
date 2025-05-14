@@ -181,7 +181,7 @@ function Navbar() {
                 {user?.firstName || user?.email?.split("@")[0]}
               </MenuItem>
             )}
-            
+
             {pages.map((page) => (
               <MenuItem key={page.label} onClick={() => { handleCloseNavMenu(); navigate(page.href); }}>
                 <Typography textAlign="center" sx={{ color: 'black' }}>{page.label}</Typography>
@@ -194,7 +194,7 @@ function Navbar() {
                 <Switch checked={currentLang === 'ar'} onChange={toggleLanguage} color="primary" />
               </Box>
             </MenuItem>
-            
+
             {isAuthenticated && (
               <MenuItem onClick={() => {
                 handleCloseNavMenu();
@@ -209,7 +209,7 @@ function Navbar() {
                 <LogoutOutlinedIcon sx={{ mr: 1 }} />
                 {t("Logout")}
               </MenuItem>
-              
+
             )}
             {!isAuthenticated && (
               <MenuItem onClick={() => { handleCloseNavMenu(); navigate('/login'); }}>
@@ -330,7 +330,7 @@ function Navbar() {
                     </Typography>
                     <Typography variant="body2" sx={{ color: "#444" }}>
                       <strong>{t("Expires at")}:</strong> {user?.proExpiresAt ? new Date(user.proExpiresAt).toLocaleDateString('en-GB'
-                        
+
                       ) : 'N/A'}
                     </Typography>
                   </Box>
@@ -353,7 +353,22 @@ function Navbar() {
                   sx={{ mt: 1.5 }}
                 >
                   <Box sx={{ p: 2, minWidth: 100 }}>
-                    {user?.firstName || user?.email?.split("@")[0]}
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        fontWeight: 'bold',
+                        fontSize: '16px',
+                        color: '#4a148c',
+                        mb: 1,
+                        textAlign: 'center',
+                        borderBottom: '1px solid #eee',
+                        pb: 1
+                      }}
+                    >
+                      {user?.firstName && user?.lastName
+                        ? `${user.firstName} ${user.lastName}`
+                        : user?.firstName || user?.email?.split("@")[0]}
+                    </Typography>
                     <MenuItem>
                       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                         <Typography sx={{ fontSize: "14px", mx: 1 }}>
