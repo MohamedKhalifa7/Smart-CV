@@ -132,7 +132,7 @@ function HomePart3() {
             pb: "20px"
           }}>
             <Typography variant='h6' sx={{ color: "white" }}>{t("Pro")}</Typography>
-            <Typography variant='h5' sx={{ fontWeight: "bold" }}>
+            <Typography variant='h5' sx={{ fontWeight: "bold" ,color: "white"  }}>
               ${t("9.99")}<span style={{ fontSize: "18px", fontWeight: "normal" }}>/{t("month")}</span>
             </Typography>
             <Typography variant='body2' sx={{ color: "white", fontSize: "16px", my: 1 }}>
