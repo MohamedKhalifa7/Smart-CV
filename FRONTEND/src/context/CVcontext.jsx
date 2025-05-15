@@ -202,7 +202,7 @@ const {t}=useTranslation()
 const exportCV = async (cvId, template) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/api/ai/exports/${cvId}?format=pdf&template=${template}`,
+      `${API_URL}/api/ai/exports/${cvId}?format=pdf&template=${template}`,
       {
         withCredentials: true,
         responseType: 'blob',
@@ -213,7 +213,9 @@ const exportCV = async (cvId, template) => {
     const a = document.createElement('a');
     a.href = url;
     a.download = `CV_${cvId}.pdf`;
+      document.body.appendChild(a);
     a.click();
+      a.remove();
     window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error('Error exporting CV:', error);
