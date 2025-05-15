@@ -11,7 +11,7 @@ const formatDate = (dateString: string | undefined): string => {
 };
 
 export const exportPdfCV = async (CV: ICV, templateName: string) => {
-    const templatePath = path.join(__dirname, `../templates/${templateName}.html`);
+    const templatePath = path.join(process.cwd(), "dist", "templates", `${templateName}.html`);
     const source = fs.readFileSync(templatePath, "utf-8");
 
 
