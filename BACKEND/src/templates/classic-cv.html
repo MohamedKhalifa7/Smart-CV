@@ -9,21 +9,31 @@
     ul { padding-left: 20px; }
     .section { margin-bottom: 25px; }
     .bold { font-weight: bold; }
+    .sub { color: #666; font-size: 14px; }
+    .paragraph { margin-top: 5px; font-size: 14px; }
   </style>
 </head>
 <body>
   <h1>{{firstName}} {{lastName}}</h1>
-  <p><strong>Email:</strong> {{email}}</p>
+  <p><strong>{{professionalTitle}}</strong></p>
+  <p><strong>Email:</strong> {{email}} </p>
+  <p><strong>Phone:</strong> {{phone}}</p>
+  <p><strong>Location:</strong> {{location}}</p>
 
   <div class="section">
-    <h2>Professional Summary:</h2>
-    <p>{{professionalSummary}}</p>
+    <h2>Professional Summary</h2>
+    <p class="paragraph">{{professionalSummary}}</p>
   </div>
+
   <div class="section">
     <h2>Experience</h2>
     <ul>
       {{#each experience}}
-        <li><span class="bold">{{jobTitle}}</span> at {{company}} ({{startDate}} to {{endDate}})</li>
+        <li>
+          <div class="bold">{{role}}</div>
+          <div class="sub">{{company}} — {{startDate}} to {{endDate}}</div>
+          <p class="paragraph">{{description}}</p>
+        </li>
       {{/each}}
     </ul>
   </div>
@@ -32,7 +42,12 @@
     <h2>Education</h2>
     <ul>
       {{#each education}}
-        <li><strong>{{institution}}</strong> — {{degree}} ({{startDate}} to {{endDate}})</li>
+        <li>
+          <div class="bold">{{institution}}</div>
+          <div class="sub">{{degree}} ({{startYear}} - {{endYear}})</div>
+          <div class="sub">{{location}}</div>
+          <p class="paragraph">{{description}}</p>
+        </li>
       {{/each}}
     </ul>
   </div>
@@ -44,12 +59,16 @@
 
   <div class="section">
     <h2>Languages</h2>
-    <p>{{languages}}</p>
+    <ul>
+      {{languages}}
+    </ul>
   </div>
 
   <div class="section">
     <h2>Certifications</h2>
-    <p>{{certifications}}</p>
+    <ul>
+      {{certifications}}
+    </ul>
   </div>
 </body>
 </html>
