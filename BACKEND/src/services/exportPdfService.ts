@@ -53,7 +53,16 @@ export const exportPdfCV = async (CV: ICV, templateName: string) => {
     `${CV.personalInfo.firstName} ${CV.personalInfo.lastName}_CV.pdf`
   );
 
-  const browser = await puppeteer.launch();
+//   const browser = await puppeteer.launch();
+ const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--single-process'
+        ]
+    });
   const Page = await browser.newPage();
 
   await Page.setContent(rendered, { waitUntil: "networkidle0" });
