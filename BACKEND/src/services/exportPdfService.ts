@@ -10,12 +10,16 @@ const formatDate = (dateString: string | undefined): string => {
   return date.toLocaleDateString("en-US", { year: "numeric", month: "short" });
 };
 
+
 export const exportPdfCV = async (CV: ICV, templateName: string) => {
   const templatePath = path.join(
-    __dirname,
-    `../templates/${templateName}.html`
+    process.env.NODE_ENV === 'production' 
+      ? path.join(process.cwd(), 'dist', 'templates')
+      : path.join(__dirname, '../templates'),
+    `${templateName}.html`
   );
   const source = fs.readFileSync(templatePath, "utf-8");
+
 
   const formattedExperience = CV.experience.map((exp) => ({
     ...exp,

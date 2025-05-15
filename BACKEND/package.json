@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && mkdir -p dist/templates && cp src/templates/* dist/templates/",
+    "copy-templates": "cp -r src/templates dist/",
+    "build": "tsc && npm run copy-templates",
     "start": "node --max-old-space-size=1024 dist/server.js",
     "start:win": "npm run build && set NODE_OPTIONS=--max-old-space-size=2048 && node dist/server.js",
     "dev": "nodemon src/server.ts",
