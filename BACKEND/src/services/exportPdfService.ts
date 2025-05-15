@@ -11,10 +11,17 @@ const formatDate = (dateString: string | undefined): string => {
 };
 
 export const exportPdfCV = async (CV: ICV, templateName: string) => {
-  const templatePath = path.join(
+  const templatePath = path.resolve(
     __dirname,
-    `../templates/${templateName}.html`
+    "..",
+    "templates",
+    `${templateName}.html`
   );
+
+  if (!fs.existsSync(templatePath)) {
+    throw new Error(`Template ${templateName}.html not found at ${templatePath}`);
+  }
+
   const source = fs.readFileSync(templatePath, "utf-8");
 
   const formattedExperience = CV.experience.map((exp) => ({
@@ -45,11 +52,11 @@ export const exportPdfCV = async (CV: ICV, templateName: string) => {
     certifications: CV.skills.certifications,
   });
 
-  fs.mkdirSync(path.join(__dirname, "../exports"), { recursive: true });
+  const exportsDir = path.resolve(__dirname, "..", "exports");
+  fs.mkdirSync(exportsDir, { recursive: true });
 
   const filePath = path.join(
-    __dirname,
-    "../exports",
+    exportsDir,
     `${CV.personalInfo.firstName} ${CV.personalInfo.lastName}_CV.pdf`
   );
 
