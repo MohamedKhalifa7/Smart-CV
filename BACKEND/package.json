@@ -7,8 +7,7 @@
     "start": "node --max-old-space-size=1024 dist/server.js",
     "start:win": "npm run build && set NODE_OPTIONS=--max-old-space-size=2048 && node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "vercel-build": "npm run build",
-    "postbuild": "xcopy src\\templates dist\\templates /E /I /Y"
+    "vercel-build": "npm run build"
   },
   "keywords": [],
   "author": "",
