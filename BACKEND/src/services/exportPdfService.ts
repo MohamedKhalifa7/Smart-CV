@@ -15,7 +15,7 @@ export const exportPdfCV = async (CV: ICV, templateName: string) => {
     __dirname,
     "..",
     "templates",
-    `${templateName}.html`
+    `${templateName === 'linkedin-cv' ? 'linkedIn-cv' : templateName}.html`
   );
 
   if (!fs.existsSync(templatePath)) {
