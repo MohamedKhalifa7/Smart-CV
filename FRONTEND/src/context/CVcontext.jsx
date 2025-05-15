@@ -201,8 +201,8 @@ export const CVProvider = ({ children }) => {
   const exportCV = async (cvId, template) => {
     try {
       const response = await axios.get(
-        // `${API_URL}/api/ai/exports/${cvId}?format=pdf&template=${template}`,
-        `http://localhost:3001/api/ai/exports/${cvId}?format=pdf&template=${template}`,
+        `${API_URL}/api/ai/exports/${cvId}?format=pdf&template=${template}`,
+        // `http://localhost:3001/api/ai/exports/${cvId}?format=pdf&template=${template}`,
 
         {
           withCredentials: true,
