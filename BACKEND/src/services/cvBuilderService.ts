@@ -2,9 +2,22 @@ import { StatusCodes } from "http-status-codes";
 import CV from "../models/cvBuilderModel";
 import { CVParams } from "../types/cvBuilder.types";
 
+
 // Create CV
 export const createCV = async (cvData: CVParams & { userId: string }) => {
+  const capitalize = (str:string)=>{
+  return str.charAt(0).toUpperCase()+str.slice(1).toLowerCase()
+}
   try {
+
+    if(cvData.personalInfo?.firstName){
+      cvData.personalInfo.firstName= capitalize(cvData.personalInfo.firstName)
+    }
+    if(cvData.personalInfo?.lastName){
+            cvData.personalInfo.lastName= capitalize(cvData.personalInfo.lastName)
+
+    }
+
     const cv = await CV.create(cvData);
     return {
       status: StatusCodes.CREATED,

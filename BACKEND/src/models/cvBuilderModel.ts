@@ -19,22 +19,21 @@ const cvSchema = new mongoose.Schema(
     },
     experience: [
       {
-        jobTitle: { type: String },
-        company: { type: String },
-        location: { type: String },
-        startDate: { type: String },
-        endDate: { type: String },
+        jobTitle: { type: String,required:true },
+        company: { type: String,required:true },
+        location: { type: String,required:true },
+        startDate: { type: String,required:true },
+        endDate: { type: String,required:true },
         description: { type: String },
       },
     ],
     education: [
       {
-        institution: { type: String },
-        degree: { type: String },
-        location: { type: String },
-        startYear: { type: String },
-        endYear: { type: String },
-        description: { type: String },
+        institution: { type: String,required:true},
+        degree: { type: String,required:true },
+        location: { type: String,required:true },
+        startYear: { type: String,required:true },
+        endYear: { type: String,required:true },
       },
     ],
     skills: {

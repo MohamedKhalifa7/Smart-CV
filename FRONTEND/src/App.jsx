@@ -27,7 +27,8 @@ import ProPaymentForm from "./componants/payment/payment.js";
 import Blog from "./pages/blogs.jsx";
 import BlogDetail from "./pages/blogDetails.jsx";
 import HomePart3 from "./componants/Home/homePart3.jsx";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import CVTipsSection from "./pages/tips.jsx";
 import Settings from "./componants/Settings";
 
@@ -116,6 +117,7 @@ function App() {
   }
   return (
     <Provider store={store}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
       <CVProvider>
         <PreviewProvider>
           <TemplateProvider>
@@ -127,6 +129,7 @@ function App() {
           </TemplateProvider>
         </PreviewProvider>
       </CVProvider>
+      </LocalizationProvider>
     </Provider>
   );
 }

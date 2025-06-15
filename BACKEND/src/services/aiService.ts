@@ -48,7 +48,7 @@ export async function aiResponse(cvText:string):Promise<{
         "atsCheckerNotes": [
           "The CV is ATS-friendly with a simple layout",
           "Avoid using images or graphics that ATS might not read correctly",
-          "Match Job Description: Use exact words and phrases from the job posting.
+          "Match Job Description": Use exact words and phrases from the job posting.
         ],
         "interviewQuestions":[],
         "matchJobTitle": "your cv is a not match for the job title, it is a good match for AI engineer"

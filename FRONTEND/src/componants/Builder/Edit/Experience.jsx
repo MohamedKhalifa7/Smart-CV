@@ -3,6 +3,9 @@ import { Box, Typography, TextField, Button, IconButton, Divider, Stack, useThem
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { t } from 'i18next';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
+
 
 const Experience = () => {
   const { formData, updateArraySection, addArrayItem, removeArrayItem } = useCV();
@@ -13,6 +16,15 @@ const Experience = () => {
   const handleChange = (index, field, value) => {
     updateArraySection('experience', index, { [field]: value });
   };
+    const handleDateChange = (index, date, name) => {
+      // const updatedExperience = [...experiences];
+      // updatedExperience[index] = {
+      //   ...updatedExperience[index],
+      //   [name]: dayjs(date).year().toString(),
+      // };
+updateArraySection('experience', index, {
+  [name]: dayjs(date).year().toString(),
+});    };
 
   const addExperience = () => {
     addArrayItem('experience', {
@@ -24,6 +36,7 @@ const Experience = () => {
       description: ""
     });
   };
+  
 
   return (
     <Box sx={{
@@ -148,46 +161,64 @@ const Experience = () => {
                   <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
                     {t('Start Date')}
                   </Typography>
-                  <TextField
-                    fullWidth
-                    variant="standard"
-                    name="startDate"
-                    value={exp.startDate || ''}
-                    onChange={(e) => handleChange(index, 'startDate', e.target.value)}
-                    placeholder={t('Jan 2020')}
-                    InputProps={{ disableUnderline: true }}
-                    sx={{
-                      '& .MuiInput-input': {
-                        border: '1px solid #ddd',
-                        borderRadius: '8px',
-                        fontSize: '0.85rem',
-                        padding: '4px 8px'
-                      }
-                    }}
-                  />
+                  <DatePicker
+                  views={["year"]}
+                    format="YYYY"
+                  value={exp.startDate ? dayjs(`${exp.startDate}`) : null}
+                  onChange={(newDate) => handleDateChange(index, newDate, "startDate")}
+                  maxDate={exp.endDate?dayjs(exp.endDate,"YYYY"):undefined}
+                  slotProps={{
+                    textField: {
+                      variant: "standard",
+                      InputProps: { disableUnderline: true },
+                      sx: {
+                        "& .MuiInput-input": {
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                          fontSize: "0.85rem",
+                          padding: "4px 8px",
+                        },
+                        width:"100%",
+                        border:"1px solid #ddd",
+                        borderRadius:"8px",
+                        paddingLeft:"8px"
+                        
+                      },
+                    },
+                  }}
+                />
                 </Box>
 
                 <Box sx={{ width: '50%' }}>
                   <Typography variant="subtitle1" sx={{ fontWeight: 'bold', fontSize: '0.85rem', textAlign: 'start' }}>
                     {t('End Date')}
                   </Typography>
-                  <TextField
-                    fullWidth
-                    variant="standard"
-                    name="endDate"
-                    value={exp.endDate || ''}
-                    onChange={(e) => handleChange(index, 'endDate', e.target.value)}
-                    placeholder={t('Present')}
-                    InputProps={{ disableUnderline: true }}
-                    sx={{
-                      '& .MuiInput-input': {
-                        border: '1px solid #ddd',
-                        borderRadius: '8px',
-                        fontSize: '0.85rem',
-                        padding: '4px 8px'
-                      }
-                    }}
-                  />
+                  <DatePicker
+                  views={["year"]}
+                    format="YYYY"
+                  value={exp.endDate ? dayjs(`${exp.endDate}`) : null}
+                  onChange={(newDate) => handleDateChange(index, newDate, "endDate")}
+                  maxDate={exp.startDate?dayjs(exp.startDate,"YYYY"):undefined}
+                  slotProps={{
+                    textField: {
+                      variant: "standard",
+                      InputProps: { disableUnderline: true },
+                      sx: {
+                        "& .MuiInput-input": {
+                          border: "1px solid #ddd",
+                          borderRadius: "8px",
+                          fontSize: "0.85rem",
+                          padding: "4px 8px",
+                        },
+                        width:"100%",
+                        border:"1px solid #ddd",
+                        borderRadius:"8px",
+                        paddingLeft:"8px"
+                        
+                      },
+                    },
+                  }}
+                />
                 </Box>
               </Box>
 
